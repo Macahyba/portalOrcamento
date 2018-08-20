@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>Lista de orcamentos</title>
+	</head>
+	<body>
+        <h1>Lista de orcamentos</h1>
+        <table>
+            <tr>
+                <td>Cliente</td>
+                <td>Equipamento</td>
+                <td>Serial Number</td>
+                <td>Valor</td>
+                <td>Data de Criacao</td>
+            </tr>
+            
+            <% for (let i = 0; i < orcamentos.length; i++) { %>
+            
+            <tr>
+                <td><%= orcamento[i].cliente%></td>
+                <td><%= orcamento[i].equipamento%></td>
+                <td><%= orcamento[i].serial%></td>
+                <td><%= orcamento[i].valor%></td>
+                <td><%= orcamento[i].data%></td>
+            </tr>
+
+            <% } %>
+        </table>
+    </body>
+</html>
