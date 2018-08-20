@@ -6,14 +6,27 @@ module.exports = function(app){
 		
 		pConnection.then(function(connection){
 
-			var pQuery = connection.db("orcamentos").collection('users').find().toArray();
-		
+			var pQuery = connection.query("select * from users");
+
 			pQuery.then(function(query) {
 				res.render("orcamento/aprovar", {users : query});	
 			});
 
-			connection.close();		
-	
+			pQuery.catch(function(query){
+				
+				console.log("erro de query");
+				res.status(404).render("erro");
+			});		
+			
+			connection.end();	
+				
 		});
+
+		pConnection.catch(function(error){
+			
+			console.log("erro de conexao");
+			res.status(404).render("erro");
+		});
+
 	});
 };

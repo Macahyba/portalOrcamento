@@ -2,4 +2,5 @@
 // https://expressjs.com/en/starter/faq.html
 module.exports = function(req,res) {
 	res.status(404).render("erro");
+	//todo: passar o codigo de erro
 };

@@ -1,14 +1,17 @@
-var mongo = require('mongodb').MongoClient;
+var mysql = require('promise-mysql');
 
-var url = 'mongodb://localhost:27017';
+var connMySQL = function(){
 
-var mongoConn = function(){
-
-	return mongo.connect(url, { useNewUrlParser : true});
+	return mysql.createConnection({
+		host: 'localhost',
+		user: 'root',
+		password: '123456',
+		database: 'orcamentos'
+	})
 }
 
 module.exports = function(){
 
-	return mongoConn;
+	return connMySQL;
 
 }
