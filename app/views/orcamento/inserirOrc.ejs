@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>Inserir orcamentos!</title>
+	</head>
+	<body>
+		<form action="/inserirOrc" method="post">
+			<table>
+				<tr>
+					<td>Cliente</td>
+					<td>Equipamento</td>
+					<td>Serial Number</td>
+					<td>Valor</td>
+				</tr>
+
+				<tr>
+					<td><input type="text" name="cliente" id="cliente"></td>
+					<td><input type="text" name="equipamento" id="equipamento"></td>
+					<td><input type="number" name="serialNumber" id="serialNumber"></td>
+					<td><input type="number" name="valor" id="valor"></td>
+					<td><input type="hidden" name="usuario" id="usuario" value="1"></td>
+					<td><input type="hidden" name="id" id="id" value="6"></td>
+					<td><input type="submit" value="Submit"></td>
+				</tr>
+			
+			</table>
+		</form>
+	</body>
+</html>
