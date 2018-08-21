@@ -10,8 +10,9 @@ app.set('views', './app/views');
 consign()
     .include("app/routes")
     .then("config/dbConnection.js")
+    .then("app/models")
     .into(app);
 
-app.use(errorRoute);
+errorRoute(app);
 
 module.exports = app;

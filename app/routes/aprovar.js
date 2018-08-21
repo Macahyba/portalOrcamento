@@ -9,23 +9,24 @@ module.exports = function(app){
 			var pQuery = connection.query("select * from users");
 
 			pQuery.then(function(query) {
+
 				res.render("orcamento/aprovar", {users : query});	
 			});
 
-			pQuery.catch(function(query){
+			pQuery.catch(function(queryErr){
 				
-				console.log("erro de query");
-				res.status(404).render("erro");
+				//console.log(queryErr);
+				res.status(500).render("erro", { error : queryErr});
 			});		
 			
 			connection.end();	
 				
 		});
 
-		pConnection.catch(function(error){
+		pConnection.catch(function(connectionErr){
 			
-			console.log("erro de conexao");
-			res.status(404).render("erro");
+			//console.log(connectionErr);
+			res.status(500).render("erro", { error : connectionErr});
 		});
 
 	});

@@ -6,7 +6,7 @@ var connMySQL = function(){
 		host: 'localhost',
 		user: 'root',
 		password: '123456',
-		database: 'orcamentos'
+		database: 'orcamentosDB'
 	})
 }
 
