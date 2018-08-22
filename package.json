@@ -9,6 +9,7 @@
   "author": "Thiago",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "consign": "^0.1.6",
     "ejs": "^2.6.1",

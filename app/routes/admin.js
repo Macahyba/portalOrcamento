@@ -8,10 +8,10 @@ module.exports = function(app){
 
 		.then(function(connection){
 
-			orcamentosDAO.getOrcamentos(connection)
+			orcamentosDAO.getSumm(connection)
 
 			.then(function(query){
-				//console.log(query[0].nomeCliente)
+				//console.log(query.nomeEquip[0].nomeEquip)
 				res.render("orcamento/inserirOrc", {detalhe : query});
 			})
 		})

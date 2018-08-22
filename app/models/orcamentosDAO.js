@@ -1,5 +1,7 @@
 module.exports = function(){
 
+    let Promise = require("bluebird");
+
     let sQuery =
         "SELECT orcamentos.id, idUsuario, nomeUsuario, idCliente, nomeCliente, idEquip, nomeEquip, serialNumber, valor, " +
         "status, dataCriacao " +
@@ -21,7 +23,9 @@ module.exports = function(){
 
     this.getCliente = function(connection, id){
 
-        return connection.query(sQuery + "WHERE clientes.id=" + id + " ORDER BY id");
+        let a = connection.query(sQuery + "WHERE clientes.id=" + id + " ORDER BY id");
+        console.log(a);
+        return a;
 
     }
 
@@ -38,6 +42,14 @@ module.exports = function(){
 
         return connection.query(sQuery + "WHERE users.id=" + id + " ORDER BY id");
         
+    }
+
+    this.getSumm = function(connection){
+
+        let clientes = connection.query("SELECT distinct nomeCliente FROM clientes ORDER BY nomeCliente");
+        let equipamentos = connection.query("SELECT distinct nomeEquip FROM equipamentos ORDER BY nomeEquip");
+
+        return Promise.props({'nomeCliente': clientes,'nomeEquip': equipamentos});
     }
 
 	return this;

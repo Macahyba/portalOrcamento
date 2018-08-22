@@ -11,7 +11,7 @@ module.exports = function(app){
 			orcamentosDAO.getCliente(connection,req.params.cliId)
 
 			.then(function(query) {
-
+				console.log(query);
 				res.render("orcamento/clienteDetalhe", {detalhe : query});	
 			})
 
