@@ -2,23 +2,21 @@ module.exports = function(app){
 	
 	app.get('/listaOrcamentos', function(req, res){
 
-		let orcamentosModel = app.app.models.orcamentosModel;
+		let orcamentosDAO = app.app.models.orcamentosDAO;
 
 		app.config.dbConnection()
 		
 		.then(function(connection){
 
-			orcamentosModel.getOrcamentos(connection)
+			orcamentosDAO.getOrcamentos(connection)
 
 			.then(function(query) {
 
-			//	orcamentosModel.getOrcamentos(query)
 				res.render("orcamento/listaOrcamentos", {detalhe : query});	
 			})
 
 			.catch(function(queryErr){
 				
-			//	console.log(queryErr);
 				res.status(500).render("erro", { error : queryErr});
 			});		
 			

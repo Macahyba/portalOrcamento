@@ -1,15 +1,14 @@
 module.exports = function(app){
 	
 	app.get('/orcDetalhe/:orcId', function(req, res){
-
 		
-		let orcamentosModel = app.app.models.orcamentosModel;
+		let orcamentosDAO = app.app.models.orcamentosDAO;
 
 		app.config.dbConnection()
 		
 		.then(function(connection){
 
-			orcamentosModel.getOrcamentoDetalhado(connection,req.params.orcId)
+			orcamentosDAO.getOrcamentoDetalhado(connection,req.params.orcId)
 
 			.then(function(query) {
 

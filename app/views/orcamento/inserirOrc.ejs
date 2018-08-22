@@ -15,12 +15,18 @@
 				</tr>
 
 				<tr>
-					<td><input type="text" name="cliente" id="cliente"></td>
-					<td><input type="text" name="equipamento" id="equipamento"></td>
+					<td><input type="text" name="cliente" list="cliente"><input type="hidden" name="idCliente" value="<%= %>"></td>
+					<datalist id="cliente">
+						<% let unique = [...new Set(detalhe.nomeCliente)]; %>
+						<% for (var i=0; i < unique.length; i++) { %>
+							<option value="<%= unique[i].nomeCliente%>">
+						<% } %>	
+					</datalist>
+					<td><input type="text" name="equipamento" id="equipamento"><input type="hidden" name="idEquip" value="<%= %>"></td>
 					<td><input type="number" name="serialNumber" id="serialNumber"></td>
 					<td><input type="number" name="valor" id="valor"></td>
-					<td><input type="hidden" name="usuario" id="usuario" value="1"></td>
-					<td><input type="hidden" name="id" id="id" value="6"></td>
+					<td><input type="hidden" name="usuario" id="usuario" value="1"><input type="hidden" name="idUsuario" value="<%= %>"></td>
+					<td><input type="hidden" name="id" id="id" value="<%= %>"></td>
 					<td><input type="submit" value="Submit"></td>
 				</tr>
 			

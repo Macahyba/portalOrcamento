@@ -14,18 +14,20 @@
 					<td>Serial Number</td>
 					<td>Valor</td>
 					<td>Responsavel</td>
+					<td>Status</td>
 					<td>Data de criacao</td>
 				</tr>
 	
 				<% for (let i=0; i < detalhe.length; i++) {%>
 	
 				<tr>
-					<td><a href="/orcDetalhe/<%= detalhe[i].id; %>"><%= detalhe[i].id; %></td>
-					<td><%= detalhe[i].nomeCliente; %></td>
+					<td><a href="/orcDetalhe/<%= detalhe[i].id; %>"><%= detalhe[i].id; %></a></td>
+					<td><a href="/clienteDetalhe/<%= detalhe[i].id; %>"><%= detalhe[i].nomeCliente; %></a></td>
 					<td><%= detalhe[i].nomeEquip; %></td>
 					<td><%= detalhe[i].serialNumber; %></td>
 					<td>R$ <%= detalhe[i].valor; %></td>
 					<td><a href="/userDetalhe/<%= detalhe[i].idUsuario; %>"><%= detalhe[i].nomeUsuario; %></a></td>
+					<td><%= detalhe[i].status; %></td>
 					<td><%= detalhe[i].dataCriacao; %></td>
 
 				</tr>

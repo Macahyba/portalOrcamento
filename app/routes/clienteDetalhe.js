@@ -1,6 +1,6 @@
 module.exports = function(app){
 	
-	app.get('/userDetalhe/:userId', function(req, res){
+	app.get('/clienteDetalhe/:cliId', function(req, res){
 		
 		let orcamentosDAO = app.app.models.orcamentosDAO;
 
@@ -8,11 +8,11 @@ module.exports = function(app){
 		
 		.then(function(connection){
 
-			orcamentosDAO.getUser(connection,req.params.userId)
+			orcamentosDAO.getCliente(connection,req.params.cliId)
 
 			.then(function(query) {
 
-				res.render("orcamento/userDetalhe", {detalhe : query});	
+				res.render("orcamento/clienteDetalhe", {detalhe : query});	
 			})
 
 			.catch(function(queryErr){
