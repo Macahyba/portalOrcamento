@@ -15,16 +15,16 @@
 				</tr>
 
 				<tr>
-					<td><input autocomplete="off" type="text" name="cliente" list="cliente"><input type="hidden" name="idCliente" value="<%= %>"></td>
+					<td><input autocomplete="off" type="text" name="cliente" list="cliente"></td>
 					<datalist id="cliente">
-						<% for (var i=0; i < detalhe.nomeCliente.length; i++) { %>
-							<option value="<%= detalhe.nomeCliente[i].nomeCliente %>">
+						<% for (var i=0; i < detalhe.cliente.length; i++) { %>
+							<option value="<%= detalhe.cliente[i].nomeCliente %>">
 						<% } %>	
 					</datalist>
-					<td><input autocomplete="off" type="text" name="equipamento" list="equipamento" id="equipamento"><input type="hidden" name="idEquip" value="<%= %>"></td>
+					<td><input autocomplete="off" type="text" name="equipamento" list="equipamento" id="equipamento"></td>
 					<datalist id="equipamento">
-						<% for (var i=0; i < detalhe.nomeEquip.length; i++) { %>
-							<option value="<%= detalhe.nomeEquip[i].nomeEquip %>">
+						<% for (var i=0; i < detalhe.equip.length; i++) { %>
+							<option value="<%= detalhe.equip[i].nomeEquip %>">
 						<% } %>	
 					</datalist>
 					<td><input autocomplete="off" type="number" name="serialNumber" id="serialNumber"></td>
@@ -36,5 +36,21 @@
 			
 			</table>
 		</form>
+	<script>
+		function eliminateDuplicates(arr) {
+			var i,
+				len = arr.length,
+				out = [],
+				obj = {};
+
+			for (i = 0; i < len; i++) {
+				obj[arr[i]] = 0;
+			}
+			for (i in obj) {
+				out.push(i);
+			}
+			return out;
+		}
+	</script>
 	</body>
 </html>

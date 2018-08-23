@@ -51,8 +51,9 @@ CREATE TABLE `equipamentos` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `nomeEquip` varchar(255) NOT NULL,
   `serialNumber` varchar(16) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_index` (`nomeEquip`,`serialNumber`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,4 +136,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-22  1:03:13
+-- Dump completed on 2018-08-22 18:40:33

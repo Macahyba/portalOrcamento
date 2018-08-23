@@ -10,17 +10,17 @@ module.exports = function(app){
 
 			orcamentosDAO.getOrcamentoDetalhado(connection,req.params.orcId)
 
-			.then(function(query) {
+		.then(function(query) {
 
-				res.render("orcamento/orcDetalhe", {detalhe : query});	
-			})
+			res.render("orcamento/orcDetalhe", {detalhe : query});	
+		})
 
-			.catch(function(queryErr){
-				
-				res.status(500).render("erro", { error : queryErr});
-			});		
+		.catch(function(queryErr){
 			
-			connection.end();	
+			res.status(500).render("erro", { error : queryErr});
+		});		
+		
+		connection.end();	
 				
 		})
 

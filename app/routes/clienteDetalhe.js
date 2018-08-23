@@ -10,17 +10,17 @@ module.exports = function(app){
 
 			orcamentosDAO.getCliente(connection,req.params.cliId)
 
-			.then(function(query) {
-				console.log(query);
-				res.render("orcamento/clienteDetalhe", {detalhe : query});	
-			})
+		.then(function(query) {
+			//console.log(query);
+			res.render("orcamento/clienteDetalhe", {detalhe : query});	
+		})
 
-			.catch(function(queryErr){
-				
-				res.status(500).render("erro", { error : queryErr});
-			});		
+		.catch(function(queryErr){
 			
-			connection.end();	
+			res.status(500).render("erro", { error : queryErr});
+		});		
+		
+		connection.end();	
 				
 		})
 
