@@ -2,9 +2,10 @@ module.exports = function(){
 
     let Promise = require("bluebird");
     let date = require('date-and-time');
+    
     // dateStr USADO PARA GERAR ID COM BASE NA DATA
-    let dateStr = date.format(new Date(), 'YYYYMMDD');
-
+    // let idOrc = .toLocaleString('en', {minimumIntegerDigits:4,useGrouping:false}) +
+    // date.format(new Date(), 'YYYYMMDD');
     // GERAR NUMERO PADDADO EM ZEROS PRO ID
     //.toLocaleString('en', {minimumIntegerDigits:4,useGrouping:false})
 
@@ -31,6 +32,12 @@ module.exports = function(){
 
         return connection.query(sQuery + "WHERE clientes.id=" + id + " ORDER BY id");
 
+    }
+
+    this.getUser = function(connection, id){
+
+        return connection.query(sQuery + "WHERE users.id=" + id + " ORDER BY id");
+        
     }
 
     this.insereOrcamento = function(connection, vBody){
@@ -61,6 +68,7 @@ module.exports = function(){
                 console.log("gera cliente")
             } else if (!answ.equipamento.length) {
                 //console.log(answ.equipamento[0].id);
+                console.log(typeof answ.cliente[0].id);
                 console.log("gera equip")
             }
             //console.log(answ.cliente[0].id +"----"+ answ.equipamento[0].id)
@@ -85,12 +93,6 @@ module.exports = function(){
     }
 
     this.insereCliente = function(connection){
-        
-    }
-
-    this.getUser = function(connection, id){
-
-        return connection.query(sQuery + "WHERE users.id=" + id + " ORDER BY id");
         
     }
 
