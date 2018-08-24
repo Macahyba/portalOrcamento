@@ -50,16 +50,16 @@ module.exports = function(app){
 			conn = connection;
 			return orcamentosDAO.insereOrcamento(connection, req.body)
 		})
-			//implementar retorno dessa funcao - deve retornar uma promise
-		.then(function(query){
 
+		.then(function(query){
+			
 			res.send(query);
 		})
 
-		.catch(function(queryErr){
+		/*.catch(function(queryErr){
 			
 			res.status(500).render("erro", { error : queryErr});
-		})		
+		})*/		
 		
 		.finally(function(){
 

@@ -9,27 +9,29 @@
 			<table>
 				<tr>
 					<td>Cliente</td>
+					<td>CNPJ</td>
 					<td>Equipamento</td>
 					<td>Serial Number</td>
 					<td>Valor</td>
 				</tr>
 
 				<tr>
-					<td><input autocomplete="off" type="text" name="cliente" list="cliente"></td>
-					<datalist id="cliente">
+					<td><input autocomplete="off" type="text" name="nomeCliente" list="nomeCliente"></td>
+					<datalist id="nomeCliente">
 						<% for (var i=0; i < detalhe.cliente.length; i++) { %>
 							<option value="<%= detalhe.cliente[i].nomeCliente %>">
 						<% } %>	
 					</datalist>
-					<td><input autocomplete="off" type="text" name="equipamento" list="equipamento" id="equipamento"></td>
-					<datalist id="equipamento">
+					<td><input autocomplete="off" type="text" name="cnpj" id="cnpj"></td>
+					<td><input autocomplete="off" type="text" name="nomeEquip" list="nomeEquip" id="nomeEquip"></td>
+					<datalist id="nomeEquip">
 						<% for (var i=0; i < detalhe.equip.length; i++) { %>
 							<option value="<%= detalhe.equip[i].nomeEquip %>">
 						<% } %>	
 					</datalist>
 					<td><input autocomplete="off" type="number" name="serialNumber" id="serialNumber"></td>
 					<td><input autocomplete="off" type="number" name="valor" id="valor"></td>
-					<td><input type="hidden" name="usuario" id="usuario" value="1"><input type="hidden" name="idUsuario" value="<%= %>"></td>
+					<td><input type="hidden" name="usuario" id="usuario" value="1"><input type="hidden" name="idUsuario" value="1"></td>
 					<td><input type="hidden" name="id" id="id" value="<%= %>"></td>
 					<td><input type="submit" value="Submit"></td>
 				</tr>

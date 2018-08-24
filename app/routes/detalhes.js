@@ -15,13 +15,13 @@ module.exports = function(app){
 			
 			switch (path){
 				case "clienteDetalhe":
-					return orcamentosDAO.getCliente(connection,id)
+					return orcamentosDAO.getClienteList(connection,id)
 					break;
 				case "orcDetalhe":
 					return orcamentosDAO.getOrcamentoDetalhado(connection,id)
 					break;
 				case "userDetalhe":
-					return orcamentosDAO.getUser(connection,id)
+					return orcamentosDAO.getUserList(connection,id)
 					break;
 				default :
 					throw "Routing error!"
