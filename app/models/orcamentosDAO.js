@@ -73,7 +73,7 @@ module.exports = function(){
                             })
 
         .then((answ)=>{
-            console.log("0"+JSON.stringify(answ,null,4))
+            //console.log("0"+JSON.stringify(answ,null,4))
             if (!answ.cliente.length && !answ.equipamento.length){
                 
                 console.log("gera cliente e equip")
@@ -84,7 +84,7 @@ module.exports = function(){
                 return Promise.props({ 'idCliente' : qInsCliente, 'idEquip' :  qInsEquip})
 
                 .then((res)=>{
-                    console.log("1 "+JSON.stringify(res,null,4))
+                    //console.log("1 "+JSON.stringify(res,null,4))
                     return res;
                 })
                 
@@ -121,7 +121,7 @@ module.exports = function(){
                                 }
                             })
                 
-                    console.log("1 "+JSON.stringify(d,null,4))
+                    //console.log("1 "+JSON.stringify(d,null,4))
                     return d;
                 //return Promise.props({ 'idCliente' : qInsCliente, 'idEquip' :  qInsEquip})
                 })
@@ -131,8 +131,7 @@ module.exports = function(){
         })
 
         .then((res)=>{
-            console.log("2 "+JSON.stringify(res,null,4));
-            //console.log(vBody.idUsuario, res.idEquip.insertId, res.idCliente.insertId, vBody.valor);
+            //console.log("2 "+JSON.stringify(res,null,4));
             return this.gravaOrcamento(connection, vBody.idUsuario, res.idEquip.insertId, res.idCliente.insertId, vBody.valor);
 
         })

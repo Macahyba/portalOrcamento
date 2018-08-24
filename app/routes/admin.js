@@ -38,7 +38,7 @@ module.exports = function(app){
 	});
 
 	app.post('/inserirOrc',function(req,res){
-
+		//console.log(req.body)
 		let orcamentosDAO = app.app.models.orcamentosDAO;
 		let conn;
 
@@ -53,7 +53,8 @@ module.exports = function(app){
 
 		.then(function(query){
 			
-			res.send(query);
+			//res.send(query);
+			res.redirect("/listaOrcamentos");
 		})
 
 		/*.catch(function(queryErr){
