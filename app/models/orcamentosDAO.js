@@ -52,12 +52,10 @@ module.exports = function(){
         return connection.query("SELECT * FROM equipamentos WHERE nomeEquip='" + nomeEquip + "' AND serialNumber='" + serialNumber + "' ORDER BY id LIMIT 1");
    
     }
-///////////// VERIFICAR ESSA ROTINA
+
     this.insereOrcamento = function(connection, vBody){
 
-        //let cliente = connection.query("SELECT id FROM clientes WHERE nomeCliente='" + vBody.cliente + "'");
         let cliente = this.getCliente(connection, vBody.nomeCliente);
-        //let equipamento = connection.query("SELECT id FROM equipamentos WHERE nomeEquip='" + vBody.equipamento + "' AND serialNumber='" + vBody.serialNumber + "'");
         let equipamento = this.getEquip(connection, vBody.nomeEquip,vBody.serialNumber);
 
         return Promise.props({  'cliente' : cliente, 
@@ -73,10 +71,10 @@ module.exports = function(){
                             })
 
         .then((answ)=>{
-            //console.log("0"+JSON.stringify(answ,null,4))
+            //console.log("answ:"+JSON.stringify(answ,null,4))
             if (!answ.cliente.length && !answ.equipamento.length){
                 
-                console.log("gera cliente e equip")
+                //console.log("gera cliente e equip")
                 //console.log(connection,answ.newEquip.nomeEquip,answ.newEquip.serialNumber);
                 let qInsEquip =  this.insereEquip(connection, answ.newEquip.nomeEquip, answ.newEquip.serialNumber); 
                 let qInsCliente = this.insereCliente(connection, answ.newCliente.nomeCliente, answ.newCliente.newCNPJ);
@@ -84,54 +82,53 @@ module.exports = function(){
                 return Promise.props({ 'idCliente' : qInsCliente, 'idEquip' :  qInsEquip})
 
                 .then((res)=>{
-                    //console.log("1 "+JSON.stringify(res,null,4))
+                    //console.log("ambos "+JSON.stringify(res,null,4))
                     return res;
                 })
                 
 
 
             } else if (!answ.cliente.length){
-                
-                console.log("gera cliente")
+                //console.log("gera cliente: "+JSON.stringify(answ.equipamento[0]['id'],null,4))
                 //let qInsCliente = 
                 return this.insereCliente(connection, answ.newCliente.nomeCliente, answ.newCliente.newCNPJ)
 
                 .then((res)=>{
-
-                    let c =  ({ 'idCliente' : res, 
+                    //console.log("res de cliente: "+JSON.stringify(res,null,4));                    
+                    return Promise.props({ 'idCliente' : res, 
                                 'idEquip' :  {
-                                    'insertId': equipamento.id
+                                    'insertId': answ.equipamento[0]['id']
                                 }
                             })
-                
-                    console.log("1 "+JSON.stringify(c,null,4))
-                    return c;
-                //return Promise.props({ 'idCliente' : qInsCliente, 'idEquip' :  qInsEquip})
                 })
             } else if (!answ.equipamento.length) {
                 
-                console.log("gera equip")
+                //console.log("gera equip: "+JSON.stringify(answ.cliente[0]['id'],null,4))
                 //let qInsEquip =  
                 return this.insereEquip(connection, answ.newEquip.nomeEquip, answ.newEquip.serialNumber)
 
                 .then((res)=>{
-                    let d =  ({ 'idEquip' : res, 
-                                'idCliente' :  {
-                                    'insertId': cliente.id
-                                }
+                    //console.log("res de equip: "+JSON.stringify(res,null,4));
+                    return ({   'idCliente' :  {
+                                    'insertId': answ.cliente[0]['id']},
+                                'idEquip' : res
                             })
-                
-                    //console.log("1 "+JSON.stringify(d,null,4))
-                    return d;
-                //return Promise.props({ 'idCliente' : qInsCliente, 'idEquip' :  qInsEquip})
                 })
+
+            } else {
+
+                return Promise.props({  'idCliente': { 
+                                            'insertId' : answ.cliente[0]['id']},
+                                        'idEquip': {
+                                            'insertId' : answ.equipamento[0]['id']}
+                                    })
             }
 
            
         })
 
         .then((res)=>{
-            //console.log("2 "+JSON.stringify(res,null,4));
+            //throw "end of test"
             return this.gravaOrcamento(connection, vBody.idUsuario, res.idEquip.insertId, res.idCliente.insertId, vBody.valor);
 
         })
@@ -140,13 +137,13 @@ module.exports = function(){
 
     this.getIncr = function(connection,id){
         
-        return connection.query("SELECT RIGHT(MAX(id),3) as id FROM orcamentos WHERE idCliente=" + id)
+        return connection.query("SELECT RIGHT(MAX(id)+1,3) as id FROM orcamentos WHERE idCliente=" + id)
 
     }
 
     this.getSumm = function(connection){
 
-        let clientes = connection.query("SELECT distinct nomeCliente FROM clientes ORDER BY nomeCliente");
+        let clientes = connection.query("SELECT distinct nomeCliente,cnpj FROM clientes ORDER BY nomeCliente");
         let equipamentos = connection.query("SELECT distinct nomeEquip,serialNumber FROM equipamentos ORDER BY nomeEquip");
 
         return Promise.props({'cliente': clientes,'equip': equipamentos});
@@ -173,7 +170,7 @@ module.exports = function(){
 
             return date.format(new Date(), 'YYYYMM')+
                         idCliente.toLocaleString('en', {minimumIntegerDigits:3,useGrouping:false}) +
-                        ((res.id||0)+1).toLocaleString('en', {minimumIntegerDigits:3,useGrouping:false});
+                        ((parseInt(res[0].id)||0)).toLocaleString('en', {minimumIntegerDigits:3,useGrouping:false})
 
             
         })

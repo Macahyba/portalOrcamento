@@ -48,6 +48,11 @@ module.exports = function(app){
 		.then(function(connection){
 
 			conn = connection;
+
+			// Fields validation on server side
+			Object.keys(req.body).forEach(function(key) {
+				if(!req.body[key]){ throw key + " is missing"; }
+			})
 			return orcamentosDAO.insereOrcamento(connection, req.body)
 		})
 
@@ -60,7 +65,7 @@ module.exports = function(app){
 		/*.catch(function(queryErr){
 			
 			res.status(500).render("erro", { error : queryErr});
-		})*/		
+		})		*/
 		
 		.finally(function(){
 

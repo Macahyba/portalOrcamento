@@ -29,7 +29,7 @@ CREATE TABLE `clientes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `nomeCliente` (`nomeCliente`),
   UNIQUE KEY `cnpj` (`cnpj`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (1,'TV Globo RJ','cnpjglobo'),(2,'Globosat','cnpjglobosat'),(68,'q','q'),(69,'a','a'),(70,'s','s'),(71,'1','1'),(73,'2','2'),(74,'4','4'),(75,'5','5'),(76,'6','6'),(77,'7','7'),(78,'8','8'),(79,'9','9'),(80,'z','z'),(82,'b','b'),(83,'g','g');
+INSERT INTO `clientes` VALUES (22,'TVG','TVG'),(23,'TVR','TVR');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +55,7 @@ CREATE TABLE `equipamentos` (
   `serialNumber` varchar(16) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_index` (`nomeEquip`,`serialNumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `equipamentos` (
 
 LOCK TABLES `equipamentos` WRITE;
 /*!40000 ALTER TABLE `equipamentos` DISABLE KEYS */;
-INSERT INTO `equipamentos` VALUES (73,'1','1'),(90,'123','123'),(75,'2','2'),(76,'4','4'),(77,'5','5'),(78,'6','6'),(79,'7','7'),(80,'8','8'),(81,'9','9'),(82,'a','1'),(71,'a','2'),(85,'b','223'),(91,'bgt','0'),(88,'g','667'),(86,'mmm','009'),(1,'ODS-L30M','123456'),(2,'PMW-200','456789'),(3,'PMW-200','987654'),(70,'q','1'),(72,'s','4'),(89,'tt','564'),(83,'z','222');
+INSERT INTO `equipamentos` VALUES (39,'AA','5'),(37,'ODS','1'),(38,'ODS','2');
 /*!40000 ALTER TABLE `equipamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +100,7 @@ CREATE TABLE `orcamentos` (
 
 LOCK TABLES `orcamentos` WRITE;
 /*!40000 ALTER TABLE `orcamentos` DISABLE KEYS */;
-INSERT INTO `orcamentos` VALUES (1,1,1,1,1000,'novo','2018-08-20 22:24:53'),(2,2,2,2,2000,'novo','2018-08-20 22:27:00'),(3,1,2,1,3000,'encerrado','2018-08-20 22:51:06'),(4,1,1,1,3000,'novo','2018-08-21 13:26:13'),(5,1,1,1,7000,'novo','2018-08-21 17:33:53'),(6,1,2,2,10000,'novo','2018-08-21 17:35:33'),(201808001125,1,1,1,1000,'novo','2018-08-23 19:20:13'),(201808071001,1,73,71,1,'novo','2018-08-24 00:53:37'),(201808073001,1,75,73,2,'novo','2018-08-24 00:53:44'),(201808074001,1,76,74,4,'novo','2018-08-24 00:55:52'),(201808075001,1,77,75,5,'novo','2018-08-24 00:56:16'),(201808076001,1,78,76,6,'novo','2018-08-24 00:59:56'),(201808082001,1,85,82,1,'novo','2018-08-24 01:35:36'),(201808083001,1,88,83,900,'novo','2018-08-24 01:41:10');
+INSERT INTO `orcamentos` VALUES (201808022000,1,37,22,10,'novo','2018-08-25 18:56:04'),(201808022001,1,38,22,20,'novo','2018-08-25 18:56:17'),(201808023000,1,39,23,90,'novo','2018-08-25 18:56:31');
 /*!40000 ALTER TABLE `orcamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-24  1:55:03
+-- Dump completed on 2018-08-25 19:15:46
