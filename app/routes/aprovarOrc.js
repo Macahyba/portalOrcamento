@@ -1,5 +1,5 @@
 module.exports = function(app){
-	
+	// TO DEVELOP
 	app.get('/aprovarOrc', function(req, res){
 
 		var pConnection = app.config.dbConnection();

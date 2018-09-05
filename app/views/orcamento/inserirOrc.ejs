@@ -3,6 +3,24 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Inserir orcamentos!</title>
+		<script>
+		
+
+				var data = JSON.parse("<%- summData %>")
+
+				function completaCNPJ(val){
+					
+					try {
+						let filtro = data.cliente.filter((arr)=>
+							arr.nomeCliente == val.toUpperCase())
+						cnpj.value = filtro[0].cnpj;					
+						cnpj.readOnly = true;
+					} catch {
+						cnpj.value = "";
+						cnpj.readOnly = false;
+					}
+				}
+			</script>
 	</head>
 	<body>
 		<form action="/inserirOrc" method="post">
@@ -10,56 +28,42 @@
 				<tr>
 					<td>Cliente</td>
 					<td>CNPJ</td>
-					<td>Equipamento</td>
-					<td>Serial Number</td>
-					<td>Valor</td>
+					<td>Responsável</td>
 				</tr>
 
 				<tr>
 					<td><input autocomplete="off" type="text" name="nomeCliente" list="nomeCliente" onBlur="completaCNPJ(this.value);" 
 						onFocus="cnpj.readOnly = false;"></td>
 					<datalist id="nomeCliente">
-						<% console.log(JSON.stringify(detalhe,null,4)); %>
-						<% for (var i=0; i < detalhe.cliente.length; i++) { %>
-							<option value="<%= detalhe.cliente[i].nomeCliente %>">
+						<% //console.log(JSON.stringify(montaData,null,4)); %>
+						<% for (var i=0; i < montaData.cliente.length; i++) { %>
+							<option value="<%= montaData.cliente[i].nomeCliente %>">
 						<% } %>	
 					</datalist>
 					<td><input autocomplete="off" type="text" name="cnpj" id="cnpj"></td>
+					<td><input autocomplete="off" type="text" name="responsavel" id="responsavel"></td>
+				</tr>
+				<tr>
+					<td>Equipamento</td>
+					<td>Serial Number</td>
+					<td>Valor</td>
+				</tr>
+				<tr>
 					<td><input autocomplete="off" type="text" name="nomeEquip" list="nomeEquip" id="nomeEquip"></td>
 					<datalist id="nomeEquip">
-						<% for (var i=0; i < detalhe.equip.length; i++) { %>
-							<option value="<%= detalhe.equip[i].nomeEquip %>">
+						<% for (var i=0; i < montaData.equip.length; i++) { %>
+							<option value="<%= montaData.equip[i].nomeEquip %>">
 						<% } %>	
 					</datalist>
-					<td><input autocomplete="off" type="number" name="serialNumber" id="serialNumber"></td>
+					<td><input autocomplete="off" type="text" name="serialNumber" id="serialNumber" list="serialNumber"></td>
 					<td><input autocomplete="off" type="number" name="valor" id="valor"></td>
+				</tr>
+				<tr>
+					<td><button onclick="this.disabled=false; this.form.submit();">Submit</button></td>								
 					<td><input type="hidden" name="idUsuario" value="1"></td>
-					<tr>
-						<td><button onclick="this.disabled=true; this.form.submit();">Submit</button></td>					
-					</tr>
 				</tr>
 			
 			</table>
 		</form>
-	<script>
-		function completaCNPJ(val){
-			cnpj.value = val;
-			cnpj.readOnly = true;
-		}
-		function eliminateDuplicates(arr) {
-			var i,
-				len = arr.length,
-				out = [],
-				obj = {};
-
-			for (i = 0; i < len; i++) {
-				obj[arr[i]] = 0;
-			}
-			for (i in obj) {
-				out.push(i);
-			}
-			return out;
-		}
-	</script>
 	</body>
 </html>

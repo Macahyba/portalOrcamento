@@ -1,33 +1,15 @@
-module.exports = function(app){
+module.exports = function(application){
 	
-	app.get('/listaOrcamentos', function(req, res){
+	application.get('/listaOrcamentos', function(req, res){
 		
-		let orcamentosDAO = app.app.models.orcamentosDAO;
-		let conn;
+		application.app.controllers.orcamentos.listaOrcamentos(application, req, res);
 
-		app.config.dbConnection()
-		
-		.then(function(connection){
-			
-			conn = connection;
-			return orcamentosDAO.getOrcamentos(connection)
-		})
+	});
 
-		.then(function(query) {
+	application.get(['/clienteDetalhe/:cliId','/orcDetalhe/:orcId','/userDetalhe/:userId'], function(req, res){
 
-			res.render("orcamento/listaOrcamentos", {detalhe : query});	
-		})
-
-		.catch(function(err){
-			
-			//console.log(err);
-			res.status(500).render("erro", { error : err});
-		})
-
-		.finally(function(){
-			
-			if (conn) { conn.end()} ;
-		})
+		application.app.controllers.orcamentos.detalhes(application, req, res);
 
 	});
 };
+

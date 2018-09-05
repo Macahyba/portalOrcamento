@@ -1,77 +1,14 @@
-module.exports = function(app){
+module.exports = function(application){
 
-	app.get('/inserirOrc',function(req,res){
+	application.get('/inserirOrc',function(req,res){
 		
-		let orcamentosDAO = app.app.models.orcamentosDAO;
-		let conn;
-
-		app.config.dbConnection()
-
-		.then(function(connection){
-
-			conn = connection;
-			return orcamentosDAO.getSumm(connection)
-		})
-
-		.then(function(query){
-			//console.log(query.nomeEquip[0].nomeEquip)
-			res.render("orcamento/inserirOrc", {detalhe : query});
-		})
-
-			/*.catch(function(queryErr){
-				
-				res.status(500).render("erro", { error : queryErr});
-			})*/		
-
-			
-		
-
-		.catch(function(queryErr){
-				
-			res.status(500).render("erro", { error : queryErr});
-		})
-		
-		.finally(function(){
-			if (conn) { conn.end()}
-		})
+		application.app.controllers.admin.inserirOrcGET(application, req, res);
 		
 	});
 
-	app.post('/inserirOrc',function(req,res){
-		//console.log(req.body)
-		let orcamentosDAO = app.app.models.orcamentosDAO;
-		let conn;
+	application.post('/inserirOrc',function(req,res){
 
-		//console.log(req.body);
-		app.config.dbConnection()
-
-		.then(function(connection){
-
-			conn = connection;
-
-			// Fields validation on server side
-			Object.keys(req.body).forEach(function(key) {
-				if(!req.body[key]){ throw key + " is missing"; }
-			})
-			return orcamentosDAO.insereOrcamento(connection, req.body)
-		})
-
-		.then(function(query){
-			
-			//res.send(query);
-			res.redirect("/listaOrcamentos");
-		})
-
-		/*.catch(function(queryErr){
-			
-			res.status(500).render("erro", { error : queryErr});
-		})		*/
-		
-		.finally(function(){
-
-			if (conn) { conn.end() }
-		})
-		
+		application.app.controllers.admin.inserirOrcPOST(application, req, res);
 
 	});
 }
