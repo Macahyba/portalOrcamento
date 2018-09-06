@@ -16,10 +16,10 @@ module.exports.inserirOrcGET = function(app, req, res){
         res.render("orcamento/inserirOrc", {montaData : query, summData :JSON.stringify(query).replace(/\\/g, '\\\\').replace(/"/g, '\\\"')});
     })
 
-    .catch(function(queryErr){
+    /*.catch(function(queryErr){
             
         res.status(500).render("erro", { error : queryErr});
-    })
+    })*/
     
     .finally(function(){
         if (conn) { conn.end()}

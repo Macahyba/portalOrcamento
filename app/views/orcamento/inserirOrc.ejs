@@ -23,7 +23,32 @@
 					} catch {
 						cnpj.value = "";
 						cnpj.readOnly = false;
+						responsavel.value = "";
+						responsavel.readOnly = false;
+						departamento.value = "";
+						departamento.readOnly = false;
 					}
+				}
+
+				function getCNPJ(val){
+
+					fetch("/formFill/cnpj/"+val)
+
+					.then(function(res){
+
+						return res.json()
+					})
+
+					.then(function(res){
+						cnpj.value = res[0].cnpj;
+						cnpj.readOnly = true;
+					})
+
+					.catch(function() {
+						cnpj.value = "";
+						cnpj.readOnly = false;
+					})
+
 				}
 			</script>
 	</head>
@@ -38,7 +63,7 @@
 				</tr>
 
 				<tr>
-					<td><input autocomplete="off" type="text" name="nomeCliente" list="nomeCliente" onBlur="completaCNPJ(this.value);" 
+					<td><input autocomplete="off" type="text" name="nomeCliente" list="nomeCliente" onBlur="getCNPJ(this.value);" 
 						onFocus="cnpj.readOnly = false;"></td>
 					<datalist id="nomeCliente">
 						<% //console.log(JSON.stringify(montaData,null,4)); %>

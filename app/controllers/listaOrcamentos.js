@@ -1,4 +1,4 @@
-module.exports.listaOrcamentos = function(app, req, res){
+module.exports.lista = function(app, req, res){
 
     let conn;
 
@@ -11,7 +11,7 @@ module.exports.listaOrcamentos = function(app, req, res){
         return OrcamentosDAO.getOrcamentos()
     })
 
-    .then(function(query) {
+    .then(function(query){
 
         res.render("orcamento/listaOrcamentos", {detalhe : query});	
     })
@@ -32,8 +32,8 @@ module.exports.listaOrcamentos = function(app, req, res){
 module.exports.detalhes = function(app, req, res){
 
     let conn;
-    let path = req.url.split("/")[1];
-    let id = req.url.split("/")[2];
+    let path = req.url.split("/")[2];
+    let id = req.url.split("/")[3];
 
     app.config.dbConnection()
     

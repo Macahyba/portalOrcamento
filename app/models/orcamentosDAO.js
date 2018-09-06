@@ -52,7 +52,7 @@ OrcamentosDAO.prototype.getEquip = function(nomeEquip,serialNumber){
 
 OrcamentosDAO.prototype.insereOrcamento = function(vBody){
 
-    let cliente = this.getCliente(vBody.nomeCliente, vBody.cnpj, vBody.responsavel);
+    let cliente = this.getCliente(vBody.nomeCliente, vBody.cnpj, vBody.responsavel, vBody.departamento);
     let equipamento = this.getEquip(vBody.nomeEquip,vBody.serialNumber);
 
     return this._Promise.props({  'cliente' : cliente, 
@@ -60,7 +60,8 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody){
                             'newCliente' : {
                                 'nomeCliente' : vBody.nomeCliente,
                                 'newCNPJ' : vBody.cnpj,
-                                'newResp' : vBody.responsavel
+                                'newResp' : vBody.responsavel,
+                                'newDepto' : vBody.departamento
                             }, 
                             'newEquip': {
                                 'nomeEquip' : vBody.nomeEquip,
@@ -75,7 +76,8 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody){
             //console.log("gera cliente e equip")
             //console.log(connection,answ.newEquip.nomeEquip,answ.newEquip.serialNumber);
             let qInsEquip =  this.insereEquip(answ.newEquip.nomeEquip, answ.newEquip.serialNumber); 
-            let qInsCliente = this.insereCliente(answ.newCliente.nomeCliente, answ.newCliente.newCNPJ, answ.newCliente.newResp);
+            let qInsCliente =   this.insereCliente(answ.newCliente.nomeCliente, answ.newCliente.newCNPJ, 
+                                answ.newCliente.newResp, answ.newCliente.newDepto);
 
             return this._Promise.props({ 'idCliente' : qInsCliente, 'idEquip' :  qInsEquip})
 
@@ -89,7 +91,8 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody){
         } else if (!answ.cliente.length){
             //console.log("gera cliente: "+JSON.stringify(answ.equipamento[0]['id'],null,4))
             //let qInsCliente = 
-            return this.insereCliente(answ.newCliente.nomeCliente, answ.newCliente.newCNPJ, answ.newCliente.newResp)
+            return this.insereCliente(answ.newCliente.nomeCliente, answ.newCliente.newCNPJ, 
+                                        answ.newCliente.newResp, answ.newCliente.newDepto)
 
             .then((res)=>{
                 //console.log("res de cliente: "+JSON.stringify(res,null,4));                    
@@ -162,10 +165,11 @@ OrcamentosDAO.prototype.insereEquip = function(nomeEquip, serialNumber){
 
 }
 
-OrcamentosDAO.prototype.insereCliente = function(nomeCliente, cnpj, responsavel){
+OrcamentosDAO.prototype.insereCliente = function(nomeCliente, cnpj, responsavel, departamento){
 
-    return this._connection.query(    "INSERT INTO clientes (nomeCliente, cnpj, responsavel) VALUES(UPPER('" + nomeCliente + "'), UPPER('" + cnpj + "')" +
-                                ", UPPER('" + responsavel + "'))");
+    return this._connection.query(  "INSERT INTO clientes (nomeCliente, cnpj, responsavel, departamento) " +
+                                    "VALUES(UPPER('" + nomeCliente + "'), UPPER('" + cnpj + "'), UPPER('" + 
+                                    responsavel + "'), UPPER('" + departamento + "'))");
 
 }
 
@@ -191,7 +195,11 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente,
 
 }
 
+OrcamentosDAO.prototype.getCNPJ = function(nomeCliente){
 
+    return this._connection.query("SELECT DISTINCT cnpj FROM clientes WHERE nomeCliente='" + nomeCliente + "'");
+
+}
 
 module.exports = function(){
 
