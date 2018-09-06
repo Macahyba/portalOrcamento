@@ -26,10 +26,11 @@ CREATE TABLE `clientes` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `nomeCliente` varchar(255) NOT NULL,
   `cnpj` varchar(16) NOT NULL,
+  `responsavel` varchar(255) NOT NULL,
+  `departamento` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `nomeCliente` (`nomeCliente`),
-  UNIQUE KEY `cnpj` (`cnpj`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `nomeCliente` (`nomeCliente`,`cnpj`,`responsavel`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +39,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (22,'TVG','TVG'),(23,'TVR','TVR');
+INSERT INTO `clientes` VALUES (22,'TVG','cnpjtvg','MARIO','Engenharia TVG'),(23,'TVR','cnpjtvr','JOAO','Engenharia TVR'),(25,'EMISSORA','CNPJEMISSORA','MARIA','Engenharia EMISSORA'),(26,'XPTO','NPMJ','JOSE','Engenharia XPTO'),(27,'TVG','CNPJTVG','ANTONIO','Engenharia TVG'),(28,'EMISSORA','CNPJEMISSORA','ANTONIO','Engenharia EMISSORA'),(31,'RECORD RJ','01024.2325/1000','ALTAIR','Engenharia RECORD RJ');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,10 +53,10 @@ DROP TABLE IF EXISTS `equipamentos`;
 CREATE TABLE `equipamentos` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `nomeEquip` varchar(255) NOT NULL,
-  `serialNumber` varchar(16) NOT NULL,
+  `serialNumber` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_index` (`nomeEquip`,`serialNumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +65,7 @@ CREATE TABLE `equipamentos` (
 
 LOCK TABLES `equipamentos` WRITE;
 /*!40000 ALTER TABLE `equipamentos` DISABLE KEYS */;
-INSERT INTO `equipamentos` VALUES (39,'AA','5'),(37,'ODS','1'),(38,'ODS','2');
+INSERT INTO `equipamentos` VALUES (50,'',''),(42,'AA','488484'),(39,'AA','5'),(45,'AAA','355'),(37,'ODS','1'),(40,'ODS','10'),(41,'ODS','1232'),(49,'ODS','124'),(38,'ODS','2'),(51,'ODS-L30','124'),(44,'PDW','1520'),(48,'PDW','5000'),(47,'PDW','520'),(46,'PDW','555'),(43,'PMW','258');
 /*!40000 ALTER TABLE `equipamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +101,7 @@ CREATE TABLE `orcamentos` (
 
 LOCK TABLES `orcamentos` WRITE;
 /*!40000 ALTER TABLE `orcamentos` DISABLE KEYS */;
-INSERT INTO `orcamentos` VALUES (201808022000,1,37,22,10,'novo','2018-08-25 18:56:04'),(201808022001,1,38,22,20,'novo','2018-08-25 18:56:17'),(201808023000,1,39,23,90,'novo','2018-08-25 18:56:31');
+INSERT INTO `orcamentos` VALUES (201808022000,1,37,22,10,'novo','2018-08-25 18:56:04'),(201808022001,1,38,22,20,'novo','2018-08-25 18:56:17'),(201808023000,1,39,23,90,'novo','2018-08-25 18:56:31'),(201809025000,1,41,25,666,'novo','2018-09-01 19:05:03'),(201809025001,1,42,25,8000,'novo','2018-09-01 19:05:58'),(201809025002,1,43,25,500,'novo','2018-09-01 19:15:00'),(201809025003,1,44,25,330,'novo','2018-09-01 21:32:41'),(201809026000,1,45,26,222,'novo','2018-09-01 21:33:06'),(201809026001,1,46,26,5454,'novo','2018-09-01 21:34:20'),(201809027000,1,47,27,1000,'novo','2018-09-01 22:16:19'),(201809028000,1,48,28,1000,'novo','2018-09-01 23:15:37'),(201809028001,1,49,28,3333,'novo','2018-09-01 23:16:01'),(201809031000,1,51,31,500,'novo','2018-09-02 02:15:52');
 /*!40000 ALTER TABLE `orcamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-25 19:15:46
+-- Dump completed on 2018-09-05 23:52:18

@@ -15,6 +15,11 @@
 							arr.nomeCliente == val.toUpperCase())
 						cnpj.value = filtro[0].cnpj;					
 						cnpj.readOnly = true;
+						responsavel.value = filtro[0].responsavel;
+						responsavel.readOnly = true;
+						departamento.value = filtro[0].departamento;
+						departamento.readOnly = true;
+						
 					} catch {
 						cnpj.value = "";
 						cnpj.readOnly = false;
@@ -29,6 +34,7 @@
 					<td>Cliente</td>
 					<td>CNPJ</td>
 					<td>Responsável</td>
+					<td>Departamento</td>
 				</tr>
 
 				<tr>
@@ -42,6 +48,7 @@
 					</datalist>
 					<td><input autocomplete="off" type="text" name="cnpj" id="cnpj"></td>
 					<td><input autocomplete="off" type="text" name="responsavel" id="responsavel"></td>
+					<td><input autocomplete="off" type="text" name="departamento" id="departamento"></td>
 				</tr>
 				<tr>
 					<td>Equipamento</td>

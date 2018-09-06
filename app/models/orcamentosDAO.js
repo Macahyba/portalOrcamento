@@ -142,7 +142,7 @@ OrcamentosDAO.prototype.getIncr = function(id){
 OrcamentosDAO.prototype.getSumm = function(){
 
     //SELECT distinct nomeCliente,cnpj,responsavel,(select count(*) from orcamentos where idCliente=p.id) as total FROM clientes p ORDER BY nomeCliente ASC, total DESC;
-    let clientes = this._connection.query("SELECT distinct nomeCliente,cnpj FROM clientes ORDER BY nomeCliente");
+    let clientes = this._connection.query("SELECT distinct nomeCliente, cnpj, responsavel, departamento FROM clientes ORDER BY nomeCliente");
     let equipamentos = this._connection.query("SELECT distinct nomeEquip FROM equipamentos ORDER BY nomeEquip");
     
     /* 
