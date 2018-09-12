@@ -26,7 +26,8 @@ OrcamentosDAO.prototype.getOrcamentoDetalhado = function(id) {
 
 OrcamentosDAO.prototype.getClienteList = function(id){
 
-    return this._connection.query(this._sQuery + "WHERE clientes.id=" + id + " ORDER BY id");
+    return this._connection.query(  this._sQuery + "WHERE clientes.nomeCliente=(SELECT nomeCliente FROM clientes " +
+                                    "WHERE id=" + id + ") ORDER BY dataCriacao");
 
 }
 
@@ -38,15 +39,15 @@ OrcamentosDAO.prototype.getUserList = function(id){
 
 OrcamentosDAO.prototype.getCliente = function(nomeCliente, cnpj, responsavel){
 
-    return this._connection.query(    "SELECT * FROM clientes WHERE nomeCliente='" + nomeCliente + "' AND cnpj='" + cnpj + "' " +
-                                "AND responsavel='" + responsavel + "' ORDER BY id LIMIT 1");
+    return this._connection.query(  "SELECT * FROM clientes WHERE nomeCliente='" + nomeCliente + "' AND cnpj='" + cnpj + "' " +
+                                    "AND responsavel='" + responsavel + "' ORDER BY id LIMIT 1");
     
 }    
 
 OrcamentosDAO.prototype.getEquip = function(nomeEquip,serialNumber){
 
-    return this._connection.query(    "SELECT * FROM equipamentos WHERE nomeEquip='" + nomeEquip + "' " +
-                                "AND serialNumber='" + serialNumber + "' ORDER BY id LIMIT 1");
+    return this._connection.query(  "SELECT * FROM equipamentos WHERE nomeEquip='" + nomeEquip + "' " +
+                                    "AND serialNumber='" + serialNumber + "' ORDER BY id LIMIT 1");
 
 }
 
@@ -55,19 +56,20 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody){
     let cliente = this.getCliente(vBody.nomeCliente, vBody.cnpj, vBody.responsavel, vBody.departamento);
     let equipamento = this.getEquip(vBody.nomeEquip,vBody.serialNumber);
 
-    return this._Promise.props({  'cliente' : cliente, 
-                            'equipamento' : equipamento, 
-                            'newCliente' : {
-                                'nomeCliente' : vBody.nomeCliente,
-                                'newCNPJ' : vBody.cnpj,
-                                'newResp' : vBody.responsavel,
-                                'newDepto' : vBody.departamento
-                            }, 
-                            'newEquip': {
-                                'nomeEquip' : vBody.nomeEquip,
-                                'serialNumber' : vBody.serialNumber
-                            }
-                        })
+    return this._Promise.props({  
+                                'cliente' : cliente, 
+                                'equipamento' : equipamento, 
+                                'newCliente' : {
+                                    'nomeCliente' : vBody.nomeCliente,
+                                    'newCNPJ' : vBody.cnpj,
+                                    'newResp' : vBody.responsavel,
+                                    'newDepto' : vBody.departamento
+                                }, 
+                                'newEquip': {
+                                    'nomeEquip' : vBody.nomeEquip,
+                                    'serialNumber' : vBody.serialNumber
+                                }
+                            })
 
     .then((answ)=>{
         //console.log("answ:"+JSON.stringify(answ,null,4))
@@ -145,15 +147,8 @@ OrcamentosDAO.prototype.getIncr = function(id){
 OrcamentosDAO.prototype.getSumm = function(){
 
     //SELECT distinct nomeCliente,cnpj,responsavel,(select count(*) from orcamentos where idCliente=p.id) as total FROM clientes p ORDER BY nomeCliente ASC, total DESC;
-    let clientes = this._connection.query("SELECT distinct nomeCliente, cnpj, responsavel, departamento FROM clientes ORDER BY nomeCliente");
+    let clientes = this._connection.query("SELECT distinct nomeCliente FROM clientes ORDER BY nomeCliente");
     let equipamentos = this._connection.query("SELECT distinct nomeEquip FROM equipamentos ORDER BY nomeEquip");
-    
-    /* 
-    FUTURE IMPLEMENTATION, RETRIEVE SERIALNUMBER AND SEND TO DATALIST
-        let equipamentos = connection.query("SELECT GROUP_CONCAT(" +
-                                        "JSON_OBJECT('nomeEquip', nomeEquip, 'serialNumber', (SELECT DISTINCT CONCAT('[', GROUP_CONCAT(serialNumber),"+
-                                        "']') FROM equipamentos where nomeEquip=p.nomeEquip))) as json from equipamentos p group by nomeEquip");
-    */
 
     return this._Promise.props({'cliente': clientes,'equip': equipamentos});
 
@@ -197,8 +192,16 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente,
 
 OrcamentosDAO.prototype.getCNPJ = function(nomeCliente){
 
-    return this._connection.query("SELECT DISTINCT cnpj FROM clientes WHERE nomeCliente='" + nomeCliente + "'");
+    //return this._connection.query("SELECT DISTINCT cnpj, responsavel FROM clientes WHERE nomeCliente='" + nomeCliente + "'");
+    return this._connection.query(  "SELECT distinct nomeCliente,cnpj,responsavel,departamento,(select count(*) from orcamentos where idCliente=p.id) " +
+                                    "as total FROM clientes p where nomeCliente='" + nomeCliente + "' ORDER BY nomeCliente ASC, total DESC");
 
+}
+
+OrcamentosDAO.prototype.getSerialNumber = function(nomeEquip){
+
+    return this._connection.query(  "SELECT distinct nomeEquip, serialNumber, (select count(*) from orcamentos where idEquip=p.id) " +
+                                    "as total FROM equipamentos p where nomeEquip='" + nomeEquip + "' ORDER BY nomeEquip ASC, total DESC");
 }
 
 module.exports = function(){

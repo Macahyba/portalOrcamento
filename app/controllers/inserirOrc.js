@@ -13,7 +13,8 @@ module.exports.inserirOrcGET = function(app, req, res){
 
     .then(function(query){
 
-        res.render("orcamento/inserirOrc", {montaData : query, summData :JSON.stringify(query).replace(/\\/g, '\\\\').replace(/"/g, '\\\"')});
+        //res.render("orcamento/inserirOrc", {montaData : query, summData :JSON.stringify(query).replace(/\\/g, '\\\\').replace(/"/g, '\\\"')});
+        res.render("orcamento/inserirOrc", {summData :JSON.stringify(query).replace(/\\/g, '\\\\').replace(/"/g, '\\\"')});
     })
 
     /*.catch(function(queryErr){

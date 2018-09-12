@@ -10,6 +10,8 @@ app.set('views', './app/views');
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use("/scripts", express.static("app/scripts"));
+
 consign()
     .include("app/routes")
     .then("config/dbConnection.js")

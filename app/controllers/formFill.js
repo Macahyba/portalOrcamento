@@ -1,7 +1,7 @@
 module.exports.formFill = function(app, req, res){
 
     let table = req.url.split("/")[2];
-    let field = req.url.split("/")[3];
+    let field = req.url.split("/")[3].replace(/%20/g," ");
     let conn;
 
     app.config.dbConnection()
@@ -16,10 +16,8 @@ module.exports.formFill = function(app, req, res){
 
             case "cnpj":
                 return OrcamentosDAO.getCNPJ(field);
-            case "responsavel":
-            case "departamento":
-    
-            break;
+            case "serialNumber":
+                return OrcamentosDAO.getSerialNumber(field);
         }
     })
 

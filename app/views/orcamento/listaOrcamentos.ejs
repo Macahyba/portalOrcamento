@@ -29,10 +29,14 @@
 					<td><a href="/detalhe/userDetalhe/<%= detalhe[i].idUsuario; %>"><%= detalhe[i].nomeUsuario; %></a></td>
 					<td><%= detalhe[i].status; %></td>
 					<td><%= detalhe[i].dataCriacao; %></td>
+					
 
 				</tr>
 	
 				<% } %>
+				<tr>
+					<td><input type="button" onclick="window.location.href='/'" value="Home" /></td>
+				</tr>
 			
 			</table>
     </body>

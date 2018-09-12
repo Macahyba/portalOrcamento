@@ -3,55 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Inserir orcamentos!</title>
-		<script>
-		
-
-				var data = JSON.parse("<%- summData %>")
-
-				function completaCNPJ(val){
-					
-					try {
-						let filtro = data.cliente.filter((arr)=>
-							arr.nomeCliente == val.toUpperCase())
-						cnpj.value = filtro[0].cnpj;					
-						cnpj.readOnly = true;
-						responsavel.value = filtro[0].responsavel;
-						responsavel.readOnly = true;
-						departamento.value = filtro[0].departamento;
-						departamento.readOnly = true;
-						
-					} catch {
-						cnpj.value = "";
-						cnpj.readOnly = false;
-						responsavel.value = "";
-						responsavel.readOnly = false;
-						departamento.value = "";
-						departamento.readOnly = false;
-					}
-				}
-
-				function getCNPJ(val){
-
-					fetch("/formFill/cnpj/"+val)
-
-					.then(function(res){
-
-						return res.json()
-					})
-
-					.then(function(res){
-						cnpj.value = res[0].cnpj;
-						cnpj.readOnly = true;
-					})
-
-					.catch(function() {
-						cnpj.value = "";
-						cnpj.readOnly = false;
-					})
-
-				}
-			</script>
-	</head>
+		<script type="text/javascript"> var data = JSON.parse("<%- summData %>")</script>
+		<script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="scripts/script.js"></script>
+		</head>
 	<body>
 		<form action="/inserirOrc" method="post">
 			<table>
@@ -63,16 +18,11 @@
 				</tr>
 
 				<tr>
-					<td><input autocomplete="off" type="text" name="nomeCliente" list="nomeCliente" onBlur="getCNPJ(this.value);" 
-						onFocus="cnpj.readOnly = false;"></td>
-					<datalist id="nomeCliente">
-						<% //console.log(JSON.stringify(montaData,null,4)); %>
-						<% for (var i=0; i < montaData.cliente.length; i++) { %>
-							<option value="<%= montaData.cliente[i].nomeCliente %>">
-						<% } %>	
-					</datalist>
+					<td><input autocomplete="off" type="text" name="nomeCliente" list="nomeList" id="nomeCliente"></td>
+					<datalist id="nomeList"></datalist>
 					<td><input autocomplete="off" type="text" name="cnpj" id="cnpj"></td>
-					<td><input autocomplete="off" type="text" name="responsavel" id="responsavel"></td>
+					<datalist id="respList"></datalist>
+					<td><input autocomplete="off" type="text" name="responsavel" id="responsavel" list="respList"></td>
 					<td><input autocomplete="off" type="text" name="departamento" id="departamento"></td>
 				</tr>
 				<tr>
@@ -81,17 +31,15 @@
 					<td>Valor</td>
 				</tr>
 				<tr>
-					<td><input autocomplete="off" type="text" name="nomeEquip" list="nomeEquip" id="nomeEquip"></td>
-					<datalist id="nomeEquip">
-						<% for (var i=0; i < montaData.equip.length; i++) { %>
-							<option value="<%= montaData.equip[i].nomeEquip %>">
-						<% } %>	
-					</datalist>
-					<td><input autocomplete="off" type="text" name="serialNumber" id="serialNumber" list="serialNumber"></td>
+					<td><input autocomplete="off" type="text" name="nomeEquip" list="equipList" id="nomeEquip"></td>
+					<datalist id="equipList"></datalist>
+					<td><input autocomplete="off" type="text" name="serialNumber" id="serialNumber" list="serialList"></td>
+					<datalist id="serialList"></datalist>
 					<td><input autocomplete="off" type="number" name="valor" id="valor"></td>
 				</tr>
 				<tr>
-					<td><button onclick="this.disabled=false; this.form.submit();">Submit</button></td>								
+					<td><button name="submit" onclick="this.disabled=false; this.form.submit();">Submit</button></td>	
+					<td><input type="button" onclick="window.location.href='/'" value="Home" /></td>								
 					<td><input type="hidden" name="idUsuario" value="1"></td>
 				</tr>
 			
