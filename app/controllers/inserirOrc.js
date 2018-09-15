@@ -40,7 +40,7 @@ module.exports.inserirOrcPOST = function(app, req, res){
 
         let OrcamentosDAO = new app.app.models.OrcamentosDAO(connection);
         conn = connection;
-
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        // refatorar para ser antes de abrir o banco
         // Fields validation on server side
         Object.keys(req.body).forEach(function(key) {
             if(!req.body[key]){ throw key + " is missing"; }

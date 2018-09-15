@@ -1,6 +1,7 @@
 let express = require('express');
 let consign = require('consign');
 let bodyParser = require('body-parser');
+let passport = require('../app/middleware/passport');
 let errorRoute = require('../app/middleware/error.js');
 // to achando q o consign não serve pra carregar middlewares 
 let app = express();
@@ -20,5 +21,6 @@ consign()
     .into(app);
 
 errorRoute(app);
+passport(app);
 
 module.exports = app;

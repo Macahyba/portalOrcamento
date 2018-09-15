@@ -1,7 +1,12 @@
-module.exports = function(app){
-	app.get('/',function(req,res){
+module.exports = function(application){
+	application.get('/',function(req,res){
 		
-		res.render("orcamento/home");
+		application.app.controllers.auth.loginGet(application, req, res);
 		
 	});
+
+	application.post('/login', function(req, res){
+
+		application.app.controllers.auth.loginPost(application, req, res);
+	})
 };

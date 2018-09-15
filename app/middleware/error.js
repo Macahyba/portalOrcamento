@@ -7,7 +7,7 @@
 // MELHORAR
 
 module.exports = function(app){
-	app.get('*', function(req, res){
+	app.use(function(req, res, next){
 			
 		res.status(404).render('erro404');
 

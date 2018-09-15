@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Login</title>
+    </head>
+	<body>
+        <h1>Login</h1>
+        <form action="/login" method="post">
+            <table>
+                <tr>
+                    <td>Login</td>
+                    <td><input type="text" name="nomeUsuario"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" name="password"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="button" onclick="this.disabled=false; this.form.submit();" value="Enviar"></td>
+                </tr>
+            </table>
+        </form>
+	</body>
+</html>

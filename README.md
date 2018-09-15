@@ -1,17 +1,17 @@
 "# portalOrcamento" 
 
-v0.422 (2018-09-05)
+Portal for invoice generation
 
-DB field added (cliente.departamento);
+//improve
 
-v0.423
+v0.425
 
-Partial refactoring on data fetching to frontend via Ajax
+Started auth module
+Refactored error 404 handling
 
-v0.424
-
-Finished backend logic for data input
 
 ToDo:
-Fetch the data on demand, according to the selected fields on frontend;
 Create the approval, mail and auth workflow;
+Refactor on auth.js
+Create reports
+Create pdf file after approval

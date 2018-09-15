@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Cadastrar</title>
+    </head>
+	<body>
+        <h1>Cadastrar</h1>
+        <form action="/admin" method="post">
+            <table>
+                <tr>
+                    <td>Login</td>
+                    <td><input type="text" name="nomeUsuario"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" name="password"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td><input type="text" name="email"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Perfil</td>
+                    <td><select name="perfil">
+                        <option value="usuario">Usuario</option>
+                        <option value="manager">Manager</option>
+                    </select></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="button" onclick="this.disabled=false; this.form.submit();" value="Enviar"></td>
+                </tr>
+            </table>
+        </form>
+	</body>
+</html>
