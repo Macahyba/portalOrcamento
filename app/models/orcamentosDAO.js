@@ -14,7 +14,7 @@ function OrcamentosDAO (connection) {
 
 OrcamentosDAO.prototype.getOrcamentos = function(){
  
-    return this._connection.query(this._sQuery + "ORDER BY id");
+    return this._connection.query(this._sQuery + "ORDER BY dataCriacao DESC");
 
 }
 
@@ -51,7 +51,7 @@ OrcamentosDAO.prototype.getEquip = function(nomeEquip,serialNumber){
 
 }
 
-OrcamentosDAO.prototype.insereOrcamento = function(vBody){
+OrcamentosDAO.prototype.insereOrcamento = function(vBody, id){
 
     let cliente = this.getCliente(vBody.nomeCliente, vBody.cnpj, vBody.responsavel, vBody.departamento);
     let equipamento = this.getEquip(vBody.nomeEquip,vBody.serialNumber);
@@ -120,7 +120,7 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody){
 
         } else {
 
-            return Promise.props({  'idCliente': { 
+            return this._Promise.props({  'idCliente': { 
                                         'insertId' : answ.cliente[0]['id']},
                                     'idEquip': {
                                         'insertId' : answ.equipamento[0]['id']}
@@ -132,7 +132,7 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody){
 
     .then((res)=>{
         //throw "end of test"
-        return this.gravaOrcamento(vBody.idUsuario, res.idEquip.insertId, res.idCliente.insertId, vBody.valor);
+        return this.gravaOrcamento(id, res.idEquip.insertId, res.idCliente.insertId, vBody.valor);
 
     })
 

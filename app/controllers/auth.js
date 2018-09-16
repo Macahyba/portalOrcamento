@@ -5,52 +5,8 @@ module.exports.loginGet = function(app, req, res){
 
 module.exports.loginPost = function(app, req, res){
 
-    Object.keys(req.body).forEach(function(key) {
-        if(!req.body[key]){ throw key + " is missing"; }
-    })
-
-    let bcrypt = require('bcrypt');
-    let pass = req.body.password;
-            
-    app.config.dbConnection()
-
-    .then(function(connection){
-
-        let AuthDAO = new app.app.models.AuthDAO(connection);
-        conn = connection;
-
-        return AuthDAO.getUser(req.body)
-    })		
-
-    .then(function(query){
-
-        if (query.length) {
-            return bcrypt.compare(pass, query[0].password)
-        } 
-    })
-
-    .then(function(auth){
-
-        if (auth) {
-
-            res.redirect("/home");
-        
-        } else {
-
-            res.render("erro", { error : "Access Denied" });
-        }
-    })
-
-    .catch(function(queryErr){
-    
-        res.status(500).render("erro", { error : queryErr});
-    })		
-    
-    .finally(function(){
-
-        if (conn) { conn.end() }
-    }) 
-
+    app.locals.user =  { 'id' : req.user[0].id, 'nomeUsuario': req.user[0].nomeUsuario };
+    res.redirect('/home');
 }
 
 module.exports.adminGet = function(app, req, res){

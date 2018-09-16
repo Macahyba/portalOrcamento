@@ -10,9 +10,9 @@ AuthDAO.prototype.insertUser = function(hash, vBody){
                                     "','" + vBody.email + "','" + vBody.perfil + "','" + hash + "')");
 }
 
-AuthDAO.prototype.getUser = function(vBody){
+AuthDAO.prototype.getUser = function(nomeUsuario){
 
-    return this._connection.query("SELECT * FROM users WHERE nomeUsuario='"+ vBody.nomeUsuario + "'");
+    return this._connection.query("SELECT * FROM users WHERE nomeUsuario='"+ nomeUsuario + "'");
 }
 
 module.exports = function() {
