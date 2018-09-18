@@ -3,23 +3,26 @@
     <head>
         <meta charset="utf-8">
         <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="scripts/script.js"></script>
     </head>
 	<body>
         <h1>Login</h1>
-        <form action="/login" method="post">
+         <form action="/login" id="form" method="post">
             <table>
                 <tr>
                     <td>Login</td>
-                    <td><input type="text" name="nomeUsuario"></td>
+                    <td><input type="text" name="nomeUsuario"><span class="error">Campo obrigatório</span></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>Password</td>
-                    <td><input type="password" name="password"></td>
+                    <td><input type="password" name="password"><span class="error">Campo obrigatório</span></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><input type="button" onclick="this.disabled=true; this.form.submit();" value="Enviar"></td>
+                    <td><input onclick="sendForm()" type="button" id="send" value="Enviar"></td>
                 </tr>
             </table>
         </form>

@@ -1,16 +1,30 @@
 $(function(){
 
-    //console.log(JSON.stringify(data,null,4))
-    for (var i=0; i < data.cliente.length; i++) {
-       // <option value="<%= montaData.cliente[i].nomeCliente %>">
-       $('#nomeList').append("<option value='" + data.cliente[i].nomeCliente + "'")
+    /*$('input[name=nomeUsuario]').on('input', function() {
+        var input=$(this);
+        var is_name=input.val();
+        if(is_name){input.removeClass("invalid").addClass("valid");}
+        else{input.removeClass("valid").addClass("invalid");}
+    });*/
+    $('input').on('input', function(){
 
-    }
+        $(this).next().removeClass('errorShow').addClass("error");
+        $(this).removeClass('invalid').addClass("valid");
+    })
 
-    for (var i=0; i < data.equip.length; i++) {
+    if (typeof(data) != 'undefined') {
+        //console.log(JSON.stringify(data,null,4))
+        for (var i=0; i < data.cliente.length; i++) {
+        // <option value="<%= montaData.cliente[i].nomeCliente %>">
+        $('#nomeList').append("<option value='" + data.cliente[i].nomeCliente + "'")
 
-       $('#equipList').append("<option value='" + data.equip[i].nomeEquip + "'")
+        }
 
+        for (var i=0; i < data.equip.length; i++) {
+
+        $('#equipList').append("<option value='" + data.equip[i].nomeEquip + "'")
+
+        }
     }
 
     var full;
@@ -94,6 +108,11 @@ $(function(){
 
     });
 
+    $('input').keypress(function(e) {
+        if(e.which == 13) {
+            sendForm();
+        }
+    });
 })
 
 function limpaCliente(){
@@ -112,4 +131,25 @@ function limpaEquip(){
     serialNumber.value = "";
     $('#serialList option').remove();
 
+}
+
+function sendForm(){
+
+    let formData = $('#form').serializeArray();
+    let errorFree = true;
+
+    for (let input in formData){
+        
+        if (!$('input[name='+formData[input].name+']').val()){
+            $('input[name='+formData[input].name+']').next().removeClass('error').addClass("errorShow");
+            $('input[name='+formData[input].name+']').removeClass('valid').addClass("invalid");
+            errorFree = false;
+        };
+    }
+
+    if (errorFree){
+        
+        $("#send").prop('disabled', true);
+        $("#form").submit();
+    }
 }
