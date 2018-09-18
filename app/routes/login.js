@@ -7,9 +7,9 @@ module.exports = function(application){
 	});
 
 	application.post('/login', passport.authenticate('local-login'), function(req, res){
-
+  
 		application.app.controllers.auth.loginPost(application, req, res);
-		
+
 	});
 
 	application.get('/logout', function(req, res){

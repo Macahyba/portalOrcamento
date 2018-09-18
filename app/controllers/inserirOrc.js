@@ -55,7 +55,7 @@ module.exports.inserirOrcPOST = function(app, req, res){
     })
 
     .catch(function(queryErr){
-        
+        console.log(queryErr);
         res.status(500).render("erro", { error : queryErr});
     })		
     

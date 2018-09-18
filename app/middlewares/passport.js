@@ -64,14 +64,17 @@ module.exports.passaportInit = function(app){
 
             } else {
 
-                return done(null, false);;
+                return done(null, false);
             }
 
         })
     
         .catch(function(queryErr){
-        
-            res.status(500).render("erro", { error : queryErr});
+            // REFACTOR
+            //console.log(queryErr)
+            //res.status(500).render("erro", { error : queryErr});
+            return done(queryErr);
+
         })		
         
         .finally(function(){

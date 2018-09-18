@@ -1,33 +1,11 @@
-module.exports = function(app){
-	// TO DEVELOP
-	app.get('/aprovarOrc', function(req, res){
+let ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 
-		var pConnection = app.config.dbConnection();
-		
-		pConnection.then(function(connection){
+module.exports = function(application) {
 
-			var pQuery = connection.query("select * from users");
+	application.post('/approve', ensureLoggedIn('/'), function(req, res){
 
-			pQuery.then(function(query) {
-
-				res.render("orcamento/aprovarOrc", {users : query});	
-			});
-
-			pQuery.catch(function(queryErr){
-				
-				//console.log(queryErr);
-				res.status(500).render("erro", { error : queryErr});
-			});		
-			
-			connection.end();	
-				
-		});
-
-		pConnection.catch(function(connectionErr){
-			
-			//console.log(connectionErr);
-			res.status(500).render("erro", { error : connectionErr});
-		});
+		application.app.controllers.aprovarOrc.aprova(application, req, res);
 
 	});
-};
+
+}

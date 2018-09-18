@@ -1,3 +1,5 @@
+let moment = require('moment');
+
 module.exports.lista = function(app, req, res){
 
     let conn;
@@ -13,7 +15,7 @@ module.exports.lista = function(app, req, res){
 
     .then(function(query){
 
-        res.render("orcamento/listaOrcamentos", {detalhe : query});	
+        res.render("orcamento/listaOrcamentos", {detalhe : query, moment : moment});	
     })
 
     .catch(function(err){

@@ -20,34 +20,34 @@ OrcamentosDAO.prototype.getOrcamentos = function(){
 
 OrcamentosDAO.prototype.getOrcamentoDetalhado = function(id) {
 
-    return this._connection.query(this._sQuery + "WHERE orcamentos.id=" + id + " ORDER BY id");
+    return this._connection.query(this._sQuery + "WHERE orcamentos.id=? ORDER BY id", [ id ]);
     
 }
 
 OrcamentosDAO.prototype.getClienteList = function(id){
 
     return this._connection.query(  this._sQuery + "WHERE clientes.nomeCliente=(SELECT nomeCliente FROM clientes " +
-                                    "WHERE id=" + id + ") ORDER BY dataCriacao");
+                                    "WHERE id=?) ORDER BY dataCriacao",  [ id ]);
 
 }
 
 OrcamentosDAO.prototype.getUserList = function(id){
 
-    return this._connection.query(this._sQuery + "WHERE users.id=" + id + " ORDER BY id");
+    return this._connection.query(this._sQuery + "WHERE users.id=? ORDER BY id", [ id ]);
     
 }
 
 OrcamentosDAO.prototype.getCliente = function(nomeCliente, cnpj, responsavel){
 
-    return this._connection.query(  "SELECT * FROM clientes WHERE nomeCliente='" + nomeCliente + "' AND cnpj='" + cnpj + "' " +
-                                    "AND responsavel='" + responsavel + "' ORDER BY id LIMIT 1");
+    return this._connection.query(  "SELECT * FROM clientes WHERE nomeCliente=?AND cnpj=? AND responsavel=? ORDER BY id LIMIT 1", 
+                                    [ nomeCliente, cnpj, responsavel ]);
     
 }    
 
 OrcamentosDAO.prototype.getEquip = function(nomeEquip,serialNumber){
 
-    return this._connection.query(  "SELECT * FROM equipamentos WHERE nomeEquip='" + nomeEquip + "' " +
-                                    "AND serialNumber='" + serialNumber + "' ORDER BY id LIMIT 1");
+    return this._connection.query(  "SELECT * FROM equipamentos WHERE nomeEquip=? AND serialNumber=? ORDER BY id LIMIT 1", 
+                                    [ nomeEquip, serialNumber ]);
 
 }
 
@@ -156,15 +156,15 @@ OrcamentosDAO.prototype.getSumm = function(){
 
 OrcamentosDAO.prototype.insereEquip = function(nomeEquip, serialNumber){
 
-    return this._connection.query("INSERT INTO equipamentos (nomeEquip, serialNumber) VALUES(UPPER('" + nomeEquip + "'), UPPER('" + serialNumber + "'))")
+    return this._connection.query(  "INSERT INTO equipamentos (nomeEquip, serialNumber) VALUES(UPPER(?), UPPER(?))", 
+                                    [ nomeEquip, serialNumber ])
 
 }
 
 OrcamentosDAO.prototype.insereCliente = function(nomeCliente, cnpj, responsavel, departamento){
 
     return this._connection.query(  "INSERT INTO clientes (nomeCliente, cnpj, responsavel, departamento) " +
-                                    "VALUES(UPPER('" + nomeCliente + "'), UPPER('" + cnpj + "'), UPPER('" + 
-                                    responsavel + "'), UPPER('" + departamento + "'))");
+                                    "VALUES(UPPER(?), UPPER(?), UPPER(?), UPPER(?))", [ nomeCliente, cnpj, responsavel, departamento ]);
 
 }
 
@@ -183,8 +183,8 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente,
 
     .then((idOrc)=>{    
         
-        return this._connection.query("INSERT INTO orcamentos (id, idUsuario, idEquip, idCliente, valor, status) VALUES("+
-        idOrc + "," + idUsuario + "," + idEquip + "," + idCliente + "," + valor + ",'novo')");
+        return this._connection.query(  "INSERT INTO orcamentos (id, idUsuario, idEquip, idCliente, valor, status) VALUES(?, ?, ?, ?, ?,'NOVO')",
+                                        [ idOrc, idUsuario, idEquip, idCliente, valor ]);
 
     })
 
@@ -194,14 +194,14 @@ OrcamentosDAO.prototype.getCNPJ = function(nomeCliente){
 
     //return this._connection.query("SELECT DISTINCT cnpj, responsavel FROM clientes WHERE nomeCliente='" + nomeCliente + "'");
     return this._connection.query(  "SELECT distinct nomeCliente,cnpj,responsavel,departamento,(select count(*) from orcamentos where idCliente=p.id) " +
-                                    "as total FROM clientes p where nomeCliente='" + nomeCliente + "' ORDER BY nomeCliente ASC, total DESC");
+                                    "as total FROM clientes p where nomeCliente=? ORDER BY nomeCliente ASC, total DESC", [ nomeCliente ]);
 
 }
 
 OrcamentosDAO.prototype.getSerialNumber = function(nomeEquip){
 
     return this._connection.query(  "SELECT distinct nomeEquip, serialNumber, (select count(*) from orcamentos where idEquip=p.id) " +
-                                    "as total FROM equipamentos p where nomeEquip='" + nomeEquip + "' ORDER BY nomeEquip ASC, total DESC");
+                                    "as total FROM equipamentos p where nomeEquip=? ORDER BY nomeEquip ASC, total DESC", [ nomeEquip ]);
 }
 
 module.exports = function(){

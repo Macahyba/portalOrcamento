@@ -6,6 +6,7 @@
 	</head>
 	<body>
         <h1>Lista de orcamentos</h1>
+		<p>User: <%= user.nomeUsuario %>&nbsp;&nbsp;Id: <%= user.id %>&nbsp;&nbsp;Id: <%= user.perfil %></p>
 		<table>
 				<tr>
 					<td>Id</td>
@@ -27,13 +28,38 @@
 					<td><%= detalhe[i].serialNumber; %></td>
 					<td>R$ <%= detalhe[i].valor; %></td>
 					<td><a href="/detalhe/userDetalhe/<%= detalhe[i].idUsuario; %>"><%= detalhe[i].nomeUsuario; %></a></td>
-					<td><%= detalhe[i].status; %></td>
-					<td><%= detalhe[i].dataCriacao; %></td>
+
+					<% if (user.perfil == 'manager') { %>
+
+						<form id='<%= detalhe[i].id%>' action='/approve' method='post' >
+							<td>
+								<select name='status'>
+									<option value="NOVO">NOVO</option>
+									<option value="APROVADO">APROVADO</option>
+									<option value="REJEITADO">REJEITADO</option>
+								</select>	
+								<input type='hidden' name='id' value='<%= detalhe[i].id%>'>						
+							</td>
+
+					<% } else { %>
+
+							<td><%= detalhe[i].status; %></td>
+
+					<% } %>
 					
+							<td><%= moment(detalhe[i].dataCriacao).format( 'ddd DD/MM/YYYY HH:mm:ss') ; %></td>
+
+					<% if (user.perfil == 'manager') { %>							
+
+							<td><button onclick="this.disabled=true; document.getElementById('<%= detalhe[i].id%>').submit();">Submit</button></td>
+						</form>
+
+					<% } %>	
 
 				</tr>
 	
 				<% } %>
+
 				<tr>
 					<td><input type="button" onclick="window.location.href='/home'" value="Home" /></td>
 				</tr>
