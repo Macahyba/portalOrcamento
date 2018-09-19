@@ -46,6 +46,12 @@ module.exports.inserirOrcPOST = function(app, req, res){
         conn = connection;
         
         return OrcamentosDAO.insereOrcamento(req.body, app.locals.user.id)
+        //return true
+    })
+
+    .then((mail)=>{
+
+        app.app.middlewares.mail.sendMail(mail);
     })
 
     .then(function(){

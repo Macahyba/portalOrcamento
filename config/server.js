@@ -1,7 +1,7 @@
 let express = require('express');
 let consign = require('consign');
 let bodyParser = require('body-parser');
-let errorRoute = require('../app/middlewares/error.js');
+//let errorRoute = require('../app/middlewares/error.js');
 let passaportConfig = require('../app/middlewares/passport.js')
 let expressSession = require('express-session')({ secret: 'superultrasecretsalt', resave: false, saveUninitialized: false });
 // to achando q o consign não serve pra carregar middlewares 
@@ -21,9 +21,10 @@ consign()
     .then("config/dbConnection.js")
     .then("app/models")
     .then("app/controllers")
+    .then("app/middlewares")
     .into(app);
 
 
-errorRoute(app);
+//errorRoute(app);
 
 module.exports = app;

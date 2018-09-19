@@ -15,3 +15,12 @@ input.invalid, textarea.invalid{
 input.valid, textarea.valid{
 	border: 1px solid ;
 }
+
+select {
+    border:0px;
+    outline:0px;
+    background-color:white;
+    background:none;
+    -webkit-appearance:none;
+    appearance:none;
+}

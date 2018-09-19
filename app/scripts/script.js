@@ -6,6 +6,9 @@ $(function(){
         if(is_name){input.removeClass("invalid").addClass("valid");}
         else{input.removeClass("valid").addClass("invalid");}
     });*/
+
+    $('select')
+
     $('input').on('input', function(){
 
         $(this).next().removeClass('errorShow').addClass("error");
@@ -15,14 +18,14 @@ $(function(){
     if (typeof(data) != 'undefined') {
         //console.log(JSON.stringify(data,null,4))
         for (var i=0; i < data.cliente.length; i++) {
-        // <option value="<%= montaData.cliente[i].nomeCliente %>">
-        $('#nomeList').append("<option value='" + data.cliente[i].nomeCliente + "'")
+            // <option value="<%= montaData.cliente[i].nomeCliente %>">
+            $('#nomeList').append("<option value='" + data.cliente[i].nomeCliente + "'")
 
         }
 
         for (var i=0; i < data.equip.length; i++) {
 
-        $('#equipList').append("<option value='" + data.equip[i].nomeEquip + "'")
+            $('#equipList').append("<option value='" + data.equip[i].nomeEquip + "'")
 
         }
     }

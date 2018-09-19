@@ -183,8 +183,10 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente,
 
     .then((idOrc)=>{    
         
-        return this._connection.query(  "INSERT INTO orcamentos (id, idUsuario, idEquip, idCliente, valor, status) VALUES(?, ?, ?, ?, ?,'NOVO')",
+        let qInsert = this._connection.query(  "INSERT INTO orcamentos (id, idUsuario, idEquip, idCliente, valor, status) VALUES(?, ?, ?, ?, ?,'NOVO')",
                                         [ idOrc, idUsuario, idEquip, idCliente, valor ]);
+
+        return this._Promise.props({ 'qInsert' : qInsert, 'idOrc' : idOrc , 'idUsuario' : idUsuario })                                    
 
     })
 
@@ -202,6 +204,11 @@ OrcamentosDAO.prototype.getSerialNumber = function(nomeEquip){
 
     return this._connection.query(  "SELECT distinct nomeEquip, serialNumber, (select count(*) from orcamentos where idEquip=p.id) " +
                                     "as total FROM equipamentos p where nomeEquip=? ORDER BY nomeEquip ASC, total DESC", [ nomeEquip ]);
+}
+
+OrcamentosDAO.prototype.aprovarOrc = function(vBody){
+
+    return this._connection.query(  "UPDATE orcamentos SET status=?, dataAprov=now() WHERE id=?", [ vBody.status, vBody.id]);
 }
 
 module.exports = function(){

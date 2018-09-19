@@ -6,8 +6,9 @@
 
 // MELHORAR
 
+let ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 module.exports = function(app){
-	app.use(function(req, res, next){
+	app.use(ensureLoggedIn('/'), function(req, res, next){
 			
 		res.status(404).render('erro404');
 

@@ -7,6 +7,7 @@ Portal for invoice generation
 
 ToDo:
 code on controllers/aprovarOrc.js (approval workflow)
+finish mail.js
 Create the approval and mail  workflow;
 Refactor on passport.js
 Create reports
