@@ -10,8 +10,9 @@
 	</head>
 	<body>
         <h1>Lista de orcamentos</h1>
-		<p>User: <%= user.nomeUsuario %>&nbsp;&nbsp;Id: <%= user.id %>&nbsp;&nbsp;Id: <%= user.perfil %></p>
+		<p>User: <%= user.nomeUsuario %>&nbsp;&nbsp;Id: <%= user.id %>&nbsp;&nbsp;Id: <%= user.perfil %>&nbsp;&nbsp;<%= Date.now()%></p>
 		<table>
+			<thead>
 				<tr>
 					<td>Id</td>
 					<td>Cliente</td>
@@ -22,10 +23,11 @@
 					<td>Status</td>
 					<td>Data de criacao</td>
 				</tr>
-	
+			</thead>
+			<tbody>
 				<% for (let i=0; i < detalhe.length; i++) {%>
 	
-				<tr>
+				<tr id="tr<%= detalhe[i].id; %>" class="row">
 					<td><a href="/detalhe/orcDetalhe/<%= detalhe[i].id; %>"><%= detalhe[i].id; %></a></td>
 					<td><a href="/detalhe/clienteDetalhe/<%= detalhe[i].idCliente; %>"><%= detalhe[i].nomeCliente; %></a></td>
 					<td><%= detalhe[i].nomeEquip; %></td>
@@ -55,7 +57,7 @@
 
 					<% if (user.perfil == 'manager') { %>							
 
-							<td><button onclick="this.disabled=true; document.getElementById('<%= detalhe[i].id%>').submit();">Submit</button></td>
+							<td><input type='button' id="sub<%= detalhe[i].id; %>" value="Submit"></td>
 						</form>
 
 					<% } %>	
@@ -63,11 +65,12 @@
 				</tr>
 	
 				<% } %>
-
+			</tbody>
+			<tfoot>
 				<tr>
 					<td><input type="button" onclick="window.location.href='/home'" value="Home" /></td>
 				</tr>
-			
-			</table>
+			</tfoot>
+		</table>
     </body>
 </html>

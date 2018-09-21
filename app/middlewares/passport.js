@@ -42,7 +42,7 @@ module.exports.passaportInit = function(app){
             let AuthDAO = new app.app.models.AuthDAO(connection);
             conn = connection;
     
-            return AuthDAO.getUser(null, nomeUsuario)
+            return AuthDAO.getUserByName(nomeUsuario)
         })		
     
         .then(function(query){

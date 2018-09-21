@@ -208,9 +208,14 @@ OrcamentosDAO.prototype.getSerialNumber = function(nomeEquip){
 
 OrcamentosDAO.prototype.aprovarOrc = function(vBody){
 
-    return this._connection.query(  "UPDATE orcamentos SET status=?, dataAprov=now() WHERE id=?", [ vBody.status, vBody.id]);
-}
+    return this._connection.query(  "UPDATE orcamentos SET status=?, dataAprov=now() WHERE id=?", [ vBody.status, vBody.id])
 
+    .then(()=>{
+
+        return this.getOrcamentoDetalhado(vBody.id)
+    })
+
+}
 module.exports = function(){
 
     return OrcamentosDAO;    

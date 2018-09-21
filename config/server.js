@@ -3,7 +3,7 @@ let consign = require('consign');
 let bodyParser = require('body-parser');
 //let errorRoute = require('../app/middlewares/error.js');
 let passaportConfig = require('../app/middlewares/passport.js')
-let expressSession = require('express-session')({ secret: 'superultrasecretsalt', resave: false, saveUninitialized: false });
+let expressSession = require('express-session')({ secret: 'superultrasecretsalt', resave: false, saveUninitialized: false, cookie: { maxAge: 3600000 } });
 // to achando q o consign não serve pra carregar middlewares 
 let app = express();
 

@@ -24,3 +24,18 @@ select {
     -webkit-appearance:none;
     appearance:none;
 }
+
+thead {
+
+    color: blue;
+}
+
+tbody {
+
+    color: green;
+}
+
+#th201809025027 {
+
+    background-color: gray;
+}

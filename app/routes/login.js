@@ -15,6 +15,7 @@ module.exports = function(application){
 	application.get('/logout', function(req, res){
 
 		application.locals.user = null;
+		delete req.session.returnTo ;
     	req.logout();
     	res.redirect('/');
   	});

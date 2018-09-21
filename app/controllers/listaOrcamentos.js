@@ -53,7 +53,7 @@ module.exports.detalhes = function(app, req, res){
                 return OrcamentosDAO.getOrcamentoDetalhado(id)
                 break;
             case "userDetalhe":
-                return OrcamentosDAO.getUserList(id, null)
+                return OrcamentosDAO.getUserList(id)
                 break;
             default :
                 throw "Routing error!"

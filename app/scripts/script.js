@@ -1,11 +1,31 @@
 $(function(){
 
-    /*$('input[name=nomeUsuario]').on('input', function() {
-        var input=$(this);
-        var is_name=input.val();
-        if(is_name){input.removeClass("invalid").addClass("valid");}
-        else{input.removeClass("valid").addClass("invalid");}
-    });*/
+    $(document).ready(function(){
+        $('body').on('click','input[type="button"]', (function(){
+            
+            let id = $(this).attr('id').slice(3)            
+            let formData = $('#tr'+id+' :input').serializeArray();
+            $('#sub' + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
+            event.preventDefault();
+            $.ajax({
+                method: "post",
+                url: "/approve",
+                data: formData
+            })
+            .done(function( msg ) {
+
+                $('#tr' + id).replaceWith(msg);
+                alert("Orcamento: " + id + " atualizado com sucesso!")
+            })
+
+            .fail(function(err){
+
+                alert("Ocorreu um erro, favor tente novamente")
+                $('#sub' + id).prop('disabled', false);
+                console.log(now()+JSON.stringify(err,null,4))
+            })
+        }))
+    })
 
     $('input').on('input', function(){
 
@@ -157,4 +177,18 @@ function sendForm(){
         $("#send").prop('disabled', true);
         $("#form").submit();
     }
+}
+
+function updateRow(data) {
+    alert(data)
+    $('#b'+data).prop('disabled', true);
+    //document.getElementById(data).submit();
+    $.post("/approve", {
+        status: "APROVADO",
+        id: data
+    },
+    (dataa, statuss)=>{
+        $('#tr'+data).load();
+        console.log("Data: " + dataa + "\nStatus: " + statuss);
+    });
 }
