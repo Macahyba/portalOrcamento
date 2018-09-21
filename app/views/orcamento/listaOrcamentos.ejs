@@ -25,46 +25,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% for (let i=0; i < detalhe.length; i++) {%>
-	
-				<tr id="tr<%= detalhe[i].id; %>" class="row">
-					<td><a href="/detalhe/orcDetalhe/<%= detalhe[i].id; %>"><%= detalhe[i].id; %></a></td>
-					<td><a href="/detalhe/clienteDetalhe/<%= detalhe[i].idCliente; %>"><%= detalhe[i].nomeCliente; %></a></td>
-					<td><%= detalhe[i].nomeEquip; %></td>
-					<td><%= detalhe[i].serialNumber; %></td>
-					<td>R$ <%= detalhe[i].valor; %></td>
-					<td><a href="/detalhe/userDetalhe/<%= detalhe[i].idUsuario; %>"><%= detalhe[i].nomeUsuario; %></a></td>
+				<%	for (let i=0; i < detalhe.length; i++) {%>
 
-					<% if (user.perfil == 'manager') { %>
+				<%-		app.app.models.orcamentos.montaOrc(app, detalhe[i]); %>
 
-						<form id='<%= detalhe[i].id%>' action='/approve' method='post' >
-							<td>
-								<select name='status'>
-									<option value="NOVO" <% if (detalhe[i].status == "NOVO") {  %> selected="selected"<% } %>>NOVO</option>
-									<option value="APROVADO" <% if (detalhe[i].status == "APROVADO") {  %> selected="selected" <% } %>>APROVADO</option>
-									<option value="REJEITADO" <% if (detalhe[i].status == "REJEITADO") {  %> selected="selected" <% } %>>REJEITADO</option>
-								</select>	
-								<input type='hidden' name='id' value='<%= detalhe[i].id%>'>						
-							</td>
-
-					<% } else { %>
-
-							<td><%= detalhe[i].status; %></td>
-
-					<% } %>
-					
-							<td><%= moment(detalhe[i].dataCriacao).format( 'ddd DD/MM/YYYY HH:mm:ss') ; %></td>
-
-					<% if (user.perfil == 'manager') { %>							
-
-							<td><input type='button' id="sub<%= detalhe[i].id; %>" value="Submit"></td>
-						</form>
-
-					<% } %>	
-
-				</tr>
-	
-				<% } %>
+				<%	} %>
 			</tbody>
 			<tfoot>
 				<tr>

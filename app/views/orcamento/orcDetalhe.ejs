@@ -20,17 +20,7 @@
 	
 				<% for (let i=0; i < detalhe.length; i++) {%>
 	
-				<tr>
-					<td><%= detalhe[i].id; %></td>
-					<td><%= detalhe[i].nomeCliente; %></td>
-					<td><%= detalhe[i].nomeEquip; %></td>
-					<td><%= detalhe[i].serialNumber; %></td>
-					<td>R$ <%= detalhe[i].valor; %></td>
-					<td><%= detalhe[i].nomeUsuario; %></td>
-					<td><%= detalhe[i].status; %></td>
-					<td><%= detalhe[i].dataCriacao; %></td>
-
-				</tr>
+					<%-		app.app.models.orcamentos.montaOrc(app, detalhe[i]); %>
 	
 				<% } %>
 				

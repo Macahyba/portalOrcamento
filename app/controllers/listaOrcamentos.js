@@ -15,7 +15,7 @@ module.exports.lista = function(app, req, res){
 
     .then(function(query){
 
-        res.render("orcamento/listaOrcamentos", {detalhe : query, moment : moment, summData :JSON.stringify(query).replace(/\\/g, '\\\\').replace(/"/g, '\\\"')});	
+        res.render("orcamento/listaOrcamentos", {detalhe : query, moment : moment, summData :JSON.stringify(query).replace(/\\/g, '\\\\').replace(/"/g, '\\\"'), app: app});	
     })
 
     .catch(function(err){
@@ -63,7 +63,7 @@ module.exports.detalhes = function(app, req, res){
 
     .then(function(query) {
 
-        res.render("orcamento/" + path, {detalhe : query});	
+        res.render("orcamento/" + path, {detalhe : query, app: app});	
     })
 
     .catch(function(err){
@@ -76,4 +76,10 @@ module.exports.detalhes = function(app, req, res){
         if (conn) { conn.end()} ;
     })
 
+}
+
+module.exports.download = function(app, req, res) {
+
+    //console.log(JSON.stringify(req.body, null, 4))
+    app.app.models.PDFGen.download(app, req.body.id, res);
 }
