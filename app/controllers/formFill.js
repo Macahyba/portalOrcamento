@@ -10,7 +10,7 @@ module.exports.formFill = function(app, req, res){
 
         conn = connection;
 
-        let OrcamentosDAO = new app.app.models.OrcamentosDAO(connection);
+        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
 
         switch (table){
 

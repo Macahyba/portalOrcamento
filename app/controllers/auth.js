@@ -35,7 +35,7 @@ module.exports.adminPost = function(app, req, res){
 
         .then(function(connection){
 
-            let AuthDAO = new app.app.models.AuthDAO(connection);
+            let AuthDAO = new app.models.AuthDAO(connection);
             conn = connection;
 
             return AuthDAO.insertUser(hash, req.body)

@@ -4,7 +4,7 @@ module.exports = function(application) {
 
 	application.post('/approve', ensureLoggedIn('/'), function(req, res){
 
-		application.app.controllers.aprovarOrc.aprova(application, req, res);
+		application.controllers.aprovarOrc.aprova(application, req, res);
 
 	});
 

@@ -30,7 +30,7 @@ module.exports.sendMail = function(mail, app){
 
         .then(function(connection){
 
-            let AuthDAO = new app.app.models.AuthDAO(connection);
+            let AuthDAO = new app.models.AuthDAO(connection);
             conn = connection;
 
             return AuthDAO.getUserById(mail.idUsuario)

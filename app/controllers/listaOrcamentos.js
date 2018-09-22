@@ -8,7 +8,7 @@ module.exports.lista = function(app, req, res){
     
     .then(function(connection){
     
-        let OrcamentosDAO = new app.app.models.OrcamentosDAO(connection);
+        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
         conn = connection;
         return OrcamentosDAO.getOrcamentos()
     })
@@ -41,7 +41,7 @@ module.exports.detalhes = function(app, req, res){
     
     .then(function(connection){
 
-        let OrcamentosDAO = new app.app.models.OrcamentosDAO(connection);
+        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
 
         conn = connection;
         
@@ -81,5 +81,5 @@ module.exports.detalhes = function(app, req, res){
 module.exports.download = function(app, req, res) {
 
     //console.log(JSON.stringify(req.body, null, 4))
-    app.app.models.PDFGen.download(app, req.body.id, res);
+    app.models.PDFGen.download(app, req.body.id, res);
 }

@@ -6,7 +6,7 @@ module.exports.inserirOrcGET = function(app, req, res){
 
     .then(function(connection){
         
-        let OrcamentosDAO = new app.app.models.OrcamentosDAO(connection);
+        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
         conn = connection;
         return OrcamentosDAO.getSumm()
     })
@@ -42,7 +42,7 @@ module.exports.inserirOrcPOST = function(app, req, res){
 
     .then(function(connection){
 
-        let OrcamentosDAO = new app.app.models.OrcamentosDAO(connection);
+        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
         conn = connection;
         
         return OrcamentosDAO.insereOrcamento(req.body, app.locals.user.id)
@@ -51,7 +51,7 @@ module.exports.inserirOrcPOST = function(app, req, res){
 
     .then((mail)=>{
 
-        app.app.models.mail.sendMail(mail, app);
+        app.models.mail.sendMail(mail, app);
     })
 
     .then(function(){
