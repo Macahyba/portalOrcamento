@@ -16,14 +16,15 @@ app.use("/css", express.static(path.join(__dirname, "../app/css")));
 app.use("/pdf", express.static(path.join(__dirname, "app/pdf")));
 app.use(expressSession);
 
+
 passaportConfig.passaportInit(app);
 
-consign()
-    .include("app/routes")
-    .then("config/dbConnection.js")
-    .then("app/models")
-    .then("app/controllers")
-    .then("app/middlewares")
+consign({cwd: 'app'})
+    .include("routes")
+    .then("../config/dbConnection.js")
+    .then("models")
+    .then("controllers")
+    .then("middlewares")
     .into(app);
 
 

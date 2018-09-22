@@ -27,7 +27,7 @@ module.exports.passaportInit = function(app){
         passReqToCallback : true 
     },
     function(req, nomeUsuario, password, done) { 
-
+        
         if(!nomeUsuario || !password){ 
             throw "Data is missing"; 
         }
