@@ -1,4 +1,5 @@
 let express = require('express');
+let path = require('path')
 let consign = require('consign');
 let bodyParser = require('body-parser');
 //let errorRoute = require('../app/middlewares/error.js');
@@ -8,11 +9,11 @@ let expressSession = require('express-session')({ secret: 'superultrasecretsalt'
 let app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', './app/views');
+app.set('views', path.join(__dirname, '../app/views'));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use("/scripts", express.static("app/scripts"));
-app.use("/css", express.static("app/css"));
-app.use("/pdf", express.static("app/pdf"));
+app.use("/scripts", express.static(path.join(__dirname, "../app/scripts")));
+app.use("/css", express.static(path.join(__dirname, "../app/css")));
+app.use("/pdf", express.static(path.join(__dirname, "app/pdf")));
 app.use(expressSession);
 
 passaportConfig.passaportInit(app);
