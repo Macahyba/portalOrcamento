@@ -3,59 +3,27 @@ $(function(){
     $(document).ready(function(){
         $('body').on('click','input[type="button"]', (function(){
             
-            let id = $(this).attr('id').slice(3);
-            let op = $(this).attr('id').slice(0, 3);
-            let formData= $('#tr'+id+' :input').serializeArray();
-            //$('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
+            let id = $(this).attr('id').slice(3)            
+            let formData = $('#tr'+id+' :input').serializeArray();
+            $('#sub' + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
             event.preventDefault();
+            $.ajax({
+                method: "post",
+                url: "/approve",
+                data: formData
+            })
+            .done(function( msg ) {
 
-            switch (op){ 
+                $('#tr' + id).replaceWith(msg);
+                alert("Orcamento: " + id + " atualizado com sucesso!")
+            })
 
-                case "sub":
-                    
-                    $.ajax({
-                        method: "post",
-                        url: "/approve",
-                        data: formData
-                    })
-                    .done(function( msg ) {
-        
-                        $('#tr' + id).replaceWith(msg);
-                        alert("Orcamento: " + id + " atualizado com sucesso!")
-                    })
-        
-                    .fail(function(err){
-        
-                        alert("Ocorreu um erro, favor tente novamente")
-                        $('#sub' + id).prop('disabled', false);
-                        console.log(now()+JSON.stringify(err,null,4))
-                    })
-                    break;
+            .fail(function(err){
 
-                case "dow":
-
-                    $.ajax({
-                        method: "post",
-                        url: "/download",
-                        data: formData
-                    })
-                    .done(function() {
-                        
-                        //console.log(msg)
-                        //$('#tr' + id).replaceWith(msg);
-                        alert("Download vai começar")
-                        window.open('pdf/'+id+'.pdf','_blank')
-                    })
-        
-                    .fail(function(err){
-        
-                        alert("Ocorreu um erro, favor tente novamente")
-                        $('#dow' + id).prop('disabled', false);
-                        console.log(Date.now()+JSON.stringify(err,null,4))
-                    })
-                    break;
-            }
-            
+                alert("Ocorreu um erro, favor tente novamente")
+                $('#sub' + id).prop('disabled', false);
+                console.log(now()+JSON.stringify(err,null,4))
+            })
         }))
     })
 

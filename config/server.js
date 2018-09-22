@@ -12,7 +12,6 @@ app.set('views', './app/views');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use("/scripts", express.static("app/scripts"));
 app.use("/css", express.static("app/css"));
-app.use("/pdf", express.static("app/pdf"));
 app.use(expressSession);
 
 passaportConfig.passaportInit(app);

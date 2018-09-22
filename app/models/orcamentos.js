@@ -12,8 +12,7 @@ module.exports.montaOrc = function(app, orcamento){
 
     if (app.locals.user.perfil == 'manager') {
 
-        // <form id="'+orcamento.id +'" action="/approve" method="post" > IS OPTIONAL - JQUERY HANDLES IT
-        answ += '<td><select name="status">'
+        answ += '<form id="'+orcamento.id +'" action="/approve" method="post" ><td><select name="status">'
 
         switch (orcamento.status){
 
@@ -49,9 +48,7 @@ module.exports.montaOrc = function(app, orcamento){
 
     if (app.locals.user.perfil == 'manager') {							
 
-        answ+= '<td><input type="button" id="sub'+ orcamento.id+'" value="Submit"></td>'
-        answ+= '<td><input type="button" id="dow'+ orcamento.id+'" value="Download"></td>'
-        // </form> IS OPTIONAL - JQUERY HANDLES IT
+        answ+= '<td><input type="button" id="sub'+ orcamento.id+'" value="Submit"></td></form>'
     }	
 
     answ+='</tr>'

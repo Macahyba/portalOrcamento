@@ -13,10 +13,5 @@ module.exports = function(application){
 		application.app.controllers.listaOrcamentos.detalhes(application, req, res);
 
 	});
-
-	application.post('/download/', ensureLoggedIn('/'), function(req, res){
-
-		application.app.controllers.listaOrcamentos.download(application, req, res);
-	})
 };
 
