@@ -10,3 +10,7 @@ npm-debug.log
 #app generated artifacts
 
 /app/pdf
+
+# vs code config
+
+.vs
