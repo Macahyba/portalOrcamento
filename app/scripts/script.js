@@ -6,7 +6,7 @@ $(function(){
             let id = $(this).attr('id').slice(3);
             let op = $(this).attr('id').slice(0, 3);
             let formData= $('#tr'+id+' :input').serializeArray();
-            //$('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
+            $('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
             event.preventDefault();
 
             switch (op){ 
@@ -22,13 +22,14 @@ $(function(){
         
                         $('#tr' + id).replaceWith(msg);
                         alert("Orcamento: " + id + " atualizado com sucesso!")
+                        $('#' + op + id).prop('disabled', false);
                     })
         
                     .fail(function(err){
         
                         alert("Ocorreu um erro, favor tente novamente")
                         $('#sub' + id).prop('disabled', false);
-                        console.log(now()+JSON.stringify(err,null,4))
+                        console.log(Date.now()+JSON.stringify(err,null,4))
                     })
                     break;
 
@@ -45,6 +46,7 @@ $(function(){
                         //$('#tr' + id).replaceWith(msg);
                         alert("Download vai começar")
                         window.open('pdf/'+id+'.pdf','_blank')
+                        $('#' + op + id).prop('disabled', false);
                     })
         
                     .fail(function(err){
@@ -66,19 +68,20 @@ $(function(){
     })
 
     if (typeof(data) !== 'undefined') {
+        //console.log(JSON.stringify(data,null,4))
         if (('cliente' in data)){
             //console.log(JSON.stringify(data,null,4))
-            for (var i=0; i < data.cliente.length; i++) {
+            for (var i=0; i < data.cliente.rowCount; i++) {
                 // <option value="<%= montaData.cliente[i].nomeCliente %>">
-                $('#nomeList').append("<option value='" + data.cliente[i].nomeCliente + "'")
+                $('#nomeList').append("<option value='" + data.cliente.rows[i].nomecliente + "'")
 
             }
         }
 
         if (('equip' in data)){
-            for (var i=0; i < data.equip.length; i++) {
+            for (var i=0; i < data.equip.rowCount; i++) {
 
-                $('#equipList').append("<option value='" + data.equip[i].nomeEquip + "'")
+                $('#equipList').append("<option value='" + data.equip.rows[i].nomeequip + "'")
 
             }
         }
@@ -90,7 +93,6 @@ $(function(){
         let nomeCliente= $("#nomeCliente").val(); 
         //let idCliente = $("#nomeList").find('option[value="' + nomeCliente + '"]').attr('id');
         
-
         if (!nomeCliente) { 
             limpaCliente();
             return;
@@ -104,15 +106,15 @@ $(function(){
         })
 
         .then(function(res){
-
-            cnpj.value = res[0].cnpj;
+            
+            cnpj.value = res.rows[0].cnpj;
             cnpj.readOnly = true;
-            responsavel.value = res[0].responsavel
+            responsavel.value = res.rows[0].responsavel
             $('#respList option').remove();
-            for (i=0; i< res.length; i++){
-                $('#respList').append("<option value='" + res[i].responsavel + "'")
+            for (i=0; i< res.rowCount; i++){
+                $('#respList').append("<option value='" + res.rows[i].responsavel + "'")
             }
-            departamento.value = res[0].departamento;
+            departamento.value = res.rows[0].departamento;
 
             full = res;
             
@@ -148,8 +150,8 @@ $(function(){
         .then(function(res){
 
             $('#serialList option').remove();
-            for (i=0; i< res.length; i++){
-                $('#serialList').append("<option value='" + res[i].serialNumber + "'")
+            for (i=0; i< res.rowCount; i++){
+                $('#serialList').append("<option value='" + res.rows[i].serialnumber + "'")
             }
             full = res;
             
@@ -209,18 +211,4 @@ function sendForm(){
         $("#send").prop('disabled', true);
         $("#form").submit();
     }
-}
-
-function updateRow(data) {
-    alert(data)
-    $('#b'+data).prop('disabled', true);
-    //document.getElementById(data).submit();
-    $.post("/approve", {
-        status: "APROVADO",
-        id: data
-    },
-    (dataa, statuss)=>{
-        $('#tr'+data).load();
-        console.log("Data: " + dataa + "\nStatus: " + statuss);
-    });
 }

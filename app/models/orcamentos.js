@@ -4,11 +4,11 @@ module.exports.montaOrc = function(app, orcamento){
     let answ = 
     '<tr id="tr'+orcamento.id+'">'+
     '<td><a href="/detalhe/orcDetalhe/'+orcamento.id+'">'+orcamento.id+'</a></td>'+
-    '<td><a href="/detalhe/clienteDetalhe/'+orcamento.idCliente+'">'+orcamento.nomeCliente+'</a></td>'+
-    '<td>'+orcamento.nomeEquip+'</td>'+
-    '<td>'+orcamento.serialNumber+'</td>'+
+    '<td><a href="/detalhe/clienteDetalhe/'+orcamento.idcliente+'">'+orcamento.nomecliente+'</a></td>'+
+    '<td>'+orcamento.nomeequip+'</td>'+
+    '<td>'+orcamento.serialnumber+'</td>'+
     '<td>R$ '+orcamento.valor+'</td>'+
-    '<td><a href="/detalhe/userDetalhe/'+orcamento.idUsuario+'">'+orcamento.nomeUsuario+'</a></td>';
+    '<td><a href="/detalhe/userDetalhe/'+orcamento.idusuario+'">'+orcamento.nomeusuario+'</a></td>';
 
     if (app.locals.user.perfil == 'manager') {
 
@@ -17,12 +17,6 @@ module.exports.montaOrc = function(app, orcamento){
 
         switch (orcamento.status){
 
-            case "NOVO":
-
-                answ+= '<option value="NOVO" selected="selected">NOVO</option>'
-                answ+= '<option value="APROVADO">APROVADO</option>'
-                answ+= '<option value="REJEITADO">REJEITADO</option>'
-                break;
             case "APROVADO":
 
                 answ+= '<option value="NOVO">NOVO</option>'
@@ -35,6 +29,12 @@ module.exports.montaOrc = function(app, orcamento){
                 answ+= '<option value="APROVADO">APROVADO</option>'
                 answ+= '<option value="REJEITADO" selected="selected">REJEITADO</option>'
                 break;  
+
+            default:
+
+                answ+= '<option value="NOVO" selected="selected">NOVO</option>'
+                answ+= '<option value="APROVADO">APROVADO</option>'
+                answ+= '<option value="REJEITADO">REJEITADO</option>'
         }
 
         answ+= '</select><input type="hidden" name="id" value="'+orcamento.id+'"></td>'
@@ -45,7 +45,7 @@ module.exports.montaOrc = function(app, orcamento){
 
     }
     
-    answ+= '<td>' + moment(orcamento.dataCriacao).format( "ddd DD/MM/YYYY HH:mm:ss") + '</td>'
+    answ+= '<td>' + moment(orcamento.datacriacao).format( "ddd DD/MM/YYYY HH:mm:ss") + '</td>'
 
     if (app.locals.user.perfil == 'manager') {							
 

@@ -1,17 +1,19 @@
-var mysql = require('promise-mysql');
+var { Client } = require('pg');
 
-var connMySQL = function(){
+var connPG = function(){
 
-	return mysql.createConnection({
-		host: 'localhost',
-		user: 'root',
+	return new Client({
+		user: 'postgres',
+		host: '127.0.0.1',
+		database: 'orcamentosdb',
 		password: '123456',
-		database: 'orcamentosDB'
+		port: 5432,
 	})
+
 }
 
 module.exports = function(){
 
-	return connMySQL;
+	return connPG;
 
 }

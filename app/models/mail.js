@@ -24,26 +24,25 @@ module.exports.sendMail = function(mail, app){
             }
         });
 
-        let conn;
+        let connection = app.config.dbConnection();
 
-        app.config.dbConnection()
+        connection.connect()
 
-        .then(function(connection){
+        .then(()=>{
 
             let AuthDAO = new app.models.AuthDAO(connection);
-            conn = connection;
 
             return AuthDAO.getUserById(mail.idUsuario)
 
         })
 
-        .then(function(query){
+        .then(query=>{
 
             let url = 'http://127.0.0.1:3000/detalhe/orcDetalhe/'+ mail.idOrc;
             let mailOptions = {
                 from: '"Admin 👻" <admin@example.com>', // sender address
-                to: query[0].email + ', baz@example.com', // list of receivers
-                subject: 'Hello '+ query[0].nomeUsuario +'✔', // Subject line
+                to: query.rows[0].email + ', baz@example.com', // list of receivers
+                subject: 'Hello '+ query.rows[0].nomeusuario +'✔', // Subject line
                 text: 'Novo orcamento em ' + url, // plain text body
                 html: '<b>Novo orcamento em <a href=' + url +'>' + url + '</a></b>' // html body
             };
@@ -63,9 +62,9 @@ module.exports.sendMail = function(mail, app){
             });
         })
 
-        .finally(function(){
+        .then(()=>{
 
-            if (conn) { conn.end(); }
+            if (connection) { connection.end(); }
         })
     });
 }

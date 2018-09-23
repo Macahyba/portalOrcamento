@@ -2,49 +2,47 @@ let moment = require('moment');
 
 module.exports.lista = function(app, req, res){
 
-    let conn;
+    let connection = app.config.dbConnection();
 
-    app.config.dbConnection()
+    connection.connect()
     
-    .then(function(connection){
+    .then(()=>{
     
         let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
-        conn = connection;
         return OrcamentosDAO.getOrcamentos()
     })
 
-    .then(function(query){
+    .then(query=>{
 
-        res.render("orcamento/listaOrcamentos", {detalhe : query, moment : moment, summData :JSON.stringify(query).replace(/\\/g, '\\\\').replace(/"/g, '\\\"'), app: app});	
+        res.render("orcamento/listaOrcamentos", {detalhe : query.rows, moment : moment, summData :JSON.stringify(query.rows).replace(/\\/g, '\\\\').replace(/"/g, '\\\"'), app: app});	
     })
 
-    .catch(function(err){
+    .catch(err=>{
         
         //console.log(err);
         res.status(500).render("erro", { error : err});
     })
 
-    .finally(function(){
+    .then(()=>{
         
-        if (conn) { conn.end()} ;
+        if (connection) { connection.end()} ;
     })
 
 }
 
 module.exports.detalhes = function(app, req, res){
 
-    let conn;
     let path = req.url.split("/")[2];
     let id = req.url.split("/")[3];
 
-    app.config.dbConnection()
+    let connection = app.config.dbConnection();
+
+    connection.connect()
     
-    .then(function(connection){
+    .then(()=>{
 
         let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
-
-        conn = connection;
-        
+      
         switch (path){
             case "clienteDetalhe":
                 return OrcamentosDAO.getClienteList(id)
@@ -61,19 +59,19 @@ module.exports.detalhes = function(app, req, res){
 
     })
 
-    .then(function(query) {
+    .then(query=> {
 
-        res.render("orcamento/" + path, {detalhe : query, app: app});	
+        res.render("orcamento/" + path, {detalhe : query.rows, app: app});	
     })
 
-    .catch(function(err){
+    .catch(err=>{
         
         res.status(500).render("erro", { error : err});
     })		
     
-    .finally(function(){
+    .then(()=>{
         
-        if (conn) { conn.end()} ;
+        if (connection) { connection.end()} ;
     })
 
 }

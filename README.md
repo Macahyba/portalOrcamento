@@ -6,6 +6,7 @@ Portal for invoice generation
 
 
 ToDo:
+work on the individual views
 code on PDFGen (wait file generation before download)
 code on controllers/aprovarOrc.js (approval workflow)
 Refactor on script.js, passport.js

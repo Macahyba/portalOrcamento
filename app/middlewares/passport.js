@@ -36,27 +36,29 @@ module.exports.passaportInit = function(app){
         let bcrypt = require('bcrypt');
         let userData;
         
-        app.config.dbConnection()
-    
-        .then(function(connection){
-    
+        let connection = app.config.dbConnection();
+
+        connection.connect()
+
+        .then(()=>{
+            //console.log(JSON.stringify(connection, null, 4))
             let AuthDAO = new app.models.AuthDAO(connection);
-            conn = connection;
-    
+            //conn = connection;
+
             return AuthDAO.getUserByName(nomeUsuario)
         })		
     
-        .then(function(query){
-    
-            if (query.length) {
+        .then(query =>{
+            //console.log(JSON.stringify(query,null,4))
+            if (query.rowCount) {
 
                 userData = query;
-                return Promise.all([bcrypt.compare(password, query[0].password), query])
+                return Promise.all([bcrypt.compare(password, query.rows[0].password), query])
             } 
         })
     
-        .then(function(auth){
-            
+        .then(auth =>{
+            //console.log(auth)
             if (auth) {
 
                 if (auth[0]) { return done(null , userData); }
@@ -70,7 +72,7 @@ module.exports.passaportInit = function(app){
 
         })
     
-        .catch(function(queryErr){
+        .catch(queryErr =>{
             // REFACTOR
             //console.log(queryErr)
             //res.status(500).render("erro", { error : queryErr});
@@ -78,10 +80,10 @@ module.exports.passaportInit = function(app){
 
         })		
         
-        .finally(function(){
+        .then(()=>{
     
-            if (conn) { conn.end() }
-        }) 
+            if (connection) { connection.end() }
+        })
         
 
     }));

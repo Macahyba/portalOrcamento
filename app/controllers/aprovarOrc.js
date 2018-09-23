@@ -1,32 +1,32 @@
 module.exports.aprova = function(app, req, res) {
 
-    let conn;
     //console.log(JSON.stringify(req.body,null,4))
-    app.config.dbConnection()
+    let connection = app.config.dbConnection();
 
-    .then(function(connection) {
+    connection.connect()
 
-        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
-        conn = connection;
+    .then(()=> {
+
+        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);        
         return OrcamentosDAO.aprovarOrc(req.body)
     })
 
-    .then(function(query){
-        //console.log(JSON.stringify(query,null,4))
-        let orc = app.models.orcamentos.montaOrc(app, query[0]);
+    .then(query=>{
+        
+        let orc = app.models.orcamentos.montaOrc(app, query.rows[0]);
         //console.log(answ);
         // DON'T NEED TO SEND, AJAX FETCHES THE RETURN VALUE
         res.send(orc);
     })
 
-    .catch(function(err){
+    .catch(err=>{
         
         //console.log(err);
         res.status(500).render("erro", { error : err});
     })
 
-    .finally(function(){
+    .then(()=>{
 
-        if (conn) { conn.end(); }
+        if (connection) { connection.end(); }
     })
 }

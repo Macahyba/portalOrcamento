@@ -7,7 +7,7 @@ module.exports.loginPost = function(app, req, res){
 
     //console.log(JSON.stringify(req.session,null,4))
     if (req.session.returnTo == '/favicon.ico') { delete req.session.returnTo; }
-    app.locals.user =  { 'id' : req.user[0].id, 'nomeUsuario': req.user[0].nomeUsuario, 'perfil': req.user[0].perfil };
+    app.locals.user =  { 'id' : req.user.rows[0].id, 'nomeUsuario': req.user.rows[0].nomeusuario, 'perfil': req.user.rows[0].perfil };
     res.redirect(req.session.returnTo || '/home');
     delete req.session.returnTo;
 }
@@ -31,32 +31,33 @@ module.exports.adminPost = function(app, req, res){
 
     .then(function(hash){
 
-        app.config.dbConnection()
+        let connection = app.config.dbConnection();
 
-        .then(function(connection){
+        connection.connect()
+
+        .then(()=>{
 
             let AuthDAO = new app.models.AuthDAO(connection);
-            conn = connection;
-
+            
             return AuthDAO.insertUser(hash, req.body)
         })		
 
-        .then(function(){
+        .then(()=>{
 
             res.send("sucesso");
         })
 
-        .catch(function(queryErr){
+        /*.catch(queryErr=>{
             if (queryErr.code == "ER_DUP_ENTRY") {
                 res.status(500).render("erro", { error : "User already registered"});
             } else {
                 res.status(500).render("erro", { error : queryErr});
             }
-        })		
+        })		*/
         
-        .finally(function(){
+        .then(()=>{
 
-            if (conn) { conn.end() }
+            if (connection) { connection.end() }
         }) 
 
     })
