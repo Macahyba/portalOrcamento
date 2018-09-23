@@ -2,14 +2,15 @@ var { Client } = require('pg');
 
 var connPG = function(){
 
-	return new Client({
-		user: 'postgres',
-		host: '127.0.0.1',
-		database: 'orcamentosdb',
-		password: '123456',
-		port: 5432,
-	})
+	let ssl;
+	
+	process.env.HEROKU_BINPATH ? ssl = true: ssl = false;
 
+	return new Client({
+
+		connectionString : process.env.DATABASE_URL,
+		ssl: ssl
+	})
 }
 
 module.exports = function(){
