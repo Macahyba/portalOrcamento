@@ -1,146 +1,369 @@
--- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
--- Host: localhost    Database: orcamentosdb
--- ------------------------------------------------------
--- Server version	8.0.12
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8mb4 ;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `clientes`
+-- PostgreSQL database dump
 --
 
-DROP TABLE IF EXISTS `clientes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `clientes` (
-  `id` int(16) NOT NULL AUTO_INCREMENT,
-  `nomeCliente` varchar(255) NOT NULL,
-  `cnpj` varchar(16) NOT NULL,
-  `responsavel` varchar(255) NOT NULL,
-  `departamento` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `nomeCliente` (`nomeCliente`,`cnpj`,`responsavel`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- Dumped from database version 10.5
+-- Dumped by pg_dump version 10.5
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
 
 --
--- Dumping data for table `clientes`
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
-LOCK TABLES `clientes` WRITE;
-/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (22,'TVG','cnpjtvg','MARIO','Engenharia TVG'),(23,'TVR','cnpjtvr','JOAO','Engenharia TVR'),(25,'EMISSORA','CNPJEMISSORA','MARIA','Engenharia EMISSORA'),(26,'XPTO','NPMJ','JOSE','Engenharia XPTO'),(27,'TVG','CNPJTVG','ANTONIO','Engenharia TVG'),(28,'EMISSORA','CNPJEMISSORA','ANTONIO','Suporte EMISSORA'),(31,'RECORD RJ','01024.2325/1000','ALTAIR','Engenharia RECORD RJ'),(32,'TVG','CNPJTVG','TGHGGH','ENGENHARIA TVG'),(33,'TV GLOBO RJ','CNPJDATVGLOBORJ','WILSON','ENGENHARIA TVG'),(34,'TVG SP','CPFSP','MARIO','ENG');
-/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
 
 --
--- Table structure for table `equipamentos`
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
-DROP TABLE IF EXISTS `equipamentos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `equipamentos` (
-  `id` int(16) NOT NULL AUTO_INCREMENT,
-  `nomeEquip` varchar(255) NOT NULL,
-  `serialNumber` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_index` (`nomeEquip`,`serialNumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
 
 --
--- Dumping data for table `equipamentos`
+-- Name: clientes; Type: TABLE; Schema: public; Owner: postgres
 --
 
-LOCK TABLES `equipamentos` WRITE;
-/*!40000 ALTER TABLE `equipamentos` DISABLE KEYS */;
-INSERT INTO `equipamentos` VALUES (42,'AA','488484'),(39,'AA','5'),(45,'AAA','355'),(52,'AAA','JKJK'),(37,'ODS','1'),(40,'ODS','10'),(41,'ODS','1232'),(49,'ODS','124'),(38,'ODS','2'),(57,'ODS','6565'),(51,'ODS-L30','124'),(44,'PDW','1520'),(48,'PDW','5000'),(47,'PDW','520'),(46,'PDW','555'),(56,'PDWF75','25471'),(43,'PMW','258'),(53,'PMW-F55','123456'),(54,'PMWF65','123456'),(55,'PMWF65','1234567');
-/*!40000 ALTER TABLE `equipamentos` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE public.clientes (
+    id integer NOT NULL,
+    nomecliente character varying(255) NOT NULL,
+    cnpj character varying(16) NOT NULL,
+    responsavel character varying(255) NOT NULL,
+    departamento character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.clientes OWNER TO postgres;
 
 --
--- Table structure for table `orcamentos`
+-- Name: clientes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-DROP TABLE IF EXISTS `orcamentos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `orcamentos` (
-  `id` bigint(20) NOT NULL,
-  `idUsuario` int(16) NOT NULL,
-  `idEquip` int(16) NOT NULL,
-  `idCliente` int(16) NOT NULL,
-  `valor` float NOT NULL,
-  `status` varchar(16) NOT NULL,
-  `dataCriacao` datetime DEFAULT CURRENT_TIMESTAMP,
-  `dataAprov` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`),
-  KEY `idUsuario` (`idUsuario`),
-  KEY `idEquip` (`idEquip`),
-  KEY `idCliente` (`idCliente`),
-  CONSTRAINT `orcamentos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `users` (`id`),
-  CONSTRAINT `orcamentos_ibfk_2` FOREIGN KEY (`idEquip`) REFERENCES `equipamentos` (`id`),
-  CONSTRAINT `orcamentos_ibfk_3` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE SEQUENCE public.clientes_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.clientes_id_seq OWNER TO postgres;
 
 --
--- Dumping data for table `orcamentos`
+-- Name: clientes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-LOCK TABLES `orcamentos` WRITE;
-/*!40000 ALTER TABLE `orcamentos` DISABLE KEYS */;
-INSERT INTO `orcamentos` VALUES (201808022000,1,37,22,10,'NOVO','2018-08-25 18:56:04',NULL),(201808022001,1,38,22,20,'NOVO','2018-08-25 18:56:17',NULL),(201808023000,1,39,23,90,'NOVO','2018-08-25 18:56:31',NULL),(201809022002,32,43,22,11111,'NOVO','2018-09-16 02:40:06',NULL),(201809022003,33,44,22,111,'NOVO','2018-09-16 15:03:51',NULL),(201809022004,33,44,22,111,'NOVO','2018-09-16 15:04:10',NULL),(201809022005,32,43,22,111,'NOVO','2018-09-16 15:05:35',NULL),(201809022006,32,49,22,1111,'NOVO','2018-09-16 15:05:45',NULL),(201809023001,33,53,23,111,'NOVO','2018-09-16 15:08:03',NULL),(201809025000,1,41,25,666,'NOVO','2018-09-01 19:05:03',NULL),(201809025001,1,42,25,8000,'NOVO','2018-09-01 19:05:58',NULL),(201809025002,1,43,25,500,'NOVO','2018-09-01 19:15:00',NULL),(201809025003,1,44,25,330,'NOVO','2018-09-01 21:32:41',NULL),(201809025004,1,42,25,111,'NOVO','2018-09-15 22:14:58',NULL),(201809025005,1,42,25,33333,'NOVO','2018-09-15 22:16:22',NULL),(201809025006,3,45,25,111,'NOVO','2018-09-16 02:37:21',NULL),(201809025007,3,42,25,111,'NOVO','2018-09-16 02:37:59',NULL),(201809025008,32,41,25,6,'NOVO','2018-09-16 02:41:28',NULL),(201809025009,32,41,25,111,'NOVO','2018-09-16 15:05:26',NULL),(201809026000,1,45,26,222,'NOVO','2018-09-01 21:33:06',NULL),(201809026001,1,46,26,5454,'NOVO','2018-09-01 21:34:20',NULL),(201809026002,34,55,26,2232320,'NOVO','2018-09-17 22:21:32',NULL),(201809027000,1,47,27,1000,'NOVO','2018-09-01 22:16:19',NULL),(201809028000,1,48,28,1000,'NOVO','2018-09-01 23:15:37',NULL),(201809028001,1,49,28,3333,'NOVO','2018-09-01 23:16:01',NULL),(201809031000,1,51,31,500,'NOVO','2018-09-02 02:15:52',NULL),(201809031001,33,53,31,111,'NOVO','2018-09-16 15:04:27',NULL),(201809031002,3,57,31,5000,'NOVO','2018-09-17 23:52:53',NULL),(201809032000,1,52,32,22454500,'NOVO','2018-09-11 21:39:04',NULL),(201809033000,1,53,33,5000,'NOVO','2018-09-11 22:11:50',NULL),(201809033001,1,54,33,6000,'NOVO','2018-09-11 22:17:46',NULL),(201809034000,34,56,34,2000,'NOVO','2018-09-17 22:23:22',NULL);
-/*!40000 ALTER TABLE `orcamentos` ENABLE KEYS */;
-UNLOCK TABLES;
+ALTER SEQUENCE public.clientes_id_seq OWNED BY public.clientes.id;
+
 
 --
--- Table structure for table `users`
+-- Name: equipamentos; Type: TABLE; Schema: public; Owner: postgres
 --
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `users` (
-  `id` int(16) NOT NULL AUTO_INCREMENT,
-  `nomeUsuario` varchar(255) NOT NULL,
-  `email` varchar(32) NOT NULL,
-  `perfil` varchar(16) NOT NULL,
-  `password` char(60) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `nomeUsuario` (`nomeUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE public.equipamentos (
+    id integer NOT NULL,
+    nomeequip character varying(255) NOT NULL,
+    serialnumber character varying(16) NOT NULL
+);
+
+
+ALTER TABLE public.equipamentos OWNER TO postgres;
 
 --
--- Dumping data for table `users`
+-- Name: equipamentos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Thiago','t.macahyba@gmail.com','manager','\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0'),(2,'Andre','','usuario','\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0'),(3,'Maca','maca@maca.com','manager','$2b$11$9u5fpGjEhu9hNcCe4wXOaOg9WYAL8Beusu68qFdRbF2KvNMeoB7xK'),(22,'Jose','jose','usuario','$2b$11$mCSBQ/yTBVpFL5wd6VdH4e/KOyn8hJaPKC.hvt86fsxQ/Jarozykq'),(32,'joao','joao','manager','$2b$11$X60Wi5REoxBVwvMNW/OPBeQ2iENNdAHGu5jvnsu7f.NQAUaZ5oWBu'),(33,'ricardo','ricardo@ricardo.com','usuario','$2b$11$lnPK6wgMI4K4aL3S2pggOeDfH3VYHSH3YBhQCqjKdWL7A87RgnVVu'),(34,'teste','teste','usuario','$2b$11$c5MP7pzdrDp4fxvTR3Y.2.HDt7MbUTBUa7eNcCb1ZHeA1HlP99Icm');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+CREATE SEQUENCE public.equipamentos_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-18  0:55:04
+ALTER TABLE public.equipamentos_id_seq OWNER TO postgres;
+
+--
+-- Name: equipamentos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.equipamentos_id_seq OWNED BY public.equipamentos.id;
+
+
+--
+-- Name: orcamentos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.orcamentos (
+    id bigint NOT NULL,
+    idusuario integer NOT NULL,
+    idequip integer NOT NULL,
+    idcliente integer NOT NULL,
+    valor real NOT NULL,
+    status character varying(16) NOT NULL,
+    datacriacao timestamp without time zone DEFAULT now(),
+    dataaprov timestamp without time zone
+);
+
+
+ALTER TABLE public.orcamentos OWNER TO postgres;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    nomeusuario character varying(255) NOT NULL,
+    email character varying(32) NOT NULL,
+    perfil character varying(16) NOT NULL,
+    password character(60)
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: clientes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clientes ALTER COLUMN id SET DEFAULT nextval('public.clientes_id_seq'::regclass);
+
+
+--
+-- Name: equipamentos id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.equipamentos ALTER COLUMN id SET DEFAULT nextval('public.equipamentos_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: clientes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.clientes (id, nomecliente, cnpj, responsavel, departamento) FROM stdin;
+1	TVG	CNPJTVG	CARLOS	ENGENHARIA
+3	TVR	TVR	TVR	TVR
+4	TVC	TVC	TVC	TVC
+5	TVZ	TVZ	TVZ	TVZ
+6	TVA	TVA	TVA	TVA
+7	TVB	TVB	TVB	TVB
+8	TVD	TVD	TVD	TVD
+9	TVE	TVE	TVE	TVE
+10	A	A	A	A
+11	B	B	B	B
+12	C	C	C	C
+13	D	D	D	D
+14	E	E	E	E
+15	F	F	F	F
+16	G	G	G	G
+17	H	H	HHH	H
+18	I	I	I	I
+19	J	J	J	J
+20	K	K	K	K
+21	L	L	L	L
+22	M	M	M	MM
+23	N	N	N	N
+\.
+
+
+--
+-- Data for Name: equipamentos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.equipamentos (id, nomeequip, serialnumber) FROM stdin;
+1	ODS-D77	123456
+9	PMW-200	654321
+10	A	A
+11	B	B
+12	C	C
+13	D	D
+14	E	E
+15	F	F
+16	G	G
+17	H	H
+18	I	I
+19	F	2
+\.
+
+
+--
+-- Data for Name: orcamentos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.orcamentos (id, idusuario, idequip, idcliente, valor, status, datacriacao, dataaprov) FROM stdin;
+201809001000	1	1	1	1000	APROVADO	2018-09-22 22:33:11.33105	2018-09-22 22:59:40.389315
+201809009000	1	12	9	1	NOVO	2018-09-22 23:20:39.360384	\N
+201809017000	1	10	17	1	NOVO	2018-09-22 23:35:05.698006	\N
+201809018000	1	10	18	2	NOVO	2018-09-22 23:35:18.692658	\N
+201809010000	1	13	10	1	NOVO	2018-09-22 23:35:27.068399	\N
+201809023000	1	18	23	1	NOVO	2018-09-22 23:46:40.140383	\N
+201809010001	1	10	10	1	NOVO	2018-09-22 23:48:18.867319	\N
+201809010002	1	10	10	1	NOVO	2018-09-22 23:50:02.517888	\N
+201809010003	1	10	10	1	NOVO	2018-09-22 23:50:41.895993	\N
+201809012000	1	12	12	1	NOVO	2018-09-22 23:52:11.00321	2018-09-22 23:54:17.944438
+201809011000	1	11	11	2	REJEITADO	2018-09-22 23:51:35.478666	2018-09-22 23:54:27.210205
+201809010004	1	19	10	1	NOVO	2018-09-22 23:57:26.771151	2018-09-23 00:00:15.246271
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id, nomeusuario, email, perfil, password) FROM stdin;
+1	maca	maca@maca.com	manager	$2b$11$NqofYnUaaPwPPooH9AA6keLkH5Ao0i50.rpEEOgSdBw7TFt2HzVsa
+2	teste	teste	usuario	$2b$11$rmlRvYTeIaHMQCg3eq.8te7e7PY34osKf16BLatA0tFcRe3CuaNfm
+3	a	a	usuario	$2b$11$RLOhGRafBISwTIc8/sU0ge7eD1XpU3fpohUFwjBquRv.ZCZONePgK
+\.
+
+
+--
+-- Name: clientes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.clientes_id_seq', 23, true);
+
+
+--
+-- Name: equipamentos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.equipamentos_id_seq', 19, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 3, true);
+
+
+--
+-- Name: clientes clientes_nomecliente_cnpj_responsavel_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clientes
+    ADD CONSTRAINT clientes_nomecliente_cnpj_responsavel_key UNIQUE (nomecliente, cnpj, responsavel);
+
+
+--
+-- Name: clientes clientes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clientes
+    ADD CONSTRAINT clientes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: equipamentos equipamentos_nomeequip_serialnumber_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.equipamentos
+    ADD CONSTRAINT equipamentos_nomeequip_serialnumber_key UNIQUE (nomeequip, serialnumber);
+
+
+--
+-- Name: equipamentos equipamentos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.equipamentos
+    ADD CONSTRAINT equipamentos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orcamentos orcamentos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orcamentos
+    ADD CONSTRAINT orcamentos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_nomeusuario_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_nomeusuario_key UNIQUE (nomeusuario);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orcamentos orcamentos_idcliente_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orcamentos
+    ADD CONSTRAINT orcamentos_idcliente_fkey FOREIGN KEY (idcliente) REFERENCES public.clientes(id);
+
+
+--
+-- Name: orcamentos orcamentos_idequip_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orcamentos
+    ADD CONSTRAINT orcamentos_idequip_fkey FOREIGN KEY (idequip) REFERENCES public.equipamentos(id);
+
+
+--
+-- Name: orcamentos orcamentos_idusuario_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orcamentos
+    ADD CONSTRAINT orcamentos_idusuario_fkey FOREIGN KEY (idusuario) REFERENCES public.users(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

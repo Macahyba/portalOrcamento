@@ -59,10 +59,10 @@ module.exports.inserirOrcPOST = function(app, req, res){
         res.redirect("/listaOrcamentos");
     })
 
-    /*.catch(queryErr=>{
+    .catch(queryErr=>{
         console.log(queryErr);
         res.status(500).render("erro", { error : queryErr});
-    })*/		
+    })		
     
     .then(()=>{
 

@@ -20,34 +20,34 @@ OrcamentosDAO.prototype.getOrcamentos = function(){
 
 OrcamentosDAO.prototype.getOrcamentoDetalhado = function(id) {
 
-    return this._connection.query(this._sQuery + "WHERE orcamentos.id='" + id + "' ORDER BY id");
+    return this._connection.query(this._sQuery + "WHERE orcamentos.id=$1 ORDER BY id", [id]);
     
 }
 
 OrcamentosDAO.prototype.getClienteList = function(id){
 
     return this._connection.query(  this._sQuery + "WHERE clientes.nomecliente=(SELECT nomecliente FROM clientes " +
-                                    "WHERE id='" + id + "') ORDER BY datacriacao");
+                                    "WHERE id=$1) ORDER BY datacriacao", [id]);
 
 }
 
 OrcamentosDAO.prototype.getUserList = function(id){
 
-    return this._connection.query(this._sQuery + "WHERE users.id='" + id + "' ORDER BY id");
+    return this._connection.query(this._sQuery + "WHERE users.id=$1 ORDER BY id", [id]);
     
 }
 
 OrcamentosDAO.prototype.getCliente = function(nomeCliente, cnpj, responsavel){
 
-    return this._connection.query(  "SELECT * FROM clientes WHERE nomecliente='" + nomeCliente + 
-                                    "' AND cnpj='" + cnpj + "' AND responsavel='" + responsavel + "' ORDER BY id LIMIT 1");
+    return this._connection.query(  "SELECT * FROM clientes WHERE nomecliente=$1 AND cnpj=$2 AND responsavel=$3 ORDER BY id LIMIT 1",
+                                    [nomeCliente, cnpj, responsavel]);
     
 }    
 
 OrcamentosDAO.prototype.getEquip = function(nomeEquip,serialNumber){
 
-    return this._connection.query(  "SELECT * FROM equipamentos WHERE nomeequip='" + nomeEquip + 
-                                    "' AND serialnumber='" + serialNumber + "' ORDER BY id LIMIT 1");
+    return this._connection.query(  "SELECT * FROM equipamentos WHERE nomeequip=$1 AND serialnumber=$2 ORDER BY id LIMIT 1",
+                                    [nomeEquip, serialNumber]);
 
 }
 
@@ -143,7 +143,8 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody, id){
 
 OrcamentosDAO.prototype.getIncr = function(id){
     
-    return this._connection.query("SELECT RIGHT(to_char(MAX(id)+1,'fm000000000000'),3) as id FROM orcamentos WHERE idCliente=" + id)
+    return this._connection.query(  "SELECT RIGHT(to_char(MAX(id)+1,'fm000000000000'),3) as id FROM orcamentos WHERE idCliente=$1",
+                                    [id])
 
 }
 
@@ -159,16 +160,16 @@ OrcamentosDAO.prototype.getSumm = function(){
 
 OrcamentosDAO.prototype.insereEquip = function(nomeEquip, serialNumber){
 
-    return this._connection.query(  "INSERT INTO equipamentos (nomeequip, serialnumber) VALUES(UPPER('" + nomeEquip + 
-                                    "'), UPPER('" + serialNumber + "')) RETURNING *")
+    return this._connection.query(  "INSERT INTO equipamentos (nomeequip, serialnumber) VALUES(UPPER($1), UPPER($2)) RETURNING *",
+                                    [nomeEquip, serialNumber])
 
 }
 
 OrcamentosDAO.prototype.insereCliente = function(nomeCliente, cnpj, responsavel, departamento){
 
     return this._connection.query(  "INSERT INTO clientes (nomeCliente, cnpj, responsavel, departamento) " +
-                                    "VALUES(UPPER('" + nomeCliente + "'), UPPER('" + cnpj + "'), UPPER('" + 
-                                    responsavel + "'), UPPER('" + departamento + "')) RETURNING *");
+                                    "VALUES(UPPER($1), UPPER($2), UPPER($3), UPPER($4)) RETURNING *",
+                                    [nomeCliente, cnpj, responsavel, departamento]);
 
 }
 
@@ -187,8 +188,8 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente,
 
     .then((idOrc)=>{    
         
-        let qInsert = this._connection.query(  "INSERT INTO orcamentos (id, idusuario, idequip, idcliente, valor, status) VALUES('" + idOrc + 
-                                                "', '" + idUsuario + "', '" + idEquip + "', '" + idCliente + "', '" + valor + "','NOVO')");
+        let qInsert = this._connection.query(   "INSERT INTO orcamentos (id, idusuario, idequip, idcliente, valor, status) VALUES($1, $2, $3, $4, $5,'NOVO')",
+                                                [idOrc, idUsuario, idEquip, idCliente, valor]);
 
         return this._Promise.props({ 'qInsert' : qInsert, 'idOrc' : idOrc , 'idUsuario' : idUsuario })                                    
 
@@ -200,19 +201,19 @@ OrcamentosDAO.prototype.getCNPJ = function(nomeCliente){
 
     //return this._connection.query("SELECT DISTINCT cnpj, responsavel FROM clientes WHERE nomeCliente='" + nomeCliente + "'");
     return this._connection.query(  "SELECT distinct nomecliente,cnpj,responsavel,departamento,(select count(*) from orcamentos where idcliente=p.id) " +
-                                    "as total FROM clientes p where nomecliente='" + nomeCliente + "' ORDER BY nomecliente ASC, total DESC");
+                                    "as total FROM clientes p where nomecliente=$1 ORDER BY nomecliente ASC, total DESC", [nomeCliente]);
 
 }
 
 OrcamentosDAO.prototype.getSerialNumber = function(nomeEquip){
 
     return this._connection.query(  "SELECT distinct nomeequip, serialnumber, (select count(*) from orcamentos where idequip=p.id) " +
-                                    "as total FROM equipamentos p where nomeequip='" + nomeEquip + "' ORDER BY nomeequip ASC, total DESC");
+                                    "as total FROM equipamentos p where nomeequip=$1 ORDER BY nomeequip ASC, total DESC", [nomeEquip]);
 }
 
 OrcamentosDAO.prototype.aprovarOrc = function(vBody){
 
-    return this._connection.query(  "UPDATE orcamentos SET status='" + vBody.status + "', dataaprov=now() WHERE id='" + vBody.id + "'")
+    return this._connection.query(  "UPDATE orcamentos SET status=$1, dataaprov=now() WHERE id=$2", [vBody.status, vBody.id])
 
     .then(()=>{
 

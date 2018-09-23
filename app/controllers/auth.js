@@ -47,13 +47,13 @@ module.exports.adminPost = function(app, req, res){
             res.send("sucesso");
         })
 
-        /*.catch(queryErr=>{
+        .catch(queryErr=>{
             if (queryErr.code == "ER_DUP_ENTRY") {
                 res.status(500).render("erro", { error : "User already registered"});
             } else {
                 res.status(500).render("erro", { error : queryErr});
             }
-        })		*/
+        })		
         
         .then(()=>{
 
