@@ -61,6 +61,21 @@ $(function(){
         }))
     })
 
+    $('#valor').add('#desconto').blur(function(){
+
+        let valor = $('#valor').val();
+        let desconto = $('#desconto').val();
+        $('#vFinal').val(Math.round(valor*(1- desconto/100)));
+    })
+
+    $('#desconto').blur(function(){
+
+        if ($('#desconto').val() > 100){
+            alert("Insira um valor menor que 100%!");
+            $('#desconto').val('0');
+        }
+    })
+
     $('input').on('input', function(){
 
         $(this).next().removeClass('errorShow').addClass("error");
@@ -109,6 +124,8 @@ $(function(){
             
             cnpj.value = res.rows[0].cnpj;
             cnpj.readOnly = true;
+            nomeCompleto.value = res.rows[0].nomecompleto;
+            nomeCompleto.readOnly = true;
             responsavel.value = res.rows[0].responsavel
             $('#respList option').remove();
             for (i=0; i< res.rowCount; i++){
@@ -178,6 +195,8 @@ function limpaCliente(){
 
     cnpj.value = "";
     cnpj.readOnly = false;
+    nomeCompleto.value = "";
+    nomeCompleto.readOnly = false;
     responsavel.value = "";
     $('#respList option').remove();
     departamento.value = "";

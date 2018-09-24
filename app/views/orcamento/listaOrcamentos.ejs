@@ -3,14 +3,13 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Lista de orcamentos</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<script type="text/javascript"> var data = JSON.parse("<%- summData %>")</script>
-		<script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
-		<script type="text/javascript" src="scripts/script.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<script type="text/javascript" src="/scripts/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="/scripts/script.js"></script>
 	</head>
 	<body>
         <h1>Lista de orcamentos</h1>
-		<p>User: <%= user.nomeUsuario %>&nbsp;&nbsp;Id: <%= user.id %>&nbsp;&nbsp;Id: <%= user.perfil %>&nbsp;&nbsp;<%= Date.now()%></p>
+		<p>User: <%= user.login %>&nbsp;&nbsp;Id: <%= user.id %>&nbsp;&nbsp;Id: <%= user.perfil %>&nbsp;&nbsp;<%= Date.now()%></p>
 		<table>
 			<thead>
 				<tr>

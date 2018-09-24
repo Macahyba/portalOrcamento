@@ -12,6 +12,7 @@
 			<table>
 				<tr>
 					<td>Cliente</td>
+					<td>Nome Completo</td>
 					<td>CNPJ</td>
 					<td>Responsável</td>
 					<td>Departamento</td>
@@ -19,7 +20,9 @@
 
 				<tr>
 					<td><input autocomplete="off" type="text" name="nomeCliente" list="nomeList" id="nomeCliente"></td>
-					<datalist id="nomeList"></datalist>
+					<datalist id="nomeList"></datalist>					
+					<td><input autocomplete="off" type="text" name="nomeCompleto" list="nomeCompList" id="nomeCompleto"></td>
+					<datalist id="nomeCompList"></datalist>
 					<td><input autocomplete="off" type="text" name="cnpj" id="cnpj"></td>
 					<datalist id="respList"></datalist>
 					<td><input autocomplete="off" type="text" name="responsavel" id="responsavel" list="respList"></td>
@@ -29,6 +32,8 @@
 					<td>Equipamento</td>
 					<td>Serial Number</td>
 					<td>Valor</td>
+					<td>Desconto (%)</td>
+					<td>Valor Final</td>
 				</tr>
 				<tr>
 					<td><input autocomplete="off" type="text" name="nomeEquip" list="equipList" id="nomeEquip"></td>
@@ -36,6 +41,8 @@
 					<td><input autocomplete="off" type="text" name="serialNumber" id="serialNumber" list="serialList"></td>
 					<datalist id="serialList"></datalist>
 					<td><input autocomplete="off" type="number" name="valor" id="valor"></td>
+					<td><input autocomplete="off" type="number" name="desconto" id="desconto" step="0.1" min="0" max="100" value='0'></td>
+					<td><input autocomplete="off" type="number" name="vFinal" id="vFinal" readonly></td>
 				</tr>
 				<tr>
 					<td><button onclick="this.disabled=true; this.form.submit();">Submit</button></td>	

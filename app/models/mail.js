@@ -42,7 +42,7 @@ module.exports.sendMail = function(mail, app){
             let mailOptions = {
                 from: '"Admin 👻" <admin@example.com>', // sender address
                 to: query.rows[0].email + ', baz@example.com', // list of receivers
-                subject: 'Hello '+ query.rows[0].nomeusuario +'✔', // Subject line
+                subject: 'Hello '+ query.rows[0].login +'✔', // Subject line
                 text: 'Novo orcamento em ' + url, // plain text body
                 html: '<b>Novo orcamento em <a href=' + url +'>' + url + '</a></b>' // html body
             };

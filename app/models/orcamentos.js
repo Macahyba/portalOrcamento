@@ -8,9 +8,9 @@ module.exports.montaOrc = function(app, orcamento){
     '<td>'+orcamento.nomeequip+'</td>'+
     '<td>'+orcamento.serialnumber+'</td>'+
     '<td>R$ '+orcamento.valor+'</td>'+
-    '<td><a href="/detalhe/userDetalhe/'+orcamento.idusuario+'">'+orcamento.nomeusuario+'</a></td>';
+    '<td><a href="/detalhe/userDetalhe/'+orcamento.idusuario+'">'+orcamento.login+'</a></td>';
 
-    if (app.locals.user.perfil == 'manager') {
+    if (app.locals.user.perfil !== 'usuario') {
 
         // <form id="'+orcamento.id +'" action="/approve" method="post" > IS OPTIONAL - JQUERY HANDLES IT
         answ += '<td><select name="status">'
@@ -47,10 +47,15 @@ module.exports.montaOrc = function(app, orcamento){
     
     answ+= '<td>' + moment(orcamento.datacriacao).format( "ddd DD/MM/YYYY HH:mm:ss") + '</td>'
 
-    if (app.locals.user.perfil == 'manager') {							
+    if (app.locals.user.perfil !== 'usuario') {							
 
         answ+= '<td><input type="button" id="sub'+ orcamento.id+'" value="Submit"></td>'
-        answ+= '<td><input type="button" id="dow'+ orcamento.id+'" value="Download"></td>'
+        
+        if(orcamento.status == "APROVADO") {
+
+            answ+= '<td><input type="button" id="dow'+ orcamento.id+'" value="Download"></td>'
+        }
+        
         // </form> IS OPTIONAL - JQUERY HANDLES IT
     }	
 

@@ -23,13 +23,13 @@ module.exports.passaportInit = function(app){
 
     passport.use('local-login', new LocalStrategy({
         
-        usernameField : 'nomeUsuario',
+        usernameField : 'login',
         passwordField : 'password',
         passReqToCallback : true 
     },
-    function(req, nomeUsuario, password, done) { 
+    function(req, login, password, done) { 
         
-        if(!nomeUsuario || !password){ 
+        if(!login || !password){ 
             throw "Data is missing"; 
         }
     
@@ -45,7 +45,7 @@ module.exports.passaportInit = function(app){
             let AuthDAO = new app.models.AuthDAO(connection);
             //conn = connection;
 
-            return AuthDAO.getUserByName(nomeUsuario)
+            return AuthDAO.getUserByName(login)
         })		
     
         .then(query =>{

@@ -10,7 +10,12 @@
             <table>
                 <tr>
                     <td>Login</td>
-                    <td><input type="text" name="nomeUsuario"></td>
+                    <td><input type="text" name="login"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Nome Completo</td>
+                    <td><input type="text" name="nome"></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -35,6 +40,23 @@
                     <td><input type="button" onclick="this.disabled=true; this.form.submit();" value="Enviar"></td>
                     <td><input type="button" onclick="window.location.href='/home'" value="Home" /></td>
                 </tr>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Login</td>
+                        <td>Nome</td>
+                        <td>E-mail</td>
+                        <td>Perfil</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%	for (let i=0; i < detalhe.length; i++) {%>
+    
+                    <%-		app.models.auth.montaUser(app, detalhe[i]); %>
+    
+                    <%	} %>
+                </tbody>
             </table>
         </form>
 	</body>

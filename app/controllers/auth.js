@@ -7,14 +7,40 @@ module.exports.loginPost = function(app, req, res){
 
     //console.log(JSON.stringify(req.session,null,4))
     if (req.session.returnTo == '/favicon.ico') { delete req.session.returnTo; }
-    app.locals.user =  { 'id' : req.user.rows[0].id, 'nomeUsuario': req.user.rows[0].nomeusuario, 'perfil': req.user.rows[0].perfil };
+    app.locals.user =  { 'id' : req.user.rows[0].id, 'login': req.user.rows[0].login, 'perfil': req.user.rows[0].perfil };
     res.redirect(req.session.returnTo || '/home');
     delete req.session.returnTo;
 }
 
 module.exports.adminGet = function(app, req, res){
 
-    res.render("orcamento/admin");
+    let connection = app.config.dbConnection()
+
+    connection.connect()
+
+    .then(()=>{
+
+        let AuthDAO = new app.models.AuthDAO(connection);
+
+        return AuthDAO.getUsers();
+    })
+
+    .then(query=>{
+        
+        res.render("orcamento/admin", {detalhe : query.rows, app: app});
+
+    })
+
+    .catch(err=>{
+        
+        //console.log(err);
+        res.status(500).render("erro", { error : err});
+    })
+
+    .then(()=>{
+        
+        if (connection) { connection.end()} ;
+    })
 }
 
 module.exports.adminPost = function(app, req, res){
@@ -44,7 +70,7 @@ module.exports.adminPost = function(app, req, res){
 
         .then(()=>{
 
-            res.send("sucesso");
+            res.redirect("/admin");
         })
 
         .catch(queryErr=>{

@@ -4,12 +4,19 @@
    
     application.get('/admin', ensureLoggedIn('/'), function(req, res){
 
-        application.controllers.auth.adminGet(application, req, res);
+        if (application.locals.user.perfil == 'admin') {
+
+            application.controllers.auth.adminGet(application, req, res);
+
+        } else {
+
+            res.status(404).render('erro404');
+        }
 
     })
 
     application.post('/admin', ensureLoggedIn('/'), function(req, res){
-
+      
         application.controllers.auth.adminPost(application, req, res);
 
     })

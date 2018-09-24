@@ -40,6 +40,7 @@ SET default_with_oids = false;
 CREATE TABLE public.clientes (
     id integer NOT NULL,
     nomecliente character varying(255) NOT NULL,
+    nomecompleto character varying(255) NOT NULL,
     cnpj character varying(16) NOT NULL,
     responsavel character varying(255) NOT NULL,
     departamento character varying(255) NOT NULL
@@ -115,6 +116,7 @@ CREATE TABLE public.orcamentos (
     idequip integer NOT NULL,
     idcliente integer NOT NULL,
     valor real NOT NULL,
+    desconto real DEFAULT '0'::real,
     status character varying(16) NOT NULL,
     datacriacao timestamp without time zone DEFAULT now(),
     dataaprov timestamp without time zone
@@ -129,7 +131,8 @@ ALTER TABLE public.orcamentos OWNER TO postgres;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    nomeusuario character varying(255) NOT NULL,
+    login character varying(255) NOT NULL,
+    nome character varying(255) NOT NULL,
     email character varying(32) NOT NULL,
     perfil character varying(16) NOT NULL,
     password character(60)
@@ -185,29 +188,8 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: clientes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.clientes (id, nomecliente, cnpj, responsavel, departamento) FROM stdin;
-1	TVG	CNPJTVG	CARLOS	ENGENHARIA
-3	TVR	TVR	TVR	TVR
-4	TVC	TVC	TVC	TVC
-5	TVZ	TVZ	TVZ	TVZ
-6	TVA	TVA	TVA	TVA
-7	TVB	TVB	TVB	TVB
-8	TVD	TVD	TVD	TVD
-9	TVE	TVE	TVE	TVE
-10	A	A	A	A
-11	B	B	B	B
-12	C	C	C	C
-13	D	D	D	D
-14	E	E	E	E
-15	F	F	F	F
-16	G	G	G	G
-17	H	H	HHH	H
-18	I	I	I	I
-19	J	J	J	J
-20	K	K	K	K
-21	L	L	L	L
-22	M	M	M	MM
-23	N	N	N	N
+COPY public.clientes (id, nomecliente, nomecompleto, cnpj, responsavel, departamento) FROM stdin;
+2	TVG	GLOBO PARTICIPAÇÕES	CNPJGLOBO	WILSON	ENGENHARIA
 \.
 
 
@@ -216,18 +198,7 @@ COPY public.clientes (id, nomecliente, cnpj, responsavel, departamento) FROM std
 --
 
 COPY public.equipamentos (id, nomeequip, serialnumber) FROM stdin;
-1	ODS-D77	123456
-9	PMW-200	654321
-10	A	A
-11	B	B
-12	C	C
-13	D	D
-14	E	E
-15	F	F
-16	G	G
-17	H	H
-18	I	I
-19	F	2
+1	PMW-200	SW1234
 \.
 
 
@@ -235,19 +206,8 @@ COPY public.equipamentos (id, nomeequip, serialnumber) FROM stdin;
 -- Data for Name: orcamentos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.orcamentos (id, idusuario, idequip, idcliente, valor, status, datacriacao, dataaprov) FROM stdin;
-201809001000	1	1	1	1000	APROVADO	2018-09-22 22:33:11.33105	2018-09-22 22:59:40.389315
-201809009000	1	12	9	1	NOVO	2018-09-22 23:20:39.360384	\N
-201809017000	1	10	17	1	NOVO	2018-09-22 23:35:05.698006	\N
-201809018000	1	10	18	2	NOVO	2018-09-22 23:35:18.692658	\N
-201809010000	1	13	10	1	NOVO	2018-09-22 23:35:27.068399	\N
-201809023000	1	18	23	1	NOVO	2018-09-22 23:46:40.140383	\N
-201809010001	1	10	10	1	NOVO	2018-09-22 23:48:18.867319	\N
-201809010002	1	10	10	1	NOVO	2018-09-22 23:50:02.517888	\N
-201809010003	1	10	10	1	NOVO	2018-09-22 23:50:41.895993	\N
-201809012000	1	12	12	1	NOVO	2018-09-22 23:52:11.00321	2018-09-22 23:54:17.944438
-201809011000	1	11	11	2	REJEITADO	2018-09-22 23:51:35.478666	2018-09-22 23:54:27.210205
-201809010004	1	19	10	1	NOVO	2018-09-22 23:57:26.771151	2018-09-23 00:00:15.246271
+COPY public.orcamentos (id, idusuario, idequip, idcliente, valor, desconto, status, datacriacao, dataaprov) FROM stdin;
+201809002000	1	1	2	1000	0	NOVO	2018-09-24 14:59:51.951674	2018-09-24 15:01:39.500316
 \.
 
 
@@ -255,10 +215,10 @@ COPY public.orcamentos (id, idusuario, idequip, idcliente, valor, status, datacr
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, nomeusuario, email, perfil, password) FROM stdin;
-1	maca	maca@maca.com	manager	$2b$11$NqofYnUaaPwPPooH9AA6keLkH5Ao0i50.rpEEOgSdBw7TFt2HzVsa
-2	teste	teste	usuario	$2b$11$rmlRvYTeIaHMQCg3eq.8te7e7PY34osKf16BLatA0tFcRe3CuaNfm
-3	a	a	usuario	$2b$11$RLOhGRafBISwTIc8/sU0ge7eD1XpU3fpohUFwjBquRv.ZCZONePgK
+COPY public.users (id, login, nome, email, perfil, password) FROM stdin;
+1	Admin	Administrador do sistema	admin@admin	admin	$2b$11$sjTdyTd2hTMj9oB15pbx.OPi2YkouV3AVDUTrG5gvykTuTWOdLWPO
+4	Manager	Gerente	manager@manager	manager	$2b$11$OxCtD0w6IN.E.MgLacU6t.mrr4nhF19p16f/wgVolrSEw4JAN4njq
+5	User	Usuario Comum	usuario@usuario	usuario	$2b$11$P9wke1pCGJ1VJdk5b7B58Oh1iy2p5TAqlP37mHAssC7ZrnZtxAcEG
 \.
 
 
@@ -266,21 +226,21 @@ COPY public.users (id, nomeusuario, email, perfil, password) FROM stdin;
 -- Name: clientes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.clientes_id_seq', 23, true);
+SELECT pg_catalog.setval('public.clientes_id_seq', 2, true);
 
 
 --
 -- Name: equipamentos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.equipamentos_id_seq', 19, true);
+SELECT pg_catalog.setval('public.equipamentos_id_seq', 1, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 3, true);
+SELECT pg_catalog.setval('public.users_id_seq', 5, true);
 
 
 --
@@ -324,19 +284,19 @@ ALTER TABLE ONLY public.orcamentos
 
 
 --
--- Name: users users_nomeusuario_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_login_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_nomeusuario_key UNIQUE (nomeusuario);
+    ADD CONSTRAINT users_login_key UNIQUE (login);
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_pkey1; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT users_pkey1 PRIMARY KEY (id);
 
 
 --

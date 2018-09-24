@@ -4,8 +4,8 @@ function OrcamentosDAO (connection) {
     this._Promise = require("bluebird");
     this._date = require('date-and-time');
     this._sQuery =
-    "SELECT orcamentos.id, idusuario, nomeusuario, idcliente, nomecliente, idEquip, nomeequip, serialnumber, valor, " +
-    "status, datacriacao " +
+    "SELECT orcamentos.id, idusuario, login, idcliente, nomecliente, nomecompleto, idEquip, " +
+    "nomeequip, serialnumber, valor, desconto, status, datacriacao " +
     "FROM orcamentos " +
     "LEFT JOIN users ON orcamentos.idusuario=users.id " + 
     "LEFT JOIN equipamentos ON orcamentos.idequip=equipamentos.id "+
@@ -61,6 +61,7 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody, id){
                                 'equipamento' : equipamento, 
                                 'newCliente' : {
                                     'nomeCliente' : vBody.nomeCliente,
+                                    'nomeCompleto' : vBody.nomeCompleto,
                                     'newCNPJ' : vBody.cnpj,
                                     'newResp' : vBody.responsavel,
                                     'newDepto' : vBody.departamento
@@ -78,8 +79,8 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody, id){
             //console.log("gera cliente e equip")
             //console.log(connection,answ.newEquip.nomeEquip,answ.newEquip.serialNumber);
             let qInsEquip =  this.insereEquip(answ.newEquip.nomeEquip, answ.newEquip.serialNumber); 
-            let qInsCliente =   this.insereCliente(answ.newCliente.nomeCliente, answ.newCliente.newCNPJ, 
-                                answ.newCliente.newResp, answ.newCliente.newDepto);
+            let qInsCliente =   this.insereCliente(answ.newCliente.nomeCliente, answ.newCliente.nomeCompleto, 
+                                answ.newCliente.newCNPJ, answ.newCliente.newResp, answ.newCliente.newDepto);
 
             return this._Promise.props({ 'idCliente' : qInsCliente, 'idEquip' :  qInsEquip})
 
@@ -95,8 +96,8 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody, id){
         } else if (!answ.cliente.rowCount){
             //console.log("gera cliente: "+JSON.stringify(answ.equipamento.rows[0].id,null,4))
             //let qInsCliente = 
-            return this.insereCliente(answ.newCliente.nomeCliente, answ.newCliente.newCNPJ, 
-                                        answ.newCliente.newResp, answ.newCliente.newDepto)
+            return this.insereCliente(answ.newCliente.nomeCliente, answ.newCliente.nomeCompleto, 
+                        answ.newCliente.newCNPJ, answ.newCliente.newResp, answ.newCliente.newDepto)
 
             .then((res)=>{
                 //console.log("res de cliente: "+JSON.stringify(res,null,4));                    
@@ -135,7 +136,7 @@ OrcamentosDAO.prototype.insereOrcamento = function(vBody, id){
     .then((res)=>{
         //throw "end of test"
         //console.log(id, res.idEquip.id, res.idCliente.id, vBody.valor)
-        return this.gravaOrcamento(id, res.idEquip.id, res.idCliente.id, vBody.valor);
+        return this.gravaOrcamento(id, res.idEquip.id, res.idCliente.id, vBody.valor, vBody.desconto);
 
     })
 
@@ -165,15 +166,15 @@ OrcamentosDAO.prototype.insereEquip = function(nomeEquip, serialNumber){
 
 }
 
-OrcamentosDAO.prototype.insereCliente = function(nomeCliente, cnpj, responsavel, departamento){
+OrcamentosDAO.prototype.insereCliente = function(nomeCliente, nomeCompleto, cnpj, responsavel, departamento){
 
-    return this._connection.query(  "INSERT INTO clientes (nomeCliente, cnpj, responsavel, departamento) " +
-                                    "VALUES(UPPER($1), UPPER($2), UPPER($3), UPPER($4)) RETURNING *",
-                                    [nomeCliente, cnpj, responsavel, departamento]);
+    return this._connection.query(  "INSERT INTO clientes (nomecliente, nomecompleto, cnpj, responsavel, departamento) " +
+                                    "VALUES(UPPER($1), UPPER($2), UPPER($3), UPPER($4), UPPER($5)) RETURNING *",
+                                    [nomeCliente, nomeCompleto, cnpj, responsavel, departamento]);
 
 }
 
-OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente, valor){
+OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente, valor, desconto){
 
     return this.getIncr(idCliente)
 
@@ -188,8 +189,8 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente,
 
     .then((idOrc)=>{    
         
-        let qInsert = this._connection.query(   "INSERT INTO orcamentos (id, idusuario, idequip, idcliente, valor, status) VALUES($1, $2, $3, $4, $5,'NOVO')",
-                                                [idOrc, idUsuario, idEquip, idCliente, valor]);
+        let qInsert = this._connection.query(   "INSERT INTO orcamentos (id, idusuario, idequip, idcliente, valor, desconto, status) VALUES($1, $2, $3, $4, $5, $6, 'NOVO')",
+                                                [idOrc, idUsuario, idEquip, idCliente, valor, desconto]);
 
         return this._Promise.props({ 'qInsert' : qInsert, 'idOrc' : idOrc , 'idUsuario' : idUsuario })                                    
 
@@ -200,7 +201,7 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente,
 OrcamentosDAO.prototype.getCNPJ = function(nomeCliente){
 
     //return this._connection.query("SELECT DISTINCT cnpj, responsavel FROM clientes WHERE nomeCliente='" + nomeCliente + "'");
-    return this._connection.query(  "SELECT distinct nomecliente,cnpj,responsavel,departamento,(select count(*) from orcamentos where idcliente=p.id) " +
+    return this._connection.query(  "SELECT distinct nomecliente, nomecompleto, cnpj, responsavel, departamento,(select count(*) from orcamentos where idcliente=p.id) " +
                                     "as total FROM clientes p where nomecliente=$1 ORDER BY nomecliente ASC, total DESC", [nomeCliente]);
 
 }
