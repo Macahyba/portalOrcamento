@@ -174,7 +174,7 @@ OrcamentosDAO.prototype.insereCliente = function(nomeCliente, nomeCompleto, cnpj
 
 }
 
-OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente, valor, desconto){
+OrcamentosDAO.prototype.gravaOrcamento = function(idusuario, idEquip, idCliente, valor, desconto){
 
     return this.getIncr(idCliente)
 
@@ -192,7 +192,7 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente,
         let qInsert = this._connection.query(   "INSERT INTO orcamentos (id, idusuario, idequip, idcliente, valor, desconto, status) VALUES($1, $2, $3, $4, $5, $6, 'NOVO')",
                                                 [id, idusuario, idEquip, idCliente, valor, desconto]);
 
-        return this._Promise.props({ 'qInsert' : qInsert, 'id' : id , 'idUsuario' : idUsuario })                                    
+        return this._Promise.props({ 'qInsert' : qInsert, 'id' : id , 'idusuario' : idusuario })                                    
 
     })
 
