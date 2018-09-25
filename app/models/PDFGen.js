@@ -13,8 +13,6 @@ module.exports.download = function(app, id, res){
         res.download(file, id+'.pdf', function(err){
             if (err) {
                 console.log(err)
-            } else {
-                console.log("arquivo "+id+".pdf gerado")
             }
         });
     })
@@ -50,7 +48,7 @@ module.exports.exportPDF = function(html, id){
                         "format": 'A4',
                         "orientation" : 'landscape' 
                         };
-        let file = 'app/pdf/'+id+'.pdf';
+        let file = './app/pdf/'+id+'.pdf';
         
         pdf.create(html, options).toFile(file, function(err, res) {
 

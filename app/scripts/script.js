@@ -45,7 +45,7 @@ $(function(){
                         //console.log(msg)
                         //$('#tr' + id).replaceWith(msg);
                         alert("Download vai começar")
-                        window.open('pdf/'+id+'.pdf','_blank')
+                        window.open('/pdf/'+id+'.pdf','_blank')
                         $('#' + op + id).prop('disabled', false);
                     })
         

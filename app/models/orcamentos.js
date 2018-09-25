@@ -50,14 +50,15 @@ module.exports.montaOrc = function(app, orcamento){
     if (app.locals.user.perfil !== 'usuario') {							
 
         answ+= '<td><input type="button" id="sub'+ orcamento.id+'" value="Submit"></td>'
-        
-        if(orcamento.status == "APROVADO") {
+    } 
 
-            answ+= '<td><input type="button" id="dow'+ orcamento.id+'" value="Download"></td>'
-        }
-        
+    if(orcamento.status == "APROVADO") {
+
+        answ+= '<td><input type="button" id="dow'+ orcamento.id+'" value="Download"></td>'
+    }
+    
         // </form> IS OPTIONAL - JQUERY HANDLES IT
-    }	
+    	
 
     answ+='</tr>'
 
