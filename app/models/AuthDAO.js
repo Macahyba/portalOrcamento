@@ -30,6 +30,13 @@ AuthDAO.prototype.getUsers = function(){
     return this._connection.query("SELECT id, login, nome, email, perfil FROM users")
 }
 
+
+AuthDAO.prototype.getManagerList = function(){
+
+    return this._connection.query("SELECT nome, email FROM users WHERE perfil='manager' OR perfil='admin'");
+}
+
+
 AuthDAO.prototype.updateUser = function(id, field, value) {
 
     return this._connection.query("UPDATE users set $2=$3 WHERE id=$1", [id, field, value])

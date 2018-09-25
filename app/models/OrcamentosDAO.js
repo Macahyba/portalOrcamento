@@ -187,12 +187,12 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idUsuario, idEquip, idCliente,
         
     })
 
-    .then((idOrc)=>{    
+    .then((id)=>{    
         
         let qInsert = this._connection.query(   "INSERT INTO orcamentos (id, idusuario, idequip, idcliente, valor, desconto, status) VALUES($1, $2, $3, $4, $5, $6, 'NOVO')",
-                                                [idOrc, idUsuario, idEquip, idCliente, valor, desconto]);
+                                                [id, idusuario, idEquip, idCliente, valor, desconto]);
 
-        return this._Promise.props({ 'qInsert' : qInsert, 'idOrc' : idOrc , 'idUsuario' : idUsuario })                                    
+        return this._Promise.props({ 'qInsert' : qInsert, 'id' : id , 'idUsuario' : idUsuario })                                    
 
     })
 
@@ -222,6 +222,7 @@ OrcamentosDAO.prototype.aprovarOrc = function(vBody){
     })
 
 }
+
 module.exports = function(){
 
     return OrcamentosDAO;    

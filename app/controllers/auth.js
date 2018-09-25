@@ -7,7 +7,7 @@ module.exports.loginPost = function(app, req, res){
 
     //console.log(JSON.stringify(req.session,null,4))
     if (req.session.returnTo == '/favicon.ico') { delete req.session.returnTo; }
-    app.locals.user =  { 'id' : req.user.rows[0].id, 'login': req.user.rows[0].login, 'perfil': req.user.rows[0].perfil };
+    app.locals.user =  { 'id' : req.user.rows[0].id, 'login': req.user.rows[0].login, 'perfil': req.user.rows[0].perfil, 'nome' : req.user.rows[0].nome };
     res.redirect(req.session.returnTo || '/home');
     delete req.session.returnTo;
 }

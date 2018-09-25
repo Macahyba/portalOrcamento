@@ -20,7 +20,7 @@ module.exports.download = function(app, id, res){
     })
 }
 
-function createHTML(id){
+module.exports.createHTML = function(id){
     
     return new Promise((resolve, reject)=>{
         
@@ -40,13 +40,16 @@ function createHTML(id){
     })
 }
 
-function exportPDF(html, id){
+module.exports.exportPDF = function(html, id){
 
     return new Promise((resolve, reject)=>{
 
         //console.log("PDFGen.exportPDF", html)
         let pdf = require('html-pdf');
-        let options = { format: 'Portrait' };
+        let options =   { 
+                        "format": 'A4',
+                        "orientation" : 'landscape' 
+                        };
         let file = 'app/pdf/'+id+'.pdf';
         
         pdf.create(html, options).toFile(file, function(err, res) {
