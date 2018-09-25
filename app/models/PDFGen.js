@@ -1,11 +1,11 @@
 module.exports.download = function(app, id, res){
     //console.log("PDFGen.download")
     
-    createHTML(id)
+    this.createHTML(id)
 
     .then(html=>{
 
-        return exportPDF(html, id)
+        return this.exportPDF(html, id)
     })
     
     .then((file)=>{
