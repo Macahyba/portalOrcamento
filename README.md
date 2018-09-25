@@ -6,6 +6,6 @@ Portal for invoice generation
 
 
 ToDo:
-work on the individual views
+work on the individual views (montaOrc, montaCliente)
 Refactor on script.js, passport.js
 Create reports

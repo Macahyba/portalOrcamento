@@ -48,7 +48,7 @@ module.exports.exportPDF = function(html, id){
                         "format": 'A4',
                         "orientation" : 'landscape' 
                         };
-        let file = './app/pdf/'+id+'.pdf';
+        let file = './app/public/pdf/'+id+'.pdf';
         
         pdf.create(html, options).toFile(file, function(err, res) {
 

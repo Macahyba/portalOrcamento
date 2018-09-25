@@ -21,7 +21,7 @@ module.exports.sendMail = function(mail, app, mode){
             subject = 'Orcamento aprovado em Portal Orçamento ✔'
             text = 'Aviso. Orcamento aprovado em '
             html = '<b>Aviso.<br>Orcamento aprovado <a href=';
-            attachments = [ { path: './app/pdf/'+ mail.id + '.pdf' }];
+            attachments = [ { path: './app/public/pdf/'+ mail.id + '.pdf' }];
             break;
         default:
             console.log("Erro ao enviar email")
@@ -85,8 +85,8 @@ module.exports.sendMail = function(mail, app, mode){
                 html: html + url +'>' + url + '</a></b>', // html body
                 attachments : attachments
             };
-
-            transporter.sendMail(mailOptions, (error, info) => {
+            console.log(JSON.stringify(mailOptions,null,4))
+            /*transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                     return console.log(error);
                 }
@@ -98,7 +98,7 @@ module.exports.sendMail = function(mail, app, mode){
                 // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
     
                 
-            });
+            });*/
         })
 
         .then(()=>{

@@ -7,20 +7,20 @@ module.exports.montaOrc = function(app, orcamento){
     '<td><a href="/detalhe/clienteDetalhe/'+orcamento.idcliente+'">'+orcamento.nomecliente+'</a></td>'+
     '<td>'+orcamento.nomeequip+'</td>'+
     '<td>'+orcamento.serialnumber+'</td>'+
-    '<td>R$ '+orcamento.valor+'</td>'+
+    '<td>R$ '+orcamento.valor*(1-orcamento.desconto/100)+'</td>'+
     '<td><a href="/detalhe/userDetalhe/'+orcamento.idusuario+'">'+orcamento.login+'</a></td>';
 
     if (app.locals.user.perfil !== 'usuario') {
 
         // <form id="'+orcamento.id +'" action="/approve" method="post" > IS OPTIONAL - JQUERY HANDLES IT
-        answ += '<td><select name="status">'
+        answ += '<td><select class="custom-select custom-select-sm" name="status">'
 
         switch (orcamento.status){
 
             case "APROVADO":
 
                 answ+= '<option value="NOVO">NOVO</option>'
-                answ+= '<option value="APROVADO" selected="selected">APROVADO</option>'
+                answ+= '<option value="APROVADO" selected="selected" >APROVADO</option>'
                 answ+= '<option value="REJEITADO">REJEITADO</option>'
                 break;
             case "REJEITADO":
@@ -49,12 +49,14 @@ module.exports.montaOrc = function(app, orcamento){
 
     if (app.locals.user.perfil !== 'usuario') {							
 
-        answ+= '<td><input type="button" id="sub'+ orcamento.id+'" value="Submit"></td>'
+        answ+= '<td><input class="btn btn-sm btn-success" type="button" id="sub'+ orcamento.id+'" value="Submit"></td>'
     } 
 
     if(orcamento.status == "APROVADO") {
 
-        answ+= '<td><input type="button" id="dow'+ orcamento.id+'" value="Download"></td>'
+        answ+= '<td><input class="btn btn-sm btn-primary" type="button" id="dow'+ orcamento.id+'" value="Download"></td>'
+    } else {
+        answ+= '<td></td>';
     }
     
         // </form> IS OPTIONAL - JQUERY HANDLES IT
@@ -64,4 +66,15 @@ module.exports.montaOrc = function(app, orcamento){
 
     return answ;
 
+}
+
+module.exports.montaCliente = function(app, orcamento) {
+
+    // TODO
+
+}
+
+module.exports.montaOrcDet = function(app, orcamento) {
+
+    //TODO
 }

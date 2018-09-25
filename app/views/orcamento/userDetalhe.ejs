@@ -2,35 +2,45 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Detalhe de usuario</title>
-		<link rel="stylesheet" type="text/css" href="/css/style.css">
-		<script type="text/javascript" src="/scripts/jquery-3.3.1.min.js"></script>
-		<script type="text/javascript" src="/scripts/script.js"></script>
+		<link rel="stylesheet" type="text/css" href="/public/css/style.css">
+		<link rel="stylesheet" type="text/css" href="/public/bootstrap/css/bootstrap.min.css">
 	</head>
 	<body>
 		<h1>Detalhe de usuario</h1>
-		<table>
+		<table class="table">
+			<thead class="thead-light">
 				<tr>
-					<td>Id</td>
-					<td>Cliente</td>
-					<td>Equipamento</td>
-					<td>Serial Number</td>
-					<td>Valor</td>
-					<td>Responsavel</td>
-					<td>Status</td>
-					<td>Data de criacao</td>
+					<th>Id</th>
+					<th>Cliente</th>
+					<th>Equipamento</th>
+					<th>Serial Number</th>
+					<th>Valor</th>
+					<th>Responsavel</th>
+					<th>Status</th>
+					<th>Data de criacao</th>
+					<th></th>
+					<th></th>
 				</tr>
-	
+			</thead>
+			<tbody>
+
 				<% for (let i=0; i < detalhe.length; i++) {%>
-	
+
 					<%-		app.models.orcamentos.montaOrc(app, detalhe[i]); %>
-	
+
 				<% } %>
-				
+			
 				<tr>
-						<td><input type="button" onclick="window.location.href='/home'" value="Home" /></td>
-						<td><input type="button" onclick="window.location.href='/listaOrcamentos'" value="Retornar" /></td>
-					</tr>
-			</table>
+					<td><input class="btn btn-info" type="button" onclick="window.location.href='/home'" value="Home" /></td>
+					<td><input class="btn btn-secondary" type="button" onclick="window.location.href='/listaOrcamentos'" value="Retornar" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="/public/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/public/scripts/script.js"></script>
 	</body>
 </html>

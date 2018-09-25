@@ -23,19 +23,10 @@ select {
     background:none;
     -webkit-appearance:none;
     appearance:none;
+    padding-left:0.2rem;
+    padding-right:0.2rem;
 }
 
-thead {
-
-    color: blue;
-}
-
-tbody {
-
-    color: green;
-}
-
-#th201809025027 {
-
-    background-color: gray;
+body {
+    padding: 40px;
 }

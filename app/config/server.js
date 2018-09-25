@@ -12,9 +12,7 @@ let app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use("/scripts", express.static(path.join(__dirname, "../scripts")));
-app.use("/css", express.static(path.join(__dirname, "../css")));
-app.use("/pdf", express.static(path.join(__dirname, "../pdf")));
+app.use("/public", express.static(path.join(__dirname, "../public")));
 app.use(expressSession);
 
 

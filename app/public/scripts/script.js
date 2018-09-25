@@ -6,13 +6,12 @@ $(function(){
             let id = $(this).attr('id').slice(3);
             let op = $(this).attr('id').slice(0, 3);
             let formData= $('#tr'+id+' :input').serializeArray();
-            $('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
-            event.preventDefault();
-
             switch (op){ 
 
                 case "sub":
                     
+                    $('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
+                    event.preventDefault();
                     $.ajax({
                         method: "post",
                         url: "/approve",
@@ -35,6 +34,8 @@ $(function(){
 
                 case "dow":
 
+                    $('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
+                    event.preventDefault();
                     $.ajax({
                         method: "post",
                         url: "/download",
@@ -45,7 +46,7 @@ $(function(){
                         //console.log(msg)
                         //$('#tr' + id).replaceWith(msg);
                         alert("Download vai começar")
-                        window.open('/pdf/'+id+'.pdf','_blank')
+                        window.open('/public/pdf/'+id+'.pdf','_blank')
                         $('#' + op + id).prop('disabled', false);
                     })
         
