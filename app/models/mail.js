@@ -6,6 +6,7 @@ module.exports.sendMail = function(mail, app, mode){
     let nodemailer = require('nodemailer');
     let Promise = require("bluebird");
     let subject, text, html, attachments;
+
     switch (mode){
 
         case 'insert':
@@ -14,13 +15,17 @@ module.exports.sendMail = function(mail, app, mode){
             text = 'Aviso. Novo orcamento em ';
             html = '<b>Aviso.<br>Novo orcamento em <a href=';
             attachments = null
-        
+            break;
         case 'approve':
             
             subject = 'Orcamento aprovado em Portal Orçamento ✔'
             text = 'Aviso. Orcamento aprovado em '
             html = '<b>Aviso.<br>Orcamento aprovado <a href=';
             attachments = [ { path: './app/pdf/'+ mail.id + '.pdf' }];
+            break;
+        default:
+            console.log("Erro ao enviar email")
+            return false;
     }
 
     //nodemailer.createTestAccount((err, account) => {
