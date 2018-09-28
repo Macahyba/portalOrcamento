@@ -9,16 +9,25 @@
         <link rel="stylesheet" type="text/css" href="/public/bootstrap/css/bootstrap.min.css"> 
     </head>
 	<body>
-        <div class="card w-50">
-            <div class="card-header bg-primary text-white">Login</div>
-            <div class="card-body">
-                <form action="/login" id="form" method="post">
-                    <h5 class="card-body">Usuário</h5>
-                    <input class="form-control" type="text" name="login"><span class="error">Campo obrigatório</span><br>
-                    <h5 class="card-body">Password</h5>
-                    <input class="form-control" type="password" name="password"><span class="error">Campo obrigatório</span><br>
-                    <input class="btn btn-primary mt-4" onclick="sendForm()" type="button" id="send" value="Enviar">
-                </form>
+        <div class="container">
+            <div class="card">
+                <div class="card-header bg-primary text-white">Login</div>
+                <div class="card-body">
+                    <form action="/login" id="form" method="post">
+
+                        <div class="form-group">
+                            <label for="login">Usuário</label>
+                            <input name="login" type="email" class="form-control" id="login" aria-describedby="login" placeholder="Digite seu usuário" required><span class="error"><small>Campo obrigatório</small></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input name="password" type="password" class="form-control" id="password" placeholder="Senha"><span class="error"><small>Campo obrigatório</small></span>
+                        </div>
+                        <input class="btn btn-primary mt-4" onclick="sendForm()" type="button" id="send" value="Enviar">
+
+
+                    </form>
+                </div>
             </div>
         </div>
         <script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js"></script>

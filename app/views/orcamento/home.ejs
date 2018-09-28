@@ -8,19 +8,19 @@
 		<link rel="stylesheet" type="text/css" href="/public/css/style.css">
 	</head>
 	<body>
-		
-		<p><span class="h1">Bem-vindo(a), <%= user.nome; %> </span><span class="h2">(<%=user.login; %>)</span></p>
-		
-		<ul class="list-group w-25">
-			<li class="list-group-item"><a href="/inserirOrc">Inserir Orçamento</a></li>
-			<li class="list-group-item"><a href="/listaOrcamentos">Listar Orçamentos</a></li>
-			<% if (user.perfil == 'admin') { %>
-				<li class="list-group-item"><a href="/admin">Gerenciar usuários</a></li>
-			<% } %>
-		</ul>
-		
-		<p><input class="btn btn-danger  mt-4" type="button" onclick="window.location.href='/logout'" value="Logout" /></p>
-
+		<div class="container">
+			<p><span class="h1">Bem-vindo(a), <%= user.nome; %> </span><span class="h2">(<%=user.login; %>)</span></p>
+			
+			<ul class="list-group ">
+				<li class="list-group-item"><a href="/inserirOrc">Inserir Orçamento</a></li>
+				<li class="list-group-item"><a href="/listaOrcamentos">Listar Orçamentos</a></li>
+				<% if (user.perfil == 'admin') { %>
+					<li class="list-group-item"><a href="/admin">Gerenciar usuários</a></li>
+				<% } %>
+			</ul>
+			
+			<p><input class="btn btn-danger  mt-4" type="button" onclick="window.location.href='/logout'" value="Logout" /></p>
+		</div>
 		<script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="/public/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/public/scripts/script.js"></script>

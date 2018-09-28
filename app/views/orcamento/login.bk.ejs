@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="/public/css/style.css">
+        <link rel="stylesheet" type="text/css" href="/public/bootstrap/css/bootstrap.min.css"> 
+    </head>
+	<body>
+        <div class="card w-50">
+            <div class="card-header bg-primary text-white">Login</div>
+            <div class="card-body">
+                <form action="/login" id="form" method="post">
+                    <h5 class="card-body">Usuário</h5>
+                    <input class="form-control" type="text" name="login"><span class="error">Campo obrigatório</span><br>
+                    <h5 class="card-body">Password</h5>
+                    <input class="form-control" type="password" name="password"><span class="error">Campo obrigatório</span><br>
+                    <input class="btn btn-primary mt-4" onclick="sendForm()" type="button" id="send" value="Enviar">
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="/public/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/public/scripts/script.js"></script>
+	</body>
+</html>

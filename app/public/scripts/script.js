@@ -106,7 +106,8 @@ $(function(){
     var full;
     $("#nomeCliente").blur(function(){
 
-        let nomeCliente= $("#nomeCliente").val(); 
+        let nomeCliente= $("#nomeCliente").val().toUpperCase(); 
+        $("#nomeCliente").val($("#nomeCliente").val().toUpperCase());
         //let idCliente = $("#nomeList").find('option[value="' + nomeCliente + '"]').attr('id');
         
         if (!nomeCliente) { 
@@ -151,7 +152,8 @@ $(function(){
 
     $("#nomeEquip").blur(function(){
 
-        let nomeEquip= $("#nomeEquip").val();      
+        let nomeEquip= $("#nomeEquip").val().toUpperCase();    
+        $("#nomeEquip").val($("#nomeEquip").val().toUpperCase())  
 
         if (!nomeEquip) { 
             limpaEquip();

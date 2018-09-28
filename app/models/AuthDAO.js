@@ -17,7 +17,7 @@ AuthDAO.prototype.insertUser = function(hash, vBody){
 
 AuthDAO.prototype.getUserByName = function(login){
     
-    return this._connection.query("SELECT * FROM users WHERE login=$1", [capitalize(login)]);
+    return this._connection.query("SELECT * FROM users WHERE login=$1", [capitalize(login.trim())]);
 }
 
 AuthDAO.prototype.getUserById = function(id){

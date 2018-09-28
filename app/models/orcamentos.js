@@ -7,8 +7,7 @@ module.exports.montaOrc = function(app, orcamento){
     '<td><a href="/detalhe/clienteDetalhe/'+orcamento.idcliente+'">'+orcamento.nomecliente+'</a></td>'+
     '<td>'+orcamento.nomeequip+'</td>'+
     '<td>'+orcamento.serialnumber+'</td>'+
-    '<td>R$ '+orcamento.valor*(1-orcamento.desconto/100)+'</td>'+
-    '<td><a href="/detalhe/userDetalhe/'+orcamento.idusuario+'">'+orcamento.login+'</a></td>';
+    '<td>R$ '+orcamento.valor*(1-orcamento.desconto/100)+'</td>';
 
     if (app.locals.user.perfil !== 'usuario') {
 
@@ -45,11 +44,11 @@ module.exports.montaOrc = function(app, orcamento){
 
     }
     
-    answ+= '<td>' + moment(orcamento.datacriacao).format( "ddd DD/MM/YYYY HH:mm:ss") + '</td>'
+    answ+= '<td>' + moment(orcamento.datacriacao).format( "DD/MM/YYYY HH:mm") + '</td>'
 
     if (app.locals.user.perfil !== 'usuario') {							
 
-        answ+= '<td><input class="btn btn-sm btn-success" type="button" id="sub'+ orcamento.id+'" value="Submit"></td>'
+        answ+= '<td><input class="btn btn-sm btn-success" type="button" id="sub'+ orcamento.id+'" value="Submit" data-toggle="modal" data-target="#exampleModal"></td>'
     } 
 
     if(orcamento.status == "APROVADO") {
