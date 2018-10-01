@@ -14,7 +14,7 @@ module.exports.lista = function(app, req, res){
 
     .then(query=>{
 
-        res.render("orcamento/listaOrcamentos", {detalhe : query.rows, moment : moment, summData :JSON.stringify(query.rows).replace(/\\/g, '\\\\').replace(/"/g, '\\\"'), app: app});	
+        res.render("orcamento/listaOrcamentos", {detalhe : query.rows, moment : moment, app: app});	
     })
 
     .catch(err=>{

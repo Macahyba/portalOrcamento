@@ -9,36 +9,38 @@
 		<link rel="stylesheet" type="text/css" href="/public/bootstrap/css/bootstrap.min.css">
 	</head>
 	<body>
-		<h1>Detalhe de cliente</h1>
-		<table class="table">
-			<thead class="thead-light">
-				<tr>
-					<th>Id</th>
-					<th>Cliente</th>
-					<th>Equipamento</th>
-					<th>Serial Number</th>
-					<th>Valor</th>
-					<th>Responsavel</th>
-					<th>Status</th>
-					<th>Data de criacao</th>
-					<th></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
+		<div class="container">
+			<h1>Detalhe de cliente</h1>
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>Id</th>
+						<th>Cliente</th>
+						<th>Equipamento</th>
+						<th>Serial Number</th>
+						<th>Valor</th>
+						<th>Responsavel</th>
+						<th>Status</th>
+						<th>Data de criacao</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
 
-				<% for (let i=0; i < detalhe.length; i++) {%>
+					<% for (let i=0; i < detalhe.length; i++) {%>
 
-					<%-		app.models.orcamentos.montaOrc(app, detalhe[i]); %>
+						<%-		app.models.orcamentos.montaOrc(app, detalhe[i]); %>
 
-				<% } %>
+					<% } %>
 
-				<tr>
-					<td><input class="btn btn-info" type="button" onclick="window.location.href='/home'" value="Home" /></td>
-					<td><input class="btn btn-secondary" type="button" onclick="window.location.href='/listaOrcamentos'" value="Retornar" /></td>
-				</tr>
-			</tbody>
-		</table>
+					<tr>
+						<td><input class="btn btn-info" type="button" onclick="window.location.href='/home'" value="Home" /></td>
+						<td><input class="btn btn-secondary" type="button" onclick="window.location.href='/listaOrcamentos'" value="Retornar" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js"></script>
 		<script type="text/javascript" src="/public/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/public/scripts/script.js"></script>

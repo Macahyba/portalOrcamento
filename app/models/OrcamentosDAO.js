@@ -4,8 +4,8 @@ function OrcamentosDAO (connection) {
     this._Promise = require("bluebird");
     this._date = require('date-and-time');
     this._sQuery =
-    "SELECT orcamentos.id, idusuario, login, idcliente, nomecliente, nomecompleto, idEquip, " +
-    "nomeequip, serialnumber, valor, desconto, status, datacriacao " +
+    "SELECT orcamentos.id, idusuario, login, idcliente, nomecliente, nomecompleto, departamento, " +
+    "idEquip, nomeequip, serialnumber, valor, desconto, status, datacriacao " +
     "FROM orcamentos " +
     "LEFT JOIN users ON orcamentos.idusuario=users.id " + 
     "LEFT JOIN equipamentos ON orcamentos.idequip=equipamentos.id "+
