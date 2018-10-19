@@ -62,7 +62,7 @@ module.exports.exportPDF = function(app, id){
             
             } else {
 
-                html += '<div class="container-fluid small">';
+                html += '<div class="container-fluid small resiz">';
 
             }
 
