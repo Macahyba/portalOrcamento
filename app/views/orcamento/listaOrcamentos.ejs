@@ -2,75 +2,101 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Lista de orcamentos</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<script type="text/javascript"> var data = JSON.parse("<%- summData %>")</script>
-		<script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
-		<script type="text/javascript" src="scripts/script.js"></script>
+		<link rel="stylesheet" type="text/css" href="/public/css/style.css">
+		<link rel="stylesheet" type="text/css" href="/public/bootstrap/css/bootstrap.min.css">
 	</head>
 	<body>
-        <h1>Lista de orcamentos</h1>
-		<p>User: <%= user.nomeUsuario %>&nbsp;&nbsp;Id: <%= user.id %>&nbsp;&nbsp;Id: <%= user.perfil %>&nbsp;&nbsp;<%= Date.now()%></p>
-		<table>
-			<thead>
-				<tr>
-					<td>Id</td>
-					<td>Cliente</td>
-					<td>Equipamento</td>
-					<td>Serial Number</td>
-					<td>Valor</td>
-					<td>Responsavel</td>
-					<td>Status</td>
-					<td>Data de criacao</td>
-				</tr>
-			</thead>
-			<tbody>
-				<% for (let i=0; i < detalhe.length; i++) {%>
+		<div class="container-fluid">
+			<h1>Lista de orçamentos</h1>
+			<p>User: <%= user.login %>&nbsp;&nbsp;Id: <%= user.id %>&nbsp;&nbsp;Perfil: <%= user.perfil %>&nbsp;&nbsp;<%= new Date();%></p>
+
+			<input class="btn btn-info mb-3" type="button" onclick="window.location.href='/home'" value="Home" />
+
+			<table class="table table-responsive respons">
+				<thead class="thead-light">
+					<tr>
+						<th>Id</th>
+						<th>Cliente</th>
+						<th>Equipamento</th>
+						<th>Serial Number</th>
+						<th>Valor (desconto)</th>
+						<th>Status</th>
+						<th>Data de criacao</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for (let i=0; i < detalhe.length; i++) {%>
+
+						<tr id="tr<%= detalhe[i].id %>">
+							<td><a href="/detalhe/orcDetalhe/<%= detalhe[i].id %>"><%= detalhe[i].id %></a></td>
+							<td><a href="/detalhe/clienteDetalhe/<%= detalhe[i].idcliente %>"><%= detalhe[i].nomecliente %></a></td>
+							<td><%= detalhe[i].nomeequip %></td>
+							<td><%= detalhe[i].serialnumber %></td>
+							<td>R$ <%= detalhe[i].valor*(1- detalhe[i].desconto/100) %></td>
+							
+							<% if (app.locals.user.perfil !== 'usuario') { %>
+							
+								<td><select class="custom-select custom-select-sm" name="status">
+						
+								<% if (detalhe[i].status == "APROVADO") { %>
+						
+									<option value="NOVO">NOVO</option>
+									<option value="APROVADO" selected>APROVADO</option>
+									<option value="REJEITADO">REJEITADO</option>
 	
-				<tr id="tr<%= detalhe[i].id; %>" class="row">
-					<td><a href="/detalhe/orcDetalhe/<%= detalhe[i].id; %>"><%= detalhe[i].id; %></a></td>
-					<td><a href="/detalhe/clienteDetalhe/<%= detalhe[i].idCliente; %>"><%= detalhe[i].nomeCliente; %></a></td>
-					<td><%= detalhe[i].nomeEquip; %></td>
-					<td><%= detalhe[i].serialNumber; %></td>
-					<td>R$ <%= detalhe[i].valor; %></td>
-					<td><a href="/detalhe/userDetalhe/<%= detalhe[i].idUsuario; %>"><%= detalhe[i].nomeUsuario; %></a></td>
+								<% } else if (detalhe[i].status == "REJEITADO") { %>
+						
+									<option value="NOVO">NOVO</option>
+									<option value="APROVADO">APROVADO</option>
+									<option value="REJEITADO" selected>REJEITADO</option>
+						
+								<% } else { %>
+						
+									<option value="NOVO" selected>NOVO</option>
+									<option value="APROVADO">APROVADO</option>
+									<option value="REJEITADO">REJEITADO</option>
+								<% } %>
+							
+									</select>
+									<input type="hidden" name="id" value="<%= detalhe[i].id %>"></td>
+							
+							<% } else { %>
+						
+								<td><%= detalhe[i].status %></td>
+						
+							<% } %>
+								
+							<td><span class="data-exib"><%= detalhe[i].datacriacao %></span></td>
+						
+							<% if (user.perfil !== 'usuario') {	%>						
+						
+								<td><input class="btn btn-success" type="button" id="sub<%= detalhe[i].id %>" value="Atualizar"></td>
+							
+							<% } %> 
+						
+							<% if(detalhe[i].status == "APROVADO") { %>
+						
+								<td><span id="btn-d<%= detalhe[i].id %>"><input class="btn btn-primary" type="button" id="dow<%= detalhe[i].id %>" value="Download"></span></td>
 
-					<% if (user.perfil == 'manager') { %>
+							<% } else { %>
+								
+								<td><span id="btn-d<%= detalhe[i].id %>"></span></td>
 
-						<form id='<%= detalhe[i].id%>' action='/approve' method='post' >
-							<td>
-								<select name='status'>
-									<option value="NOVO" <% if (detalhe[i].status == "NOVO") {  %> selected="selected"<% } %>>NOVO</option>
-									<option value="APROVADO" <% if (detalhe[i].status == "APROVADO") {  %> selected="selected" <% } %>>APROVADO</option>
-									<option value="REJEITADO" <% if (detalhe[i].status == "REJEITADO") {  %> selected="selected" <% } %>>REJEITADO</option>
-								</select>	
-								<input type='hidden' name='id' value='<%= detalhe[i].id%>'>						
-							</td>
+							<% } %>
+							
+						</tr>
 
-					<% } else { %>
-
-							<td><%= detalhe[i].status; %></td>
-
-					<% } %>
-					
-							<td><%= moment(detalhe[i].dataCriacao).format( 'ddd DD/MM/YYYY HH:mm:ss') ; %></td>
-
-					<% if (user.perfil == 'manager') { %>							
-
-							<td><input type='button' id="sub<%= detalhe[i].id; %>" value="Submit"></td>
-						</form>
-
-					<% } %>	
-
-				</tr>
-	
-				<% } %>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td><input type="button" onclick="window.location.href='/home'" value="Home" /></td>
-				</tr>
-			</tfoot>
-		</table>
+					<%	} %>
+				</tbody>
+			</table>
+		</div>
+		<script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js" ></script>
+		<script type="text/javascript" src="/public/scripts/jquery-dateformat.min.js" ></script>
+		<script type="text/javascript" src="/public/scripts/script.js" ></script>
     </body>
 </html>

@@ -1,79 +1,82 @@
-let moment = require('moment');
-
 module.exports.lista = function(app, req, res){
 
-    let conn;
+    let connection = app.config.dbConnection();
 
-    app.config.dbConnection()
+    connection.connect()
     
-    .then(function(connection){
+    .then(()=>{
     
-        let OrcamentosDAO = new app.app.models.OrcamentosDAO(connection);
-        conn = connection;
+        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
         return OrcamentosDAO.getOrcamentos()
     })
 
-    .then(function(query){
+    .then(query=>{
 
-        res.render("orcamento/listaOrcamentos", {detalhe : query, moment : moment, summData :JSON.stringify(query).replace(/\\/g, '\\\\').replace(/"/g, '\\\"')});	
+        res.render("orcamento/listaOrcamentos", {detalhe : query.rows, app: app});	
     })
 
-    .catch(function(err){
+    .catch(err=>{
         
         //console.log(err);
         res.status(500).render("erro", { error : err});
     })
 
-    .finally(function(){
+    .then(()=>{
         
-        if (conn) { conn.end()} ;
+        if (connection) { connection.end()} ;
     })
 
 }
 
 module.exports.detalhes = function(app, req, res){
 
-    let conn;
     let path = req.url.split("/")[2];
     let id = req.url.split("/")[3];
 
-    app.config.dbConnection()
+    let connection = app.config.dbConnection();
+
+    connection.connect()
     
-    .then(function(connection){
+    .then(()=>{
 
-        let OrcamentosDAO = new app.app.models.OrcamentosDAO(connection);
-
-        conn = connection;
-        
+        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
+      
         switch (path){
-            case "clienteDetalhe":
+            // FUTURE IMPLEMENTATION
+            /*case "clienteDetalhe":
                 return OrcamentosDAO.getClienteList(id)
-                break;
+                break;*/
             case "orcDetalhe":
                 return OrcamentosDAO.getOrcamentoDetalhado(id)
                 break;
-            case "userDetalhe":
+            /*case "userDetalhe":
                 return OrcamentosDAO.getUserList(id)
                 break;
-            default :
-                throw "Routing error!"
+            default :*/
+                throw new Error("Routing error!");
         }
 
     })
 
-    .then(function(query) {
+    .then(query=> {
 
-        res.render("orcamento/" + path, {detalhe : query});	
+        res.render("orcamento/" + path, {detalhe : query.rows, app: app});	
     })
 
-    .catch(function(err){
+    .catch(err=>{
         
         res.status(500).render("erro", { error : err});
     })		
     
-    .finally(function(){
+    .then(()=>{
         
-        if (conn) { conn.end()} ;
+        if (connection) { connection.end()} ;
     })
 
+}
+
+module.exports.download = function(app, req, res) {
+
+    //console.log(JSON.stringify(req.body, null, 4))
+    app.models.PDFGen.download(app, req.body.id, res);
 }

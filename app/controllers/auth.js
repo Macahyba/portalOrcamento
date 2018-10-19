@@ -6,14 +6,41 @@ module.exports.loginGet = function(app, req, res){
 module.exports.loginPost = function(app, req, res){
     // SOMETIMES req.session.returnTo = /favicon.ico ---> FIX
     //console.log(JSON.stringify(req.session,null,4))
-    app.locals.user =  { 'id' : req.user[0].id, 'nomeUsuario': req.user[0].nomeUsuario, 'perfil': req.user[0].perfil };
+    if (req.session.returnTo == '/favicon.ico') { delete req.session.returnTo; }
+    app.locals.user =  { 'id' : req.user.rows[0].id, 'login': req.user.rows[0].login, 'perfil': req.user.rows[0].perfil, 'nome' : req.user.rows[0].nome };
     res.redirect(req.session.returnTo || '/home');
     delete req.session.returnTo;
 }
 
 module.exports.adminGet = function(app, req, res){
 
-    res.render("orcamento/admin");
+    let connection = app.config.dbConnection()
+
+    connection.connect()
+
+    .then(()=>{
+
+        let AuthDAO = new app.models.AuthDAO(connection);
+
+        return AuthDAO.getUsers();
+    })
+
+    .then(query=>{
+        
+        res.render("orcamento/admin", {detalhe : query.rows, app: app});
+
+    })
+
+    .catch(err=>{
+        
+        //console.log(err);
+        res.status(500).render("erro", { error : err});
+    })
+
+    .then(()=>{
+        
+        if (connection) { connection.end()} ;
+    })
 }
 
 module.exports.adminPost = function(app, req, res){
@@ -30,22 +57,23 @@ module.exports.adminPost = function(app, req, res){
 
     .then(function(hash){
 
-        app.config.dbConnection()
+        let connection = app.config.dbConnection();
 
-        .then(function(connection){
+        connection.connect()
 
-            let AuthDAO = new app.app.models.AuthDAO(connection);
-            conn = connection;
+        .then(()=>{
 
+            let AuthDAO = new app.models.AuthDAO(connection);
+            
             return AuthDAO.insertUser(hash, req.body)
         })		
 
-        .then(function(){
+        .then(()=>{
 
-            res.send("sucesso");
+            res.redirect("/admin");
         })
 
-        .catch(function(queryErr){
+        .catch(queryErr=>{
             if (queryErr.code == "ER_DUP_ENTRY") {
                 res.status(500).render("erro", { error : "User already registered"});
             } else {
@@ -53,9 +81,9 @@ module.exports.adminPost = function(app, req, res){
             }
         })		
         
-        .finally(function(){
+        .then(()=>{
 
-            if (conn) { conn.end() }
+            if (connection) { connection.end() }
         }) 
 
     })

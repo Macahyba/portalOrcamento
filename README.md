@@ -4,9 +4,10 @@ Portal for invoice generation
 
 //improve
 
+done:
+most front end design
 
 ToDo:
-code on controllers/aprovarOrc.js (approval workflow)
+work on the individual views (montaOrc, montaCliente)
 Refactor on script.js, passport.js
 Create reports
-Create pdf file after approval

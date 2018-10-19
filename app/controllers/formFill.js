@@ -2,15 +2,14 @@ module.exports.formFill = function(app, req, res){
 
     let table = req.url.split("/")[2];
     let field = req.url.split("/")[3].replace(/%20/g," ");
-    let conn;
 
-    app.config.dbConnection()
+    let connection = app.config.dbConnection();
 
-    .then(function(connection){
+    connection.connect()
 
-        conn = connection;
+    .then(()=>{
 
-        let OrcamentosDAO = new app.app.models.OrcamentosDAO(connection);
+        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
 
         switch (table){
 
@@ -21,13 +20,13 @@ module.exports.formFill = function(app, req, res){
         }
     })
 
-    .then(function(data){
+    .then(data=>{
 
         res.send(data);
     })
 
-    .finally(function(){
-        if (conn) { conn.end()}
+    .then(()=>{
+        if (connection) { connection.end()}
     })
 
 }
