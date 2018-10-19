@@ -8,6 +8,6 @@ done:
 most front end design
 
 ToDo:
-work on the individual views (montaOrc, montaCliente)
-Refactor on script.js, passport.js
+Check difference between pdf files
+Remove clutter
 Create reports
