@@ -11,6 +11,7 @@ pgdump.sql
 #app generated artifacts
 
 /app/public/pdf
+/app/public/pdf.html
 
 # vs code config
 
