@@ -47,7 +47,7 @@ CREATE TABLE public.clientes (
     id integer NOT NULL,
     nomecliente character varying(255) NOT NULL,
     nomecompleto character varying(255) NOT NULL,
-    cnpj character varying(16) NOT NULL,
+    cnpj character varying(32) NOT NULL,
     responsavel character varying(255) NOT NULL,
     departamento character varying(255) NOT NULL
 );
