@@ -1,1 +1,112 @@
-<!DOCTYPE html><html lang="pt-br">    <head>        <meta charset="utf-8">        <meta http-equiv="X-UA-Compatible" content="IE=edge">        <meta name="viewport" content="width=device-width, initial-scale=1">        <title>Report</title>        <link rel="stylesheet" type="text/css" href="file:\C:\Projeto\portalOrcamento\app\public\bootstrap\css\bootstrap.min.css">        <link rel="stylesheet" type="text/css" href="file:\C:\Projeto\portalOrcamento\app\public\css\style.css">    </head>    <body>        <div class="container-fluid">            <img src="file:\C:\Projeto\portalOrcamento\app\public\img\logo.png">            <h6 class="font-weight-bold">Sony Brasil Ltda.</h6>            <ul class="list-unstyled">                <li>Rua Werner Siemens, 111 | Condomínio e-Business Park | Prédio 1</li>                <li>CEP: 05069-010 | Lapa | São Paulo | SP | Brasil</li>                <li>Tel.: (11) 2196-9000 - Fax.: 2196-9186</li>            </ul>            <hr>            <ul class="list-unstyled">               <li class="font-weight-bold font-italic">GLOBO PARTICIPAÇÕES</li>               <li class="font-weight-bold font-italic">ENGENHARIA</li>            </ul>            <div class="font-weight-bold font-italic">                <span class="left">Cotação: 201809002002 - PMW-200 - Numero de Serie SW1234</span>                <span class="right">Data: 01/Oct/2018</span>            </div>        </div>        <script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js"></script>        <script type="text/javascript" src="/public/bootstrap/js/bootstrap.min.js"></script>        <script type="text/javascript" src="/public/scripts/script.js"></script>    </body></html>
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Cadastrar</title>
+		<link rel="stylesheet" type="text/css" href="/public/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/public/css/style.css">
+    </head>
+	<body>
+        <div class="container">
+            <h1>Cadastrar</h1>
+            <form action="/admin" method="post">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Login</span>
+                    </div>
+                    <input class="form-control" placeholder="Insira o Login" autocomplete="off" type="text" name="login">
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Nome Completo</span>
+                    </div>
+                    <input class="form-control" placeholder="Insira o nome completo" autocomplete="off" type="text" name="nome">
+                </div>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Password</span>
+                    </div>
+                    <input class="form-control" placeholder="Insira a sennha" autocomplete="off" type="password" name="password">
+                </div>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">E-mail</span>
+                    </div>
+                    <input class="form-control" placeholder="Insira o e-mail" autocomplete="off" type="text" name="email">
+                </div>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cargo</span>
+                    </div>
+                    <input class="form-control" placeholder="Insira o cargo" autocomplete="off" type="text" name="cargo">
+                </div>
+                
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Telefone</span>
+                    </div>
+                    <input class="form-control" placeholder="Insira o telefone" autocomplete="off" type="tel" name="telefone">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Perfil</span>
+                    </div>
+                    <select class="form-control" autocomplete="off" type="select" name="perfil">
+                        <option value="usuario">Usuario</option>
+                        <option value="manager">Manager</option>
+                        
+                        <% if (user.perfil == 'admin') { %>
+
+                            <option value="admin">Admin</option>
+
+                        <% } %>
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <button class="btn btn-success mr-4" onclick="this.disabled=true; this.form.submit();">Submit</button>	
+                        <input class="btn btn-info" type="button" onclick="window.location.href='/home'" value="Home" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        Login
+                    </div>
+                    <div class="col">
+                        Nome
+                    </div>
+                    <div class="col">
+                        E-mail
+                    </div>
+                    <div class="col">
+                        Perfil
+                    </div>
+                </div>
+                
+                <%	for (let i=0; i < detalhe.length; i++) {%>
+
+                    <div class="row">                    
+                            
+                        <%-		app.models.auth.montaUser(app, detalhe[i]); %>
+
+                    </div>
+
+                <%	} %>
+
+            </form>
+        </div>
+        <script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="/public/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/public/scripts/script.js"></script>
+	</body>
+</html>

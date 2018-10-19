@@ -50,7 +50,7 @@ module.exports.inserirOrcPOST = function(app, req, res){
 
     .then((mail)=>{
 
-        app.models.mail.sendMail(mail, app, 'insert');
+        app.models.mail.sendMail(app, mail, 'insert');
     })
 
     .then(()=>{

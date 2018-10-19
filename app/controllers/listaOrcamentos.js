@@ -1,5 +1,3 @@
-let moment = require('moment');
-
 module.exports.lista = function(app, req, res){
 
     let connection = app.config.dbConnection();
@@ -14,7 +12,7 @@ module.exports.lista = function(app, req, res){
 
     .then(query=>{
 
-        res.render("orcamento/listaOrcamentos", {detalhe : query.rows, moment : moment, app: app});	
+        res.render("orcamento/listaOrcamentos", {detalhe : query.rows, app: app});	
     })
 
     .catch(err=>{
@@ -44,17 +42,18 @@ module.exports.detalhes = function(app, req, res){
         let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
       
         switch (path){
-            case "clienteDetalhe":
+            // FUTURE IMPLEMENTATION
+            /*case "clienteDetalhe":
                 return OrcamentosDAO.getClienteList(id)
-                break;
+                break;*/
             case "orcDetalhe":
                 return OrcamentosDAO.getOrcamentoDetalhado(id)
                 break;
-            case "userDetalhe":
+            /*case "userDetalhe":
                 return OrcamentosDAO.getUserList(id)
                 break;
-            default :
-                throw "Routing error!"
+            default :*/
+                throw new Error("Routing error!");
         }
 
     })

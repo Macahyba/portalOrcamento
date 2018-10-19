@@ -1,6 +1,5 @@
 module.exports.montaOrc = function(app, orcamento){
 
-    let moment = require('moment');
     let answ = 
     '<tr id="tr'+orcamento.id+'">'+
     '<td><a href="/detalhe/orcDetalhe/'+orcamento.id+'">'+orcamento.id+'</a></td>'+
@@ -19,19 +18,19 @@ module.exports.montaOrc = function(app, orcamento){
             case "APROVADO":
 
                 answ+= '<option value="NOVO">NOVO</option>'
-                answ+= '<option value="APROVADO" selected="selected" >APROVADO</option>'
+                answ+= '<option value="APROVADO" selected>APROVADO</option>'
                 answ+= '<option value="REJEITADO">REJEITADO</option>'
                 break;
             case "REJEITADO":
 
                 answ+= '<option value="NOVO">NOVO</option>'
                 answ+= '<option value="APROVADO">APROVADO</option>'
-                answ+= '<option value="REJEITADO" selected="selected">REJEITADO</option>'
+                answ+= '<option value="REJEITADO" selected>REJEITADO</option>'
                 break;  
 
             default:
 
-                answ+= '<option value="NOVO" selected="selected">NOVO</option>'
+                answ+= '<option value="NOVO" selected>NOVO</option>'
                 answ+= '<option value="APROVADO">APROVADO</option>'
                 answ+= '<option value="REJEITADO">REJEITADO</option>'
         }
@@ -44,11 +43,11 @@ module.exports.montaOrc = function(app, orcamento){
 
     }
     
-    answ+= '<td>' + moment(orcamento.datacriacao).format( "DD/MM/YYYY HH:mm") + '</td>'
+    answ+= '<td>' + orcamento.datacriacao + '</td>'
 
     if (app.locals.user.perfil !== 'usuario') {							
 
-        answ+= '<td><input class="btn btn-sm btn-success" type="button" id="sub'+ orcamento.id+'" value="Submit" data-toggle="modal" data-target="#exampleModal"></td>'
+        answ+= '<td><input class="btn btn-sm btn-success" type="button" id="sub'+ orcamento.id+'" value="Atualizar"></td>'
     } 
 
     if(orcamento.status == "APROVADO") {

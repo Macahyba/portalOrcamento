@@ -4,7 +4,7 @@
    
     application.get('/admin', ensureLoggedIn('/'), function(req, res){
 
-        if (application.locals.user.perfil == 'admin') {
+        if (application.locals.user.perfil !== 'usuario') {
 
             application.controllers.auth.adminGet(application, req, res);
 

@@ -1,12 +1,10 @@
 module.exports.montaUser = function(app, user){
 
     let answ =
-    '<tr id="tr' + user.id + '">'+
-    '<td>'+user.login+'</td>'+
-    '<td>'+user.nome+'</td>'+
-    '<td>'+user.email+'</td>'+
-    '<td>'+user.perfil+'</td>'+
-    '</tr>'
+    '<div class="col">'+user.login+'</div>'+
+    '<div class="col">'+user.nome+'</div>'+
+    '<div class="col">'+user.email+'</div>'+
+    '<div class="col">'+user.perfil+'</div>'
 
     return answ;
 }

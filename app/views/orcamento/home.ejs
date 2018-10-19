@@ -14,7 +14,7 @@
 			<ul class="list-group ">
 				<li class="list-group-item"><a href="/inserirOrc">Inserir Orçamento</a></li>
 				<li class="list-group-item"><a href="/listaOrcamentos">Listar Orçamentos</a></li>
-				<% if (user.perfil == 'admin') { %>
+				<% if (user.perfil !== 'usuario') { %>
 					<li class="list-group-item"><a href="/admin">Gerenciar usuários</a></li>
 				<% } %>
 			</ul>

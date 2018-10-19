@@ -1,7 +1,7 @@
 // Fix for TLS error
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-module.exports.sendMail = function(mail, app, mode){
+module.exports.sendMail = function(app, mail, mode){
 
     let nodemailer = require('nodemailer');
     let Promise = require("bluebird");
@@ -27,66 +27,59 @@ module.exports.sendMail = function(mail, app, mode){
             console.log("Erro ao enviar email")
             return false;
     }
-
-    //nodemailer.createTestAccount((err, account) => {
-    //    if (err) {
-    //        console.error('Failed to create a testing account');
-    //        console.error(err);
-    //        return process.exit(1);
-    //    }
-    
-    //    console.log('Credentials obtained, sending message...');
  
-        let transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true, // true for 465, false for other ports
-            auth: {
-                user: process.env.MAILUSER, // generated ethereal user
-                pass: process.env.MAILPASS // generated ethereal password
-            }
-        });
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: process.env.MAILUSER, // generated ethereal user
+            pass: process.env.MAILPASS // generated ethereal password
+        }
+    });
 
-        let connection = app.config.dbConnection();
+    let connection = app.config.dbConnection();
 
-        connection.connect()
+    connection.connect()
 
-        .then(()=>{
+    .then(()=>{
 
-            let AuthDAO = new app.models.AuthDAO(connection);
+        let AuthDAO = new app.models.AuthDAO(connection);
 
-            let getUser = AuthDAO.getUserById(mail.idusuario);
-            let getManagers = AuthDAO.getManagerList();
+        let getUser = AuthDAO.getUserById(mail.idusuario);
+        let getManagers = AuthDAO.getManagerList();
 
-            return Promise.props({
-                                    'user': getUser,
-                                    'managers': getManagers
-            })
-
+        return Promise.props({
+                                'user': getUser,
+                                'managers': getManagers
         })
 
-        .then(query=>{
+    })
 
-            let access;
-            let to = '';
-            for (i=0; i < query.managers.rowCount; i++) {
+    .then(query=>{
 
-                to += query.managers.rows[i].email + ', ';
-            }
+        let access;
+        let to = '';
+        for (i=0; i < query.managers.rowCount; i++) {
 
-            process.env.SERVERIP ? access = 'http://' + process.env.SERVERIP + ':3000' : access = 'https://portalorcamento.herokuapp.com'
+            to += query.managers.rows[i].email + ', ';
+        }
+        
+        process.env.SERVERIP ? access = 'http://' + process.env.SERVERIP + ':3000' : access = 'https://portalorcamento.herokuapp.com'
 
-            let url = access + '/detalhe/orcDetalhe/'+ mail.id;
-            let mailOptions = {
-                from: '"Admin 👻" <' + process.env.MAILUSER + '> ', // sender address
-                to: to + query.user.rows[0].email + ' ,' + process.env.MAILUSER, // list of receivers
-                subject: subject, // Subject line
-                text: text + url, // plain text body
-                html: html + url +'>' + url + '</a></b>', // html body
-                attachments : attachments
-            };
-            console.log(JSON.stringify(mailOptions,null,4))
-            /*transporter.sendMail(mailOptions, (error, info) => {
+        let url = access + '/detalhe/orcDetalhe/'+ mail.id;
+        let mailOptions = {
+            from: '"Admin 👻" <' + process.env.MAILUSER + '> ', // sender address
+            to: to + query.user.rows[0].email + ' ,' + process.env.MAILUSER, // list of receivers
+            subject: subject, // Subject line
+            text: text + url, // plain text body
+            html: html + url +'>' + url + '</a></b>', // html body
+            attachments : attachments
+        };
+
+        if (process.env.SENDMAIL == 1) {
+
+            transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                     return console.log(error);
                 }
@@ -98,13 +91,18 @@ module.exports.sendMail = function(mail, app, mode){
                 // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
     
                 
-            });*/
-        })
+            });
 
-        .then(()=>{
+        } else {
 
-            if (connection) { connection.end(); }
-        })
-    //});
+            console.log(JSON.stringify(mailOptions,null,4))
+        }
+    })
+
+    .then(()=>{
+
+        if (connection) { connection.end(); }
+    })
+
 }
 

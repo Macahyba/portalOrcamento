@@ -3,40 +3,53 @@ function OrcamentosDAO (connection) {
     this._connection = connection;
     this._Promise = require("bluebird");
     this._date = require('date-and-time');
-    this._sQuery =
-    "SELECT orcamentos.id, idusuario, login, idcliente, nomecliente, nomecompleto, departamento, " +
-    "idEquip, nomeequip, serialnumber, valor, desconto, status, datacriacao " +
-    "FROM orcamentos " +
-    "LEFT JOIN users ON orcamentos.idusuario=users.id " + 
-    "LEFT JOIN equipamentos ON orcamentos.idequip=equipamentos.id "+
-    "LEFT JOIN clientes ON orcamentos.idcliente=clientes.id ";
 }
 
 OrcamentosDAO.prototype.getOrcamentos = function(){
  
-    return this._connection.query(this._sQuery + "ORDER BY datacriacao DESC");
+    return this._connection.query(  "SELECT orcamentos.id, nomecliente, nomeequip, serialnumber, valor, desconto, status, datacriacao " +
+                                    "FROM orcamentos " +
+                                    "LEFT JOIN users ON orcamentos.idusuario=users.id " + 
+                                    "LEFT JOIN equipamentos ON orcamentos.idequip=equipamentos.id "+
+                                    "LEFT JOIN clientes ON orcamentos.idcliente=clientes.id ORDER BY datacriacao DESC");
 
 }
 
 OrcamentosDAO.prototype.getOrcamentoDetalhado = function(id) {
 
-    return this._connection.query(this._sQuery + "WHERE orcamentos.id=$1 ORDER BY id", [id]);
-    
-}
+    return this._connection.query(  "SELECT orcamentos.id, r1.nome as nomecriador, r1.id as idusuario, nomecliente, nomecompleto, cnpj, departamento, responsavel, " + 
+                                    "nomeequip, serialnumber, valor, desconto, status, datacriacao, r2.nome as nomeaprov, r2.cargo, r2.telefone, dataaprov " +
+                                    "FROM orcamentos " +
+                                    "LEFT JOIN users r1 ON orcamentos.idusuario=r1.id " + 
+                                    "LEFT JOIN users r2 ON orcamentos.iduseraprov=r2.id " + 
+                                    "LEFT JOIN equipamentos ON orcamentos.idequip=equipamentos.id "+
+                                    "LEFT JOIN clientes ON orcamentos.idcliente=clientes.id WHERE orcamentos.id=$1", [id]);
 
+}
+/* FUTURE IMPLEMENTATION
 OrcamentosDAO.prototype.getClienteList = function(id){
 
-    return this._connection.query(  this._sQuery + "WHERE clientes.nomecliente=(SELECT nomecliente FROM clientes " +
+    return this._connection.query(  "SELECT orcamentos.id, idusuario, nome, login, idcliente, nomecliente, nomecompleto, departamento, " +
+                                    "idEquip, nomeequip, serialnumber, valor, desconto, status, datacriacao " +
+                                    "FROM orcamentos " +
+                                    "LEFT JOIN users ON orcamentos.idusuario=users.id " + 
+                                    "LEFT JOIN equipamentos ON orcamentos.idequip=equipamentos.id "+
+                                    "LEFT JOIN clientes ON orcamentos.idcliente=clientes.idWHERE clientes.nomecliente=(SELECT nomecliente FROM clientes " +
                                     "WHERE id=$1) ORDER BY datacriacao", [id]);
 
 }
 
 OrcamentosDAO.prototype.getUserList = function(id){
 
-    return this._connection.query(this._sQuery + "WHERE users.id=$1 ORDER BY id", [id]);
+    return this._connection.query(  "SELECT orcamentos.id, idusuario, nome, login, idcliente, nomecliente, nomecompleto, departamento, " +
+                                    "idEquip, nomeequip, serialnumber, valor, desconto, status, datacriacao " +
+                                    "FROM orcamentos " +
+                                    "LEFT JOIN users ON orcamentos.idusuario=users.id " + 
+                                    "LEFT JOIN equipamentos ON orcamentos.idequip=equipamentos.id "+
+                                    "LEFT JOIN clientes ON orcamentos.idcliente=clientes.idWHERE users.id=$1 ORDER BY id", [id]);
     
 }
-
+*/
 OrcamentosDAO.prototype.getCliente = function(nomeCliente, cnpj, responsavel){
 
     return this._connection.query(  "SELECT * FROM clientes WHERE nomecliente=$1 AND cnpj=$2 AND responsavel=$3 ORDER BY id LIMIT 1",
@@ -212,9 +225,9 @@ OrcamentosDAO.prototype.getSerialNumber = function(nomeEquip){
                                     "as total FROM equipamentos p where nomeequip=UPPER($1) ORDER BY nomeequip ASC, total DESC", [nomeEquip]);
 }
 
-OrcamentosDAO.prototype.aprovarOrc = function(vBody){
+OrcamentosDAO.prototype.aprovarOrc = function(vBody, id){
 
-    return this._connection.query(  "UPDATE orcamentos SET status=$1, dataaprov=now() WHERE id=$2", [vBody.status, vBody.id])
+    return this._connection.query(  "UPDATE orcamentos SET status=$1, iduseraprov=$2, dataaprov=now() WHERE id=$3", [vBody.status, id, vBody.id])
 
     .then(()=>{
 

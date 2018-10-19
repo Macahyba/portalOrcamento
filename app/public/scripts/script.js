@@ -1,66 +1,92 @@
 $(function(){
 
-    $(document).ready(function(){
-        $('body').on('click','input[type="button"]', (function(){
-            
-            let id = $(this).attr('id').slice(3);
-            let op = $(this).attr('id').slice(0, 3);
-            let formData= $('#tr'+id+' :input').serializeArray();
-            switch (op){ 
+    $(window).resize(function() {
+        //alert($(window).height() + " " + $(window).width())
+    });
 
-                case "sub":
+    $(".data-exib").each(function (idx, elem) {
+        
+        if ($(elem).is(":input")) {
+            
+            if ($(elem).val() !== "" ) $(elem).val($.format.toBrowserTimeZone($(elem).val(), 'E, dd/MM/yyyy HH:mm'));
+
+        } else {
+
+            if ($(elem).text() !== "" ) $(elem).text($.format.toBrowserTimeZone($(elem).text(), 'E, dd/MM/yyyy HH:mm'));
+
+        }
+    });
+    //<script>document.write($.format.date("<%= detalhe[i].datacriacao %>", "dd/MM/yyyy HH:mm"))</script>
+
+    $('body').on('click','input[type="button"]', (function(){
+        
+        let id = $(this).attr('id').slice(3);
+        let op = $(this).attr('id').slice(0, 3);
+        let formData= $('#tr'+id+' :input').serializeArray();
+        switch (op){ 
+
+            case "sub":
+
+                $('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
+                event.preventDefault();
+                $.ajax({
+                    method: "post",
+                    url: "/approve",
+                    data: formData
+                })
+                .done(function( msg ) {
                     
-                    $('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
-                    event.preventDefault();
-                    $.ajax({
-                        method: "post",
-                        url: "/approve",
-                        data: formData
-                    })
-                    .done(function( msg ) {
-        
-                        $('#tr' + id).replaceWith(msg);
-                        alert("Orcamento: " + id + " atualizado com sucesso!")
-                        $('#' + op + id).prop('disabled', false);
-                    })
-        
-                    .fail(function(err){
-        
-                        alert("Ocorreu um erro, favor tente novamente")
-                        $('#sub' + id).prop('disabled', false);
-                        console.log(Date.now()+JSON.stringify(err,null,4))
-                    })
-                    break;
+                    $('#dataapr' + id).val($.format.toBrowserTimeZone(msg.dataaprov,'E, dd/MM/yyyy HH:mm'));
+                    $('#aprov' + id).val(msg.nomeaprov);
+                    
+                    if (msg.status == 'APROVADO') { 
 
-                case "dow":
+                        $('#btn-d' + id).replaceWith('<span id=btn-d'+ msg.id +'><input class="btn btn-primary" type="button" id="dow'+ msg.id +'" value="Download"></span>')
 
-                    $('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
-                    event.preventDefault();
-                    $.ajax({
-                        method: "post",
-                        url: "/download",
-                        data: formData
-                    })
-                    .done(function() {
-                        
-                        //console.log(msg)
-                        //$('#tr' + id).replaceWith(msg);
-                        alert("Download vai começar")
-                        window.open('/public/pdf/'+id+'.pdf','_blank')
-                        $('#' + op + id).prop('disabled', false);
-                    })
+                    } else {
+
+                        $('#btn-d' + id).replaceWith('<span id=btn-d'+ msg.id +'></span>')
+
+                    }
+                    alert("Orcamento: " + id + " atualizado com sucesso!")
+                    $('#' + op + id).prop('disabled', false);
+                })
+    
+                .fail(function(err){
+    
+                    alert("Ocorreu um erro, favor tente novamente")
+                    $('#sub' + id).prop('disabled', false);
+                    console.log(Date.now()+JSON.stringify(err,null,4))
+                })
+                break;
+
+            case "dow":
+
+                $('#' + op + id).prop('disabled', true); // AVOID MULTIPLE SUBMITS
+                event.preventDefault();
+                $.ajax({
+                    method: "post",
+                    url: "/download",
+                    data: formData
+                })
+                .done(function() {
+                    
+                    alert("Download vai começar")
+                    window.open('/public/pdf/'+id+'.pdf','_blank')
+                    $('#' + op + id).prop('disabled', false);
+                })
+    
+                .fail(function(err){
+    
+                    alert("Ocorreu um erro, favor tente novamente")
+                    $('#dow' + id).prop('disabled', false);
+                    console.log(Date.now()+JSON.stringify(err,null,4))
+                })
+                break;
+
+        }
         
-                    .fail(function(err){
-        
-                        alert("Ocorreu um erro, favor tente novamente")
-                        $('#dow' + id).prop('disabled', false);
-                        console.log(Date.now()+JSON.stringify(err,null,4))
-                    })
-                    break;
-            }
-            
-        }))
-    })
+    }))
 
     $('#valor').add('#desconto').blur(function(){
 
@@ -187,6 +213,7 @@ $(function(){
 
     });
 
+    // SUBMIT ON ENTER
     $('input').keypress(function(e) {
         if(e.which == 13) {
             sendForm();

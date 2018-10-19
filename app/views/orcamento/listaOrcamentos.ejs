@@ -9,10 +9,13 @@
 		<link rel="stylesheet" type="text/css" href="/public/bootstrap/css/bootstrap.min.css">
 	</head>
 	<body>
-		<div class="container">
-			<h1>Lista de orcamentos</h1>
-			<p>User: <%= user.login %>&nbsp;&nbsp;Id: <%= user.id %>&nbsp;&nbsp;Id: <%= user.perfil %>&nbsp;&nbsp;<%= Date.now()%></p>
-			<table class="table">
+		<div class="container-fluid">
+			<h1>Lista de orçamentos</h1>
+			<p>User: <%= user.login %>&nbsp;&nbsp;Id: <%= user.id %>&nbsp;&nbsp;Perfil: <%= user.perfil %>&nbsp;&nbsp;<%= new Date();%></p>
+
+			<input class="btn btn-info mb-3" type="button" onclick="window.location.href='/home'" value="Home" />
+
+			<table class="table table-responsive respons">
 				<thead class="thead-light">
 					<tr>
 						<th>Id</th>
@@ -27,21 +30,73 @@
 					</tr>
 				</thead>
 				<tbody>
-					<%	for (let i=0; i < detalhe.length; i++) {%>
+					<% for (let i=0; i < detalhe.length; i++) {%>
 
-					<%-		app.models.orcamentos.montaOrc(app, detalhe[i]); %>
+						<tr id="tr<%= detalhe[i].id %>">
+							<td><a href="/detalhe/orcDetalhe/<%= detalhe[i].id %>"><%= detalhe[i].id %></a></td>
+							<td><a href="/detalhe/clienteDetalhe/<%= detalhe[i].idcliente %>"><%= detalhe[i].nomecliente %></a></td>
+							<td><%= detalhe[i].nomeequip %></td>
+							<td><%= detalhe[i].serialnumber %></td>
+							<td>R$ <%= detalhe[i].valor*(1- detalhe[i].desconto/100) %></td>
+							
+							<% if (app.locals.user.perfil !== 'usuario') { %>
+							
+								<td><select class="custom-select custom-select-sm" name="status">
+						
+								<% if (detalhe[i].status == "APROVADO") { %>
+						
+									<option value="NOVO">NOVO</option>
+									<option value="APROVADO" selected>APROVADO</option>
+									<option value="REJEITADO">REJEITADO</option>
+	
+								<% } else if (detalhe[i].status == "REJEITADO") { %>
+						
+									<option value="NOVO">NOVO</option>
+									<option value="APROVADO">APROVADO</option>
+									<option value="REJEITADO" selected>REJEITADO</option>
+						
+								<% } else { %>
+						
+									<option value="NOVO" selected>NOVO</option>
+									<option value="APROVADO">APROVADO</option>
+									<option value="REJEITADO">REJEITADO</option>
+								<% } %>
+							
+									</select>
+									<input type="hidden" name="id" value="<%= detalhe[i].id %>"></td>
+							
+							<% } else { %>
+						
+								<td><%= detalhe[i].status %></td>
+						
+							<% } %>
+								
+							<td><span class="data-exib"><%= detalhe[i].datacriacao %></span></td>
+						
+							<% if (user.perfil !== 'usuario') {	%>						
+						
+								<td><input class="btn btn-success" type="button" id="sub<%= detalhe[i].id %>" value="Atualizar"></td>
+							
+							<% } %> 
+						
+							<% if(detalhe[i].status == "APROVADO") { %>
+						
+								<td><span id="btn-d<%= detalhe[i].id %>"><input class="btn btn-primary" type="button" id="dow<%= detalhe[i].id %>" value="Download"></span></td>
+
+							<% } else { %>
+								
+								<td><span id="btn-d<%= detalhe[i].id %>"></span></td>
+
+							<% } %>
+							
+						</tr>
 
 					<%	} %>
 				</tbody>
-				<tfoot>
-					<tr>
-						<td><input class="btn btn-info" type="button" onclick="window.location.href='/home'" value="Home" /></td>
-					</tr>
-				</tfoot>
 			</table>
 		</div>
-		<script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js"></script>
-		<script type="text/javascript" src="/public/bootstrap/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/public/scripts/script.js"></script>
+		<script type="text/javascript" src="/public/scripts/jquery-3.3.1.min.js" ></script>
+		<script type="text/javascript" src="/public/scripts/jquery-dateformat.min.js" ></script>
+		<script type="text/javascript" src="/public/scripts/script.js" ></script>
     </body>
 </html>
