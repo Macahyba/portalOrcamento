@@ -56,13 +56,13 @@ module.exports.exportPDF = function(app, id){
             '   </head>'+
             '   <body>';
             
-            if (process.env.HEROKU_BINPATH) {
+            if (process.env.ALT_PDF == 1) {
 
                 html += '<div class="container-fluid small resiz">';
             
             } else {
 
-                html += '<div class="container-fluid small resiz">';
+                html += '<div class="container-fluid small">';
 
             }
 
