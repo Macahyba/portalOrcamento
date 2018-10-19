@@ -1,9 +1,10 @@
 $(function(){
 
+/*  
     $(window).resize(function() {
         //alert($(window).height() + " " + $(window).width())
     });
-
+*/
     $(".data-exib").each(function (idx, elem) {
         
         if ($(elem).is(":input")) {
@@ -18,7 +19,7 @@ $(function(){
     });
     //<script>document.write($.format.date("<%= detalhe[i].datacriacao %>", "dd/MM/yyyy HH:mm"))</script>
 
-    $('body').on('click','input[type="button"]', (function(){
+    $('body').on('click','input[type="button"]', (function(event){
         
         let id = $(this).attr('id').slice(3);
         let op = $(this).attr('id').slice(0, 3);
