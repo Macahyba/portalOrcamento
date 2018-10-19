@@ -190,3 +190,8 @@ td {
     background-color: transparent;
     border-collapse: collapse;
 }
+
+.resiz {
+    width: 50%;
+    height: 50%;
+}

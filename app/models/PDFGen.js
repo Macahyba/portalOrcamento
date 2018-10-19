@@ -45,7 +45,6 @@ module.exports.exportPDF = function(app, id){
             let descontoVal = Math.round((orcamento.rows[0].desconto/100)*orcamento.rows[0].valor);
             
             let html =
-
             '<!DOCTYPE html>'+
             '<html lang="pt-br">'+
             '   <head>'+
@@ -53,10 +52,21 @@ module.exports.exportPDF = function(app, id){
             '       <meta http-equiv="X-UA-Compatible" content="IE=edge">'+
             '       <meta name="viewport" content="width=device-width, initial-scale=1">'+
             '       <title>Report</title>'+
-            //'       <link rel="stylesheet" type="text/css" href="' + path.join('file://', __dirname, '../public/bootstrap/css/bootstrap.min.css') + '">'+
             '       <link rel="stylesheet" type="text/css" href="' + path.join('file://', __dirname, '../public/css/pdf.css') + '">'+
             '   </head>'+
-            '   <body>'+
+            '   <body>';
+            
+            if (process.env.HEROKU_BINPATH) {
+
+                html += '<div class="container-fluid small resiz">';
+            
+            } else {
+
+                html += '<div class="container-fluid small">';
+
+            }
+
+            html +=
             '       <div class="container-fluid small">'+
             '           <div class="row">'+
             '               <div class="col">'+
@@ -167,12 +177,12 @@ module.exports.exportPDF = function(app, id){
             '       </div>'+
             '   </body>'+
             '</html>';
-
+/*
             require('fs').writeFile('./app/public/pdf.html', html, (err) => {
                 if (err) throw err;
                 //console.log('The file has been saved!');
             });
-
+*/
             pdf.create(html, options).toFile(file, function(err, res) {
 
                 if (err) reject(err);

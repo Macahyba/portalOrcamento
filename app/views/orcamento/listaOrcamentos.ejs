@@ -5,8 +5,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Lista de orcamentos</title>
+		<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/public/css/style.css">
-		<link rel="stylesheet" type="text/css" href="/public/bootstrap/css/bootstrap.min.css">
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -34,7 +34,7 @@
 
 						<tr id="tr<%= detalhe[i].id %>">
 							<td><a href="/detalhe/orcDetalhe/<%= detalhe[i].id %>"><%= detalhe[i].id %></a></td>
-							<td><a href="/detalhe/clienteDetalhe/<%= detalhe[i].idcliente %>"><%= detalhe[i].nomecliente %></a></td>
+							<td><%= detalhe[i].nomecliente %></td>
 							<td><%= detalhe[i].nomeequip %></td>
 							<td><%= detalhe[i].serialnumber %></td>
 							<td>R$ <%= detalhe[i].valor*(1- detalhe[i].desconto/100) %></td>

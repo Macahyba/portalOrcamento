@@ -7,7 +7,8 @@ Portal for invoice generation
 done:
 most front end design
 
-ToDo:
+doing:
 Check difference between pdf files
-Remove clutter
+
+ToDo:
 Create reports
