@@ -67,7 +67,6 @@ module.exports.exportPDF = function(app, id){
             }
 
             html +=
-            '       <div class="container-fluid small">'+
             '           <div class="row">'+
             '               <div class="col">'+
             '                   <img src="' + path.join('file://', __dirname, '../public/img/logo.png') + '">'+
