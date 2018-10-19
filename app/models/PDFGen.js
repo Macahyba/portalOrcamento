@@ -62,7 +62,7 @@ module.exports.exportPDF = function(app, id){
             
             } else {
 
-                html += '<div class="container-fluid small resiz">';
+                html += '<div class="container-fluid small">';
 
             }
 
@@ -176,12 +176,12 @@ module.exports.exportPDF = function(app, id){
             '       </div>'+
             '   </body>'+
             '</html>';
-
+/*
             require('fs').writeFile('./app/public/pdf.html', html, (err) => {
                 if (err) throw err;
                 //console.log('The file has been saved!');
             });
-
+*/
             pdf.create(html, options).toFile(file, function(err, res) {
 
                 if (err) reject(err);
