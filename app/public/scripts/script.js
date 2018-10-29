@@ -157,7 +157,7 @@ $(function(){
             nomeCompleto.readOnly = true;
             responsavel.value = res.rows[0].responsavel
             $('#respList option').remove();
-            for (i=0; i< res.rowCount; i++){
+            for (let i=0; i< res.rowCount; i++){
                 $('#respList').append("<option value='" + res.rows[i].responsavel + "'")
             }
             departamento.value = res.rows[0].departamento;
