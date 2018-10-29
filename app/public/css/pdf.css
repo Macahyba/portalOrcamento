@@ -142,9 +142,13 @@ img {
    float: right;
 }
 
+td {
+    position: static;
+}  
+
+table.main-table thead th,
 table.main-table tbody tr td,
 table.main-table thead tr th,
-table.main-table thead th,
 table.main-table thead {
     border: 2px solid black;
 }
@@ -152,11 +156,6 @@ table.main-table thead {
 .text-primary {
     color: #1900ff !important;
 }
-
-td {
-    position: static;
-}  
-
 .servico {
 
     border-left: none !important;

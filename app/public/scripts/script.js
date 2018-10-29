@@ -114,7 +114,7 @@ $(function(){
         //console.log(JSON.stringify(data,null,4))
         if (('cliente' in data)){
             //console.log(JSON.stringify(data,null,4))
-            for (var i=0; i < data.cliente.rowCount; i++) {
+            for (let i=0; i < data.cliente.rowCount; i++) {
                 // <option value="<%= montaData.cliente[i].nomeCliente %>">
                 $('#nomeList').append("<option value='" + data.cliente.rows[i].nomecliente + "'")
 
@@ -122,7 +122,7 @@ $(function(){
         }
 
         if (('equip' in data)){
-            for (var i=0; i < data.equip.rowCount; i++) {
+            for (let i=0; i < data.equip.rowCount; i++) {
 
                 $('#equipList').append("<option value='" + data.equip.rows[i].nomeequip + "'")
 
@@ -140,7 +140,7 @@ $(function(){
         if (!nomeCliente) { 
             limpaCliente();
             return;
-        };
+        }
 
         fetch("/formFill/cnpj/" + nomeCliente)
 
@@ -185,7 +185,7 @@ $(function(){
         if (!nomeEquip) { 
             limpaEquip();
             return;
-        };
+        }
 
         fetch("/formFill/serialNumber/" + nomeEquip)
 
@@ -253,7 +253,7 @@ function sendForm(){
             $('input[name='+formData[input].name+']').next().removeClass('error').addClass("errorShow");
             $('input[name='+formData[input].name+']').removeClass('valid').addClass("invalid");
             errorFree = false;
-        };
+        }
     }
 
     if (errorFree){
