@@ -197,7 +197,7 @@ $(function(){
         .then(function(res){
 
             $('#serialList option').remove();
-            for (i=0; i< res.rowCount; i++){
+            for (let i=0; i< res.rowCount; i++){
                 $('#serialList').append("<option value='" + res.rows[i].serialnumber + "'")
             }
             full = res;
