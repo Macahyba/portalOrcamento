@@ -155,7 +155,7 @@ module.exports.exportPDF = function(app, id){
             '                   </ul>'+
             '               </div>'+
             '           </div>'+
-            '           <div>'+
+            '           <div class="h-10">'+
             '               <div class="left">'+
             '                   <ul class="list-unstyled">'+
             '                       <li>________________________________________________________________________________________</li>'+
