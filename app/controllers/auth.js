@@ -4,7 +4,7 @@ module.exports.loginGet = function(app, req, res){
 }
 
 module.exports.loginPost = function(app, req, res){
-
+    // SOMETIMES req.session.returnTo = /favicon.ico ---> FIX
     //console.log(JSON.stringify(req.session,null,4))
     if (req.session.returnTo == '/favicon.ico') { delete req.session.returnTo; }
     app.locals.user =  { 'id' : req.user.rows[0].id, 'login': req.user.rows[0].login, 'perfil': req.user.rows[0].perfil, 'nome' : req.user.rows[0].nome };
