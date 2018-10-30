@@ -158,7 +158,7 @@ module.exports.exportPDF = function(app, id){
             '           <div class="h-10">'+
             '               <div class="left">'+
             '                   <ul class="list-unstyled">'+
-            '                       <li>________________________________________________________________________________________</li>'+
+            '                       <li>___________________________________________________________________________________</li>'+
             '                       <li>' + orcamento.rows[0].nomeaprov + '</li>'+
             '                       <li>Professional Solutions Brasil | ' + orcamento.rows[0].cargo + '</li>'+
             '                       <li>Ph. ' + orcamento.rows[0].telefone + '</li>'+
@@ -166,7 +166,7 @@ module.exports.exportPDF = function(app, id){
             '               </div>'+
             '               <div class="right">'+
             '                   <ul class="list-unstyled">'+
-            '                       <li>________________________________________________________________________________________</li>'+
+            '                       <li>___________________________________________________________________________________</li>'+
             '                       <li>' + orcamento.rows[0].nomecompleto + '</li>'+
             '                       <li>' + orcamento.rows[0].departamento + '</li>'+
             '                       <li>DATA: ' + date.format(new Date(), 'DD/MM/YYYY') + '</li>'+
