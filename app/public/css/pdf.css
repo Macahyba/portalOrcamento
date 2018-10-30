@@ -97,6 +97,7 @@ h6 {
     height: 19.2cm;
     padding-right: 0.4cm;
     padding-left: 0.4cm;
+    display: inline-block;
     margin-right: auto;
     margin-left: auto;
     border: 2px solid black;
