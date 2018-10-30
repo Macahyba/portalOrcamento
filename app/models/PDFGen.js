@@ -134,7 +134,7 @@ module.exports.exportPDF = function(app, id){
             '                   </table>'+
             '               </div>'+
             '           </div>'+
-            '           <div class="h-10">'+
+            '           <div class="h-10 mb-2">'+
             '               <div class="left">'+
             '                   <ul class="list-unstyled">'+
             '                       <li class="font-weight-bold">Condições Gerais:</li>'+
@@ -155,7 +155,7 @@ module.exports.exportPDF = function(app, id){
             '                   </ul>'+
             '               </div>'+
             '           </div>'+
-            '           <div class="h-10">'+
+            '           <div class="h-10 mb-2">'+
             '               <div class="left">'+
             '                   <ul class="list-unstyled">'+
             '                       <li>____________________________________________________________________________</li>'+

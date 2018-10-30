@@ -111,7 +111,11 @@ h6 {
 
 .mb-1,
 .my-1 {
-  margin-bottom: 0.11cm !important;
+    margin-bottom: 0.11cm !important;
+}
+
+.mb-2 {
+    margin-bottom: 0.84cm !important;
 }
 
 ol,
@@ -135,7 +139,7 @@ img {
 
 .left {
     float: left;
- }
+}
 
 
 .right { 
