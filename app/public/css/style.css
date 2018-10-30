@@ -19,8 +19,8 @@ input.valid, textarea.valid{
 select {
     border:0px;
     outline:0px;
-    background-color:white;
-    background:none;
+	background:none;
+	background-color:white;
     -webkit-appearance:none;
     appearance:none;
     padding-left:0.2rem;
@@ -41,23 +41,22 @@ only screen and (max-width: 760px),
 	}
 	
 	/* Hide table headers (but not display: none;, for accessibility) */
+	.respons tr { 
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+	}
+	
 	.respons thead tr { 
 		position: absolute;
 		top: -9999px;
 		left: -9999px;
 	}
 	
-	.respons tr { 
-        border: 1px solid #ccc;
-        margin-bottom: 10px;
-    }
-	
 	.respons td { 
 		/* Behave  like a "row" */
 		border: none;
 		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
+		position: relative; 
 	}
 	
 	.respons td:before { 

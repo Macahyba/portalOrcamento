@@ -60,7 +60,7 @@ module.exports.sendMail = function(app, mail, mode){
 
         let access;
         let to = '';
-        for (i=0; i < query.managers.rowCount; i++) {
+        for (let i=0; i < query.managers.rowCount; i++) {
 
             to += query.managers.rows[i].email + ', ';
         }

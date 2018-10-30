@@ -39,7 +39,7 @@ module.exports.adminGet = function(app, req, res){
 
     .then(()=>{
         
-        if (connection) { connection.end()} ;
+        if (connection) { connection.end()}
     })
 }
 

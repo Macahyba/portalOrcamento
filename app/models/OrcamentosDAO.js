@@ -195,7 +195,7 @@ OrcamentosDAO.prototype.gravaOrcamento = function(idusuario, idEquip, idCliente,
 
         return this._date.format(new Date(), 'YYYYMM')+
                     idCliente.toLocaleString('en', {minimumIntegerDigits:3,useGrouping:false}) +
-                    ((parseInt(res.rows[0].id)||0)).toLocaleString('en', {minimumIntegerDigits:3,useGrouping:false})
+                    (parseInt(res.rows[0].id)||0).toLocaleString('en', {minimumIntegerDigits:3,useGrouping:false})
 
         
     })

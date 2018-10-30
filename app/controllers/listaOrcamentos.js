@@ -23,7 +23,7 @@ module.exports.lista = function(app, req, res){
 
     .then(()=>{
         
-        if (connection) { connection.end()} ;
+        if (connection) { connection.end()}
     })
 
 }
@@ -41,19 +41,27 @@ module.exports.detalhes = function(app, req, res){
 
         let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
       
+        // FUTURE IMPLEMENTATION
+        /*
         switch (path){
-            // FUTURE IMPLEMENTATION
-            /*case "clienteDetalhe":
+            case "clienteDetalhe":
                 return OrcamentosDAO.getClienteList(id)
-                break;*/
             case "orcDetalhe":
                 return OrcamentosDAO.getOrcamentoDetalhado(id)
-                break;
-            /*case "userDetalhe":
+            case "userDetalhe":
                 return OrcamentosDAO.getUserList(id)
-                break;
-            default :*/
+            default :
                 throw new Error("Routing error!");
+        }
+        */
+        if (path == "orcDetalhe") { 
+
+            return OrcamentosDAO.getOrcamentoDetalhado(id)
+
+        } else {
+
+            throw new Error("Routing error!");
+
         }
 
     })
@@ -70,7 +78,7 @@ module.exports.detalhes = function(app, req, res){
     
     .then(()=>{
         
-        if (connection) { connection.end()} ;
+        if (connection) { connection.end()}
     })
 
 }

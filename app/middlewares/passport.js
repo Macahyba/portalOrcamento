@@ -7,7 +7,6 @@ module.exports.myPass = function(){
 
 module.exports.passaportInit = function(app){
 
-    let conn;
     let passport = this.myPass();
     passport.serializeUser(function(user, done) {
         
