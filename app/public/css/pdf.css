@@ -99,7 +99,6 @@ h6 {
     padding-left: 0.4cm;
     display: inline-block;
     margin: 0.80cm;
-    border: 2px solid black;
 }
 
 .font-weight-bold {
@@ -136,13 +135,11 @@ img {
 
 .left {
     float: left;
-    border: 2px solid blue;
  }
 
 
 .right { 
    float: right;
-   border: 2px solid green;
 }
 
 td {
