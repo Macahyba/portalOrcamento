@@ -6,3 +6,4 @@ ToDo:
 Create reports
 Refactoring on auth.js
 User management workflow
+Implement logger

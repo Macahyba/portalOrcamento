@@ -186,7 +186,7 @@ module.exports.exportPDF = function(app, id){
 
                 if (err) reject(err);
                 else {
-                    console.log(res);
+                    //console.log(res);
                     resolve(res.filename)
                 }
             });

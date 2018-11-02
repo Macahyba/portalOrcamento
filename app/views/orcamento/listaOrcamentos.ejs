@@ -62,12 +62,11 @@
 									<option value="REJEITADO">REJEITADO</option>
 								<% } %>
 							
-									</select>
-									<input type="hidden" name="id" value="<%= detalhe[i].id %>"></td>
+									</select></td>
 							
 							<% } else { %>
 						
-								<td><%= detalhe[i].status %></td>
+								<td><%= detalhe[i].status %><input type="hidden" name="status" value="<%= detalhe[i].status %>"></td>
 						
 							<% } %>
 								
@@ -88,6 +87,8 @@
 								<td><span id="btn-d<%= detalhe[i].id %>"></span></td>
 
 							<% } %>
+
+							<input type="hidden" name="id" value="<%= detalhe[i].id %>">
 							
 						</tr>
 

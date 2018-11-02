@@ -11,8 +11,8 @@ function capitalize(string) {
 
 AuthDAO.prototype.insertUser = function(hash, vBody){
     //console.log(JSON.stringify(vBody,null,4))
-    return this._connection.query(  "INSERT INTO USERS (login, nome, email, perfil, password) VALUES($1, $2, $3, $4, $5)", 
-                                    [capitalize(vBody.login), vBody.nome, vBody.email, vBody.perfil, hash])
+    return this._connection.query(  "INSERT INTO USERS (login, nome, email, perfil, cargo, telefone, password) VALUES($1, $2, $3, $4, $5, $6, $7)", 
+                                    [capitalize(vBody.login), vBody.nome, vBody.email, vBody.perfil, vBody.cargo, vBody.telefone, hash])
 }
 
 AuthDAO.prototype.getUserByName = function(login){
