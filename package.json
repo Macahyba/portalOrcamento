@@ -1,7 +1,7 @@
 {
-  "name": "orcamento",
+  "name": "PortalOrcamento",
   "version": "1.0.0",
-  "description": "Geracao de orcamentos",
+  "description": "Portal for invoice generation",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
