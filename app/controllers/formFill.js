@@ -9,7 +9,7 @@ module.exports.formFill = function(app, req, res){
 
     .then(()=>{
 
-        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
+        let OrcamentosDAO = new app.dao.OrcamentosDAO(connection);
 
         switch (table){
 

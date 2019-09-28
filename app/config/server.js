@@ -21,6 +21,7 @@ passaportConfig.passaportInit(app);
 consign({cwd: 'app'})
     .include("routes")
     .then("config/dbConnection.js")
+    .then("dao")
     .then("models")
     .then("controllers")
     .then("middlewares")

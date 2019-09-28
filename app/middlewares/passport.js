@@ -41,7 +41,7 @@ module.exports.passaportInit = function(app){
 
         .then(()=>{
             //console.log(JSON.stringify(connection, null, 4))
-            let AuthDAO = new app.models.AuthDAO(connection);
+            let AuthDAO = new app.dao.AuthDAO(connection);
             //conn = connection;
 
             return AuthDAO.getUserByName(login)

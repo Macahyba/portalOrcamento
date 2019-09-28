@@ -44,7 +44,7 @@ module.exports.sendMail = function(app, mail, mode){
 
     .then(()=>{
 
-        let AuthDAO = new app.models.AuthDAO(connection);
+        let AuthDAO = new app.dao.AuthDAO(connection);
 
         let getUser = AuthDAO.getUserById(mail.idusuario);
         let getManagers = AuthDAO.getManagerList();

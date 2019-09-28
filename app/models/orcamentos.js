@@ -1,3 +1,4 @@
+/*
 module.exports.montaOrc = function(app, orcamento){
 
     let answ = 
@@ -76,3 +77,5 @@ module.exports.montaOrcDet = function(app, orcamento) {
 
     //TODO
 }
+
+*/

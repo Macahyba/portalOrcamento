@@ -1,5 +1,13 @@
 module.exports.aprova = function(app, req, res) {
 
+    let cliente = new app.models.Cliente();
+
+    let user = new app.models.User();
+
+    let equip = new app.models.Equipamento();
+    
+    let orcamento = new app.models.Orcamento(user, cliente, equip);
+    
     //console.log(JSON.stringify(req.body,null,4))
     let connection = app.config.dbConnection();
     //let aprovaRes;
@@ -8,7 +16,7 @@ module.exports.aprova = function(app, req, res) {
 
     .then(()=> {
 
-        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);        
+        let OrcamentosDAO = new app.dao.OrcamentosDAO(connection);        
         return OrcamentosDAO.aprovarOrc(req.body, app.locals.user.id);
     })
 

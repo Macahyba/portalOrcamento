@@ -6,7 +6,7 @@ module.exports.lista = function(app, req, res){
     
     .then(()=>{
     
-        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
+        let OrcamentosDAO = new app.dao.OrcamentosDAO(connection);
         return OrcamentosDAO.getOrcamentos()
     })
 
@@ -39,7 +39,7 @@ module.exports.detalhes = function(app, req, res){
     
     .then(()=>{
 
-        let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
+        let OrcamentosDAO = new app.dao.OrcamentosDAO(connection);
       
         // FUTURE IMPLEMENTATION
         /*

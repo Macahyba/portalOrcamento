@@ -31,7 +31,7 @@ module.exports.exportPDF = function(app, id){
 
         .then(()=>{
 
-            let OrcamentosDAO = new app.models.OrcamentosDAO(connection);
+            let OrcamentosDAO = new app.dao.OrcamentosDAO(connection);
 
             return OrcamentosDAO.getOrcamentoDetalhado(id);
 

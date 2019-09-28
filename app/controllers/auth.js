@@ -20,7 +20,7 @@ module.exports.adminGet = function(app, req, res){
 
     .then(()=>{
 
-        let AuthDAO = new app.models.AuthDAO(connection);
+        let AuthDAO = new app.dao.AuthDAO(connection);
 
         return AuthDAO.getUsers();
     })
@@ -63,7 +63,7 @@ module.exports.adminPost = function(app, req, res){
 
         .then(()=>{
 
-            let AuthDAO = new app.models.AuthDAO(connection);
+            let AuthDAO = new app.dao.AuthDAO(connection);
             
             return AuthDAO.insertUser(hash, req.body)
         })		
