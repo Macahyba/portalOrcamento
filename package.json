@@ -15,7 +15,7 @@
     "body-parser": "^1.18.3",
     "connect-ensure-login": "^0.1.1",
     "consign": "^0.1.6",
-    "date-and-time": "^0.6.2",
+    "date-and-time": "^0.14.2",
     "dotenv": "^6.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
