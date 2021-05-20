@@ -20,7 +20,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "mysql": "^2.16.0",
     "nodemailer": "^4.6.8",
     "nodemon": "^1.18.7",
